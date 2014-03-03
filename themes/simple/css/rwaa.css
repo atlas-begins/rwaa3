@@ -1,0 +1,112 @@
+@CHARSET "UTF-8";
+
+/* LINK DECORATORS
+------------------------------------ */
+.typography a.editObject, .typography a.addObject, .typography a.deleteObject {
+	padding: 0 2px 2px 20px;
+}
+	.typography a.editObject {
+		background: url(../images/icons/actions_sprite.png) no-repeat left -256px;
+	}
+	.typography a.addObject {
+		background: url(../images/icons/actions_sprite.png) no-repeat left -32px;
+	}
+	.typography a.deleteObject {
+		background: url(../images/icons/actions_sprite.png) no-repeat left -96px;
+	}
+
+/* GENERAL DECORATORS
+------------------------------------ */
+.currentSeason	{
+	font-weight: bold;
+}
+
+/* LINK ICONS - shows type of file
+------------------------------------ */
+.typography a[href$=".pdf"],
+.typography a[href$=".PDF"],
+.typography a.pdf {
+	padding: 2px;
+	padding-left: 20px;
+	background: url(../images/icons/page_white_acrobat.png) no-repeat left center;
+}
+.typography a[href$=".ppt"],
+.typography a[href$=".PPT"],
+.typography a[href$=".pptx"],
+.typography a[href$=".PPTX"],
+.typography a.pdf {
+	padding: 2px;
+	padding-left: 20px;
+	background: url(../images/icons/page_ppt.png) no-repeat left center;
+}
+.typography a[href$=".doc"],
+.typography a[href$=".DOC"],
+.typography a[href$=".docx"],
+.typography a[href$=".DOCX"],
+.typography a[href$=".rtf"],
+.typography a[href$=".RTF"],
+.typography a.doc {
+	padding: 2px;
+	padding-left: 20px;
+	background: url(../images/icons/page_word.png) no-repeat left center;
+}
+.typography a[href$=".xls"],
+.typography a[href$=".XLS"],
+.typography a[href$=".xlsx"],
+.typography a[href$=".XLSX"],
+.typography a.xls {
+	padding: 2px;
+	padding-left: 20px;
+	background: url(../images/icons/page_excel.png) no-repeat left center;
+}
+.typography a[href$=".gz"],
+.typography a[href$=".GZ"],
+.typography a[href$=".gzip"],
+.typography a[href$=".GZIP"],
+.typography a[href$=".zip"],
+.typography a[href$=".ZIP"],
+.typography a.archive {
+	padding: 2px;
+	padding-left: 20px;
+	background: url(../images/icons/page_white_zip.png) no-repeat left center;
+}
+.typography a[href$=".exe"],
+.typography a[href$=".EXE"],
+.typography a.application {
+	padding: 2px;
+	padding-left: 20px;
+	background: url(../images/icons/application.png) no-repeat left center;
+}
+
+.typography a[href$=".gif"],
+.typography a[href$=".GIF"],
+.typography a[href$=".png"],
+.typography a[href$=".PNG"],
+.typography a[href$=".jpg"],
+.typography a[href$=".JPG"],
+.typography a[href$=".jpeg"],
+.typography a[href$=".JPEG"] {
+	padding: 2px;
+	padding-left: 20px;
+	background: url(../images/icons/link-image.png) no-repeat left center;
+}
+
+div.left {
+	float: left;
+}
+.ObjectTable {
+	margin-right: 30px;
+}
+.branch_Sea, .branch_Land, .branch_Air {
+	color: #ffffff;
+	font-weight: bold;
+}
+.branch_Sea {
+	background-color: #08298A;
+}
+.branch_Land {
+	background-color: #848484;
+}
+.branch_Air {
+	background-color: #00BFFF;
+}
