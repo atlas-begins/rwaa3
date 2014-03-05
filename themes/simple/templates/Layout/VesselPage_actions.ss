@@ -3,7 +3,7 @@
 	<article>
 		<h1>$Title</h1>
 		<div class="content">
-			$Content
+			<% if Content %><div class="opaque">$Content</div><% end_if %>
 			<div class="left ObjectTable">
 				<% if ObjectAction == 'edit' %>
 					edit stuff here

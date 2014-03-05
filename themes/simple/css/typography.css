@@ -42,6 +42,7 @@ body {
     font-size: 13px; /* This overrides the browsers default font size */
     line-height: 20px; /* If you change the font-size make sure you change the line-height value as well - the usual ratio is around 1.5 (font-size x 1.5 = line-height) */
     margin-bottom: 20px;
+    background: #0E1E2B url("../images/bg_water.jpg") top center no-repeat;
     color: #333333;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -118,23 +119,29 @@ body {
 -------------------------------------------- */
 .typography table {
     border-collapse: collapse; /* borders are collapsed into a single border when possible */
-    border: 1px solid #d4d4d4;
+    border: 1px solid #aaa;
     border-spacing: 0; /* The border-spacing property sets the distance between the borders of adjacent cells - acts as a backup to border-collapse: collapse */
     margin: 0 0 10px;
     text-align: left;
 }
+  .typography table tr {
+      background-color: #fff
+  }
   .typography table tr:nth-child(even) {
       background-color: #ededed
   }
   .typography table tr.even,
-  .typography table th,
   .typography thead td {
       background-color: #ededed
+  }
+  
+  .typography table th {
+  	background-color: #dcdcdc;
   }
   .typography table td,
   .typography table th {
       padding: 2px 5px;
-      border: 1px solid #d4d4d4;
+      border: 1px solid #aaa;
       vertical-align: top;
   }
   .typography table th {

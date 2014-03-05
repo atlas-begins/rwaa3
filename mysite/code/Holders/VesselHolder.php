@@ -40,10 +40,21 @@ class VesselHolder extends Page {
     	return $result;
     }
     
-    public function getVesselActionPageLink($action = null) {
-    	return $this->Link() . $action;
+    public function getVesselActionPageLink($vtype = 'Vessel') {
+    	return $this->Link() . 'add/' . $vtype;
     }
 }
 class VesselHolder_Controller extends Page_Controller {
+	private static $allowed_actions = array (
+		'add' => 'ADMIN'
+	);
 	
+	public function add($request) {
+		$resultsArray = array();
+		$resultsArray['ObjectAction'] = 'add';
+		$resultsArray['Title'] = 'Add a ' . $this->request->param('ID');
+		$resultsArray['Form'] = true;
+		
+    	return $this->customise($resultsArray)->renderWith(array('VesselHolder_actions', 'Page'));
+    }
 }

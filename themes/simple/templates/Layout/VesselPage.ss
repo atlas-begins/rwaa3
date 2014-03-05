@@ -8,10 +8,10 @@
 				<% loop Vessel %>
 					<table>
 					<thead>
-						<tr><th colspan="2">$VesselNumber $VesselName</th></tr>
+						<tr><th colspan="2"><% if VesselName %><% else %>$VesselClass <% end_if %>$VesselNumber $VesselName</th></tr>
 					</thead>
 					<tbody>
-						<tr><td colspan="2"><a href="$getVesselDetailPageLink(editCutter)" title="Edit details for this vessel" class="editObject">edit details</a></td></tr>
+						<tr><td colspan="2"><a href="$getVesselDetailPageLink(edit)" title="Edit details for this vessel" class="editObject">edit details</a></td></tr>
 						<tr><td>Currently with</td><td>
 							<% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupName ($GroupAcronym)</a><% end_loop %>
 						</td></tr>
@@ -31,13 +31,13 @@
 				<% loop Vessel %>
 					<table>
 					<thead>
-						<tr><th colspan="4">Survey certificates</th></tr>
+						<tr><th colspan="4">Survey certificates<% if VesselName %> for "$VesselName"<% end_if %></th></tr>
 					</thead>
 					<tbody>
-						<tr><td colspan="4"><a href="$getCertActionPageLink(add)" title="Add a certificate" class="addObject">Add a certificate</a></td></tr>
+						<tr><td colspan="4"><a href="$getCertActionPageLink(add)" title="Add a certificate" class="addObject">add a certificate</a></td></tr>
 						<% loop getVesselCertificates %>
 							<tr>
-								<td><% loop SailingSeason %>$Season season<% end_loop %></td>
+								<td><% loop SailingSeason %>$Season<% end_loop %></td>
 								<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupAcronym</a><% end_loop %></td>
 								<% if VesselCertNumber %>
 									<td><a href="$getCertDetailPageLink" title="view detail about this certificate">$completeCertNumber</a></td>

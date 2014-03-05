@@ -7,7 +7,7 @@
 				<table>
 				<thead><tr><th>Zone</th></tr></thead>
 				<tbody>
-				<tr><td><a href="$getZoneLink(add)" title="Add a new Zone record" class="addObject">Add a zone</a></td></tr>
+				<tr><td><a href="$getZoneLink(add)" title="Add a new Zone record" class="addObject">add a zone</a></td></tr>
 				<% if getAllZones %>
 					<% loop getAllZones %>
 						<tr><td><a href="$getZoneDetailPageLink" title="Show detail for zone $ZoneName">$ZoneName</a></td></tr>

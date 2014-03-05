@@ -5,7 +5,7 @@
 		<div class="content">
 			<div class="left size2of5">
 			<h1>$Title</h1>
-				$Content
+				<div class="opaque">$Content</div>
 			</div>
 			<div class="left size1of5">
 				&nbsp;

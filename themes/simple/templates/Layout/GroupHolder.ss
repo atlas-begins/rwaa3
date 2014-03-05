@@ -6,7 +6,7 @@
 			<table>
 			<thead><tr><th>Branch</th><th>Group</th><th>Zone</th></tr>
 			<tbody>
-			<tr><td colspan="3"><a href="" class="addObject" title="Add a new Group">add a new Group</a></td></tr>
+			<tr><td colspan="3"><a href="$getGroupActionPageLink" class="addObject" title="Add a new Group">add a new Group</a></td></tr>
 			<% if getGroupInformation %>
 				<% loop getGroupInformation %>
 					<tr>

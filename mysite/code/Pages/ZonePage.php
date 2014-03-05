@@ -20,6 +20,28 @@ class ZonePage_Controller extends ZoneHolder_Controller {
 		, 'edit' => true
 	);
 	
+	public function Form() {
+        // Create fields
+        $fields = new FieldList(
+            new TextField('Name'),
+            new OptionsetField('Browser', 'Your Favourite Browser', array(
+                'Firefox' => 'Firefox',
+                'Chrome' => 'Chrome',
+                'Internet Explorer' => 'Internet Explorer',
+                'Safari' => 'Safari',
+                'Opera' => 'Opera',
+                'Lynx' => 'Lynx'
+            ))
+        );
+         
+        // Create actions
+        $actions = new FieldList(
+            new FormAction('doBrowserPoll', 'Submit')
+        );
+     
+        return new Form($this, 'BrowserPollForm', $fields, $actions);
+    }
+	
     public function view($request) {
     	if($result = SSZone::get()->byID($this->request->param('ID'))) {
     		$resultsArray = array(

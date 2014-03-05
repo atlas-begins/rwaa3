@@ -5,12 +5,12 @@
 		<div class="content">
 			<div class="left ObjectTable">
 				<table>
-				<thead><tr><th>Season label</th><th>Season start</th><th>Season end</th></tr></thead>
+				<thead><tr><th>Season label</th><th>Season starts</th><th>Season ends</th></tr></thead>
 				<tbody>
-				<tr><td colspan="3"><a href="" title="" class="addObject">Add a season</a></td></tr>
+				<tr><td colspan="3"><a href="" title="" class="addObject">add a Season</a></td></tr>
 				<% if getAllSeasons %>
 					<% loop getAllSeasons %>
-						<tr class="$SeasonClass"><td><a href="$getSeasonDetailPageLink" title="Show detail for season $Season">$Season</a></td><td>$SeasonStart.Long</td><td>$SeasonEnd.Long</td></tr>
+						<tr><td class="$SeasonClass"><a href="$getSeasonDetailPageLink" title="Show detail for season $Season">$Season</a></td><td class="$SeasonClass">$SeasonStart.Long</td><td class="$SeasonClass">$SeasonEnd.Long</td></tr>
 					<% end_loop %>
 				<% else %>
 					<tr><td colspan="2">No records available</td></tr>
@@ -19,7 +19,11 @@
 			</div>
 			
 			<div class="left">
-				For the current $getCurrentSeason.Season season, we have:
+				<table>
+				<thead><tr><th colspan="3">For the current $getCurrentSeason.Season season, we have:</th></tr></thead>
+				<tbody>
+				<tr><td colspan="3"><a href="" title="Add an Event to this Season" class="addObject">add an Event</a></td></tr>
+				</tbody></table>
 			</div>
 		</div>
 	</article>

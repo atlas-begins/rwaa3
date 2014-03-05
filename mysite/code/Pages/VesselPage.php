@@ -16,8 +16,9 @@ class VesselPage_Controller extends VesselHolder_Controller {
 
 	private static $allowed_actions = array (
 		'view' => true
-		, 'add' => 'ADMIN'
 		, 'edit' => 'ADMIN'
+		, 'add' => 'ADMIN'
+		
 	);
 	
 	public function view($request) {
@@ -35,5 +36,24 @@ class VesselPage_Controller extends VesselHolder_Controller {
     		);
     	}
     	return $this->customise($resultsArray)->renderWith(array('VesselPage', 'Page'));
+    }
+    
+	public function edit() {
+		$resultsArray = array();
+		$resultsArray['ObjectAction'] = 'edit';
+		if($result = SSVessel::get()->byID($this->request->param('ID'))) {
+			$namedetail = ' for ';
+			if($result->VesselName) {
+				$namedetail .= '"' . $result->VesselName .'"';
+			} else {
+				$namedetail .= $result->VesselClass . ' ' . $result->VesselNumber;
+			}
+    		$resultsArray['Title'] = 'Edit details' . $namedetail;
+    		$resultsArray['Vessel'] = $result;
+    	} else {
+    		$resultsArray['Title'] = 'Vessel not found';
+    		$resultsArray['Content'] = '<p>Sorry, we cannot locate records for that vessel.</p><p>Please return to the main page and make another selection.</p>';
+    	}
+    	return $this->customise($resultsArray)->renderWith(array('VesselPage_actions', 'Page'));
     }
 }

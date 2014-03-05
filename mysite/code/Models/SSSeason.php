@@ -16,7 +16,7 @@ class SSSeason extends DataObject {
 		$dateW1 = strtotime($this->SeasonStart);
 		$dateW2 = strtotime($this->SeasonEnd);
 		if(($refDate > $dateW1) && ($refDate < $dateW2)) {
-			return 'currentSeason branch_Sea';
+			return 'currentSeason branch_Air';
 		}
 	}
 	
