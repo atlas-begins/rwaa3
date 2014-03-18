@@ -42,7 +42,7 @@ body {
     font-size: 13px; /* This overrides the browsers default font size */
     line-height: 20px; /* If you change the font-size make sure you change the line-height value as well - the usual ratio is around 1.5 (font-size x 1.5 = line-height) */
     margin-bottom: 20px;
-    background: #0E1E2B url("../images/bg_water.jpg") top center no-repeat;
+    background: #0E1E2B url("../images/rwaa_bg.jpg") top center no-repeat;
     color: #333333;
     font-family: Arial, Helvetica, sans-serif;
 }

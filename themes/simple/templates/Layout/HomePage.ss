@@ -1,10 +1,9 @@
 <% include SideBar %>
 <div class="content-container unit size3of4 lastUnit">
 	<article>
-		
 		<div class="content">
 			<div class="left size2of5">
-			<h1>$Title</h1>
+				<h1>$Title</h1>
 				<div class="opaque">$Content</div>
 			</div>
 			<div class="left size1of5">
@@ -24,6 +23,4 @@
 			</div>
 		</div>
 	</article>
-		$Form
-		$PageComments
 </div>

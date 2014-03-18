@@ -22,6 +22,4 @@
 			</table>
 		</div>
 	</article>
-		$Form
-		$PageComments
 </div>

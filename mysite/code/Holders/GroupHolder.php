@@ -21,21 +21,13 @@ class GroupHolder extends Page {
     	return $results;
     }
     
-	public function getGroupActionPageLink($vtype = 'Group') {
-    	return $this->Link() . 'add/' . $vtype;
+	public function getGroupActionPageLink($action = 'add') {
+    	if($result = DataObject::get_one("GroupPage")) {
+			return $result->Link() . $action;
+		}
+		return false;
     }
 }
 class GroupHolder_Controller extends Page_Controller {
-	private static $allowed_actions = array (
-		'add' => 'ADMIN'
-	);
 	
-	public function add($request) {
-		$resultsArray = array();
-		$resultsArray['ObjectAction'] = 'add';
-		$resultsArray['Title'] = 'Add a Group';
-		$resultsArray['Form'] = true;
-		
-    	return $this->customise($resultsArray)->renderWith(array('GroupHolder_actions', 'Page'));
-    }
 }
