@@ -72,9 +72,8 @@ class GroupPage_Controller extends GroupHolder_Controller {
     	$result->GroupPhone = $data['GroupPhone'];
     	$result->GroupZoneID = $data['GroupZoneID'];
     	$result->write();
-    	echo SSGroup::getGroupDetailPageLink('view');
-    	die();
-    	return Director::redirect(SSGroup::getGroupDetailPageLink('view'));
+    	$returnURL = GroupHolder::getGroupActionPageLink('view') . '/' . $result->ID;
+    	return $this->redirect($returnURL);
     }
 	
     // ACTIONS

@@ -21,7 +21,7 @@ class GroupHolder extends Page {
     	return $results;
     }
     
-	public function getGroupActionPageLink($action = 'add') {
+	public static function getGroupActionPageLink($action = 'add') {
     	if($result = DataObject::get_one("GroupPage")) {
 			return $result->Link() . $action;
 		}

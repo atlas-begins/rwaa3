@@ -24,9 +24,13 @@ class SSGroup extends DataObject {
 		'GroupBranch' => 'Sea'
 	);
     
-	public function getGroupDetailPageLink($action = 'view') {
+	public function getGroupDetailPageLink($action = 'view', $groupID = null) {
 		if($result = DataObject::get_one("GroupPage")) {
-			return $result->Link() . $action . '/' . $this->ID;
+			$useID = $this->ID;
+			if($groupID) {
+				$useID = $groupID;
+			}
+			return $result->Link() . $action . '/' . $useID;
 		}
 		return false;
 	}
