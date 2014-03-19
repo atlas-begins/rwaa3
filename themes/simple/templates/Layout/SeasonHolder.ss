@@ -7,7 +7,7 @@
 				<table>
 				<thead><tr><th>Season label</th><th>Season starts</th><th>Season ends</th></tr></thead>
 				<tbody>
-				<tr><td colspan="3"><a href="" title="" class="addObject">add a Season</a></td></tr>
+				<tr><td colspan="3"><a href="$getSeasonActionPageLink" title="Add a Season" class="addObject">add a Season</a></td></tr>
 				<% if getAllSeasons %>
 					<% loop getAllSeasons %>
 						<tr><td class="$SeasonClass"><a href="$getSeasonDetailPageLink" title="Show detail for season $Season">$Season</a></td><td class="$SeasonClass">$SeasonStart.Long</td><td class="$SeasonClass">$SeasonEnd.Long</td></tr>

@@ -35,7 +35,52 @@ class SeasonHolder extends Page {
 			}
     	}
     }
+    
+	public function getSeasonActionPageLink($action = 'add') {
+    	if($result = DataObject::get_one("SeasonHolder")) {
+			return $result->Link() . $action;
+		}
+		return false;
+    }
 }
 class SeasonHolder_Controller extends Page_Controller {
 	
+	private static $allowed_actions = array (
+		'view' => true
+		, 'add' => true
+		, 'edit' => true
+		, 'SeasonForm' => true
+		, 'doSaveSeason' => true
+	);
+	
+	// FORMS
+	public function SeasonForm() {
+		$fields = singleton('SSSeason')->getFrontendFields();
+		if($this->urlParams['ID']) {
+			$idField = new HiddenField("ID", "ID", $this->urlParams['ID']);
+			$fields->push($idField);
+		}
+		$zoneField = new DropdownField('GroupZoneID', 'Zone', $allZonesMap);
+			$zoneField->setEmptyString('(Select a Zone)');
+			$fields->push($zoneField);
+		$actions = new FieldList(
+            new FormAction('doSaveGroup', 'Save changes')
+        );
+        $validator = new RequiredFields('GroupName', 'GroupZoneID');
+		$form = new Form($this, 'GroupForm', $fields, $actions, $validator);
+		if($this->urlParams['ID'] && $result = SSGroup::get()->byID($this->urlParams['ID'])) {
+			$form->loadDataFrom($result);
+		}
+		return $form;
+    }
+	
+	public function add($request) {
+    	$result = new SSSeason();
+    	$latestSeason = SSSeason::get()->sort('SeasonEnd', 'DESC')->first();
+    	$result->SeasonStart = date('Y-m-d', strtotime("+1 year", strtotime($latestSeason->SeasonStart)));
+    	$result->SeasonEnd = date('Y-m-d 23:59:59', strtotime("+1 year", strtotime($latestSeason->SeasonEnd)));
+    	$result->Season = date('Y', strtotime($result->SeasonStart)) .  '/' . date('y', strtotime($result->SeasonEnd));
+    	$result->write();
+    	return $this->redirectBack();
+    }
 }
