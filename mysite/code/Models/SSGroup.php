@@ -18,6 +18,7 @@ class SSGroup extends DataObject {
 	static $has_many = array(
 		'GroupVessels' => 'SSVessel'
 		, 'GroupPeople' => 'SSPerson'
+		, 'VesselNote' => 'SSNote'
 	);
 	
 	private static $defaults = array(

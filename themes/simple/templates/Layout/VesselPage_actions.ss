@@ -5,14 +5,7 @@
 		<div class="content">
 			<% if Content %><div class="opaque">$Content</div><% end_if %>
 			<div class="left ObjectTable">
-				<% if ObjectAction == 'edit' %>
-					edit stuff here
-				
-				<% end_if %>
-				
-				<% if ObjectAction == 'add' %>
-					add stuff here
-				<% end_if %>
+				$ObjectAction
 			</div>
 		</div>
 	</article>

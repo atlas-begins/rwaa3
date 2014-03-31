@@ -16,7 +16,7 @@ class GroupHolder extends Page {
         return $fields;
     }
     
-    public function getGroupInformation() {
+    public static function getGroupInformation() {
     	$results = DataList::create('SSGroup')->sort("GroupName");
     	return $results;
     }

@@ -26,13 +26,14 @@ class SSVessel extends DataObject {
 	
 	private static $has_many = array(
 		'SurveyCertificate' => 'SSVesselCert'
+		, 'VesselNote' => 'SSNote'
 	);
 	
 	private static $defaults = array(
 		'VesselActive' => 1
-		, 'VesselSailCapacityMin' => 1
-		, 'VesselOarCapacityMin' => 1
-		, 'VesselMotorCapacityMin' => 1
+		, 'VesselSailCapacityMin' => 0
+		, 'VesselOarCapacityMin' => 0
+		, 'VesselMotorCapacityMin' => 0
 	);
 	
 	public function getVesselDetailPageLink($action = 'view') {
@@ -53,5 +54,38 @@ class SSVessel extends DataObject {
 		if($result = DataObject::get_one("CertificatePage")) {
 			return $result->Link() . $action . '/' . $this->ID;
 		}
+	}
+	
+	public static function vesselMinMax($vtype = null) {
+		if($vtype) {
+			$vSpecs = array();
+			switch ($vtype) {
+				case 'Cutter':
+					$vSpecs['MinOar'] = '3';
+					$vSpecs['MaxOar'] = '10';
+					$vSpecs['MinSail'] = '3';
+					$vSpecs['MaxSail'] = '7';
+					$vSpecs['MinMotor'] = '0';
+					$vSpecs['MaxMotor'] = '0';
+				break;
+				case 'Sunburst':
+					$vSpecs['MinOar'] = '1';
+					$vSpecs['MaxOar'] = '3';
+					$vSpecs['MinSail'] = '2';
+					$vSpecs['MaxSail'] = '3';
+					$vSpecs['MinMotor'] = '0';
+					$vSpecs['MaxMotor'] = '0';
+				break;
+				case 'Kayak':
+					$vSpecs['MinOar'] = '1';
+					$vSpecs['MaxOar'] = '1';
+					$vSpecs['MinSail'] = '0';
+					$vSpecs['MaxSail'] = '0';
+					$vSpecs['MinMotor'] = '0';
+					$vSpecs['MaxMotor'] = '0';
+				break;
+			}
+			return $vSpecs;
+		} return false;
 	}
 }

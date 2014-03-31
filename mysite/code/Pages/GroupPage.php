@@ -30,7 +30,9 @@ class GroupPage_Controller extends GroupHolder_Controller {
 		, 'add' => true
 		, 'edit' => true
 		, 'GroupForm' => true
+		, 'PersonForm' => true
 		, 'doSaveGroup' => true
+		, 'addPerson' => true
 	);
 	
 	// FORMS
@@ -56,6 +58,30 @@ class GroupPage_Controller extends GroupHolder_Controller {
 		return $form;
     }
     
+	public function PersonForm($groupID = null) {
+		$fields = singleton('SSPerson')->getFrontendFields();
+		$fields->removeByName('ScoutGroupID');
+		if($groupID) {
+			$idField = new DropdownField("ScoutGroupID", "Add to group", DataList::create("SSGroup")->sort("GroupName")->map("ID", "GroupName"), $groupID);
+			$fields->push($idField);
+		}
+		$roleMap = DataObject::get("SSRole", '', "Role")->map('ID', 'Role');
+		$roleField = new CheckboxSetField(
+			$name = "Roles",
+			$title = "Select Roles",
+			$source = $roleMap
+			);
+		$fields->push($roleField);
+		$activeField = $fields->dataFieldByName('PersonActive'); 
+		$activeField->setValue('1');
+		$actions = new FieldList(
+            new FormAction('doSavePerson', 'Save changes')
+        );
+        $validator = new RequiredFields('FirstName', 'Surname');
+		$form = new Form($this, 'PersonForm', $fields, $actions, $validator);
+		return $form;
+    }
+    
     // FORM PROCESSORS
     public function doSaveGroup($data, $form) {
     	$groupID = isset($data['ID']) ? (int) $data['ID'] : false;
@@ -74,6 +100,23 @@ class GroupPage_Controller extends GroupHolder_Controller {
     	$result->write();
     	$returnURL = GroupHolder::getGroupActionPageLink('view') . '/' . $result->ID;
     	return $this->redirect($returnURL);
+    }
+    
+	public function doSavePerson($data, $form) {
+    	$groupID = isset($data['ScoutGroupID']) ? (int) $data['ScoutGroupID'] : false;
+    	if($groupID) {
+    		$result = new SSPerson();
+    		$result->FirstName = $data['FirstName'];
+	    	$result->Surname = $data['Surname'];
+	    	$result->ScoutGroupID = $groupID;
+	    	$result->PersonActive = $data['PersonActive'];
+	    	$result->write();
+	    	
+	    	
+	    	
+	    	$returnURL = GroupHolder::getGroupActionPageLink('view') . '/' . $result->ScoutGroupID;
+	    	return $this->redirect($returnURL);
+    	}
     }
 	
     // ACTIONS
@@ -98,13 +141,45 @@ class GroupPage_Controller extends GroupHolder_Controller {
     		, 'Form' => self::GroupForm()
     		, 'Group' => false
    		);
-    	return $this->customise($resultsArray)->renderWith(array('GroupPage_actions', 'Page'));
+    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
     }
     
 	public function edit($request) {
     	if($result = SSGroup::get()->byID($this->request->param('ID'))) {
     		$resultsArray = array(
     			'Title' => 'Edit "'. $result->GroupName . '"'
+    			, 'Form' => self::GroupForm($result->ID)
+    			, 'Group' => $result
+    		);
+    	} else {
+    		$resultsArray = array(
+    			'Title' => 'Group not found'
+    			, 'Content' => '<p>Sorry, we cannot locate records for that group.</p><p>Please return to the main page and make another selection.</p>'
+    		);
+    	}
+    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
+    }
+    
+	public function addPerson($request) {
+    	if($result = SSGroup::get()->byID($this->request->param('ID'))) {
+    		$resultsArray = array(
+    			'Title' => 'Add a Person'
+    			, 'Form' => self::PersonForm($result->ID)
+    			, 'Group' => $result
+    		);
+    	} else {
+    		$resultsArray = array(
+    			'Title' => 'Group not found'
+    			, 'Content' => '<p>Sorry, we cannot locate records for that group.</p><p>Please return to the main page and make another selection.</p>'
+    		);
+    	}
+    	return $this->customise($resultsArray)->renderWith(array('GroupPage_actions', 'Page'));
+    }
+    
+	public function addVessel($request) {
+    	if($result = SSGroup::get()->byID($this->request->param('ID'))) {
+    		$resultsArray = array(
+    			'Title' => 'Add a Vessel'
     			, 'Form' => self::GroupForm($result->ID)
     			, 'Group' => $result
     		);

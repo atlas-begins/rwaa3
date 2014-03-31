@@ -16,8 +16,8 @@ class PersonPage_Controller extends PersonHolder_Controller {
 
 	private static $allowed_actions = array (
 		'view' => true
-		, 'add' => 'ADMIN'
-		, 'edit' => 'ADMIN'
+		, 'add' => true
+		, 'edit' => true
 	);
 	
     public function view($request) {

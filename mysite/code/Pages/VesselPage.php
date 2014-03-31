@@ -16,9 +16,12 @@ class VesselPage_Controller extends VesselHolder_Controller {
 
 	private static $allowed_actions = array (
 		'view' => true
-		, 'edit' => 'ADMIN'
-		, 'add' => 'ADMIN'
-		
+		, 'edit' => true
+		, 'add' => true
+		, 'addCutter' => true
+		, 'addSunburst' => TRUE
+		, 'addKayak' => TRUE
+		, 'addOther' => true
 	);
 	
 	public function view($request) {
@@ -54,6 +57,13 @@ class VesselPage_Controller extends VesselHolder_Controller {
     		$resultsArray['Title'] = 'Vessel not found';
     		$resultsArray['Content'] = '<p>Sorry, we cannot locate records for that vessel.</p><p>Please return to the main page and make another selection.</p>';
     	}
+    	return $this->customise($resultsArray)->renderWith(array('VesselPage_actions', 'Page'));
+    }
+    
+	public function addCutter($request) {
+		$resultsArray = array();
+		$resultsArray['ObjectAction'] = 'add';
+		$resultsArray['Title'] = 'Add a cutter';
     	return $this->customise($resultsArray)->renderWith(array('VesselPage_actions', 'Page'));
     }
 }
