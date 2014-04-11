@@ -11,7 +11,9 @@
 						<tr><th colspan="2">($GroupAcronym) $GroupName</th></tr>
 					</thead>
 					<tbody>
-						<tr><td colspan="2"><a href="$getGroupDetailPageLink(edit)" title="Edit details for this group" class="editObject">edit details</a></td></tr>
+						<% if CurrentMember %>
+							<tr><td colspan="2"><a href="$getGroupDetailPageLink(edit)" title="Edit details for this group" class="editObject">edit details</a></td></tr>
+						<% end_if %>
 						<tr><td>Branch</td><td>$GroupBranch</td></tr>
 						<tr><td>Zone</td><td>
 							<% loop GroupZone %><a href="$getZoneDetailPageLink" title="View detail about $ZoneName Zone">$ZoneName</a><% end_loop %>
@@ -33,7 +35,9 @@
 						<tr><th colspan="2">People</th></tr>
 					</thead>
 					<tbody>
-						<tr><td colspan="2"><a href="$getGroupDetailPageLink(addPerson)" title="Add a person to this group" class="addObject">add a person</a></td></tr>
+						<% if CurrentMember %>
+							<tr><td colspan="2"><a href="$getGroupDetailPageLink(addPerson)" title="Add a person to this group" class="addObject">add a person</a></td></tr>
+						<% end_if %>
 						<% loop GroupPeople %>
 							<tr>
 							<td>
@@ -56,7 +60,9 @@
 						<tr><th colspan="3">Group vessels</th></tr>
 					</thead>
 					<tbody>
-						<tr><td colspan="3"><a href="$getGroupDetailPageLink(addVessel)" title="Add a vessel to this group" class="addObject">add a vessel</a></td></tr>
+						<% if CurrentMember %>
+							<tr><td colspan="3"><a href="$getGroupDetailPageLink(addVessel)" title="Add a vessel to this group" class="addObject">add a vessel</a></td></tr>
+						<% end_if %>
 						<% loop GroupVessels %>
 							<tr><td>$VesselClass</td><td>$VesselNumber</td><td><a href="$getVesselDetailPageLink" title="View details for $VesselName">$VesselName</a></td></tr>
 						<% end_loop %>

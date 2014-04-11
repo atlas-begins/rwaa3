@@ -11,7 +11,9 @@
 						<tr><th colspan="2">$completeCertNumber</th></tr>
 					</thead>
 					<tbody>
-						<tr><td colspan="2"><a href="$getCertDetailPageLink(edit)" title="Edit details for this certificate" class="editObject">edit details</a></td></tr>
+						<% if CurrentMember %>
+							<tr><td colspan="2"><a href="$getCertDetailPageLink(edit)" title="Edit details for this certificate" class="editObject">edit details</a></td></tr>
+						<% end_if %>
 						<% loop ScoutVessel %>
 							<tr><td>Issued for vessel</td>
 							<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a>

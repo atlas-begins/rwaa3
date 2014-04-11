@@ -30,11 +30,18 @@
 	padding-left: 20px;
 	background: url(../images/icons/page_white_acrobat.png) no-repeat left center;
 }
+.typography a[href$=".ics"],
+.typography a[href$=".ICS"],
+.typography a.ics {
+	padding: 2px;
+	padding-left: 20px;
+	background: url(../images/icons/calendar-file.gif) no-repeat left center;
+}
 .typography a[href$=".ppt"],
 .typography a[href$=".PPT"],
 .typography a[href$=".pptx"],
 .typography a[href$=".PPTX"],
-.typography a.pdf {
+.typography a.ppt {
 	padding: 2px;
 	padding-left: 20px;
 	background: url(../images/icons/page_ppt.png) no-repeat left center;
@@ -96,6 +103,9 @@ div.left {
 }
 .ObjectTable {
 	margin-right: 30px;
+}
+.fullWidth {
+	min-width: 70%;
 }
 .branch_Sea, .branch_Land, .branch_Air {
 	color: #ffffff;

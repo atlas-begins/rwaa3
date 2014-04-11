@@ -113,7 +113,7 @@ class DebugView extends Object {
 	public function writeInfo($title, $subtitle, $description=false) {
 		echo '<div class="info">';
 		echo "<h1>" . Convert::raw2xml($title) . "</h1>";
-		if($subtitle) echo "<h3>" . Convert::raw2xml($subtitle) . "</h3>";
+		if($subtitle) echo "<p><a href=\"" . Convert::raw2xml($subtitle) . "\" alt=\"go to site\">" . Convert::raw2xml($subtitle) . "</a></p>";
 		if ($description) {
 			echo "<p>$description</p>";
 		} else {

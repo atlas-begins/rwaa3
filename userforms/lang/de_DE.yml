@@ -1,0 +1,101 @@
+de_DE:
+  CustomRule:
+    BLANK: Leer
+    DELETE: Löschen
+    GREATERTHAN: 'Wert größer als'
+    GREATERTHANEQUAL: 'Wert größer oder gleich'
+    HIDETHISFIELD: 'Feld verstecken'
+    IS: Ist
+    LESSTHAN: 'Wert kleiner als'
+    LESSTHANEQUAL: 'Wert kleiner oder gleich'
+    NOTBLANK: 'Nicht leer'
+    NOTVALUE: 'kein Wert'
+    SHOWTHISFIELD: 'Feld anzeigen'
+    VALUE: Wert
+    WHEN: Wann
+  EditableCountryDropdownField:
+    PLURALNAME: 'Länder Dropdowns'
+    SINGULARNAME: 'Länder Dropdown'
+  EditableEmailField:
+    PLURALNAME: 'Email Felder'
+    SINGULARNAME: 'Email Feld'
+  EditableFormField:
+    ADD: Hinzufügen
+    ADDRULE: 'Regel hinzufügen'
+    BLANK: Leer
+    CUSTOMRULES: 'Eigene Regeln'
+    DELETE: Lösche dieses Feld
+    DRAG: 'Klicken und Festhalten um die Anordnung der Felder zu verändern'
+    FIELDCONFIGURATION: 'Feld Konfiguration'
+    FIELDONDEFAULT: 'Standard Feld'
+    GREATERTHAN: 'Wert größer als'
+    GREATERTHANEQUAL: 'Wert größer oder gleich'
+    HIDE: Verstecken
+    HIDETHISFIELD: 'Feld verstecken'
+    IS: Ist
+    LESSTHAN: 'Wert kleiner als'
+    LESSTHANEQUAL: 'Wert kleiner oder gleich'
+    LOCKED: 'Diese Felder können nicht verändert werden'
+    NOTBLANK: 'Nicht leer'
+    NOTVALUE: 'Kein Wert'
+    OPTIONS: Optionen
+    REQUIRED: 'Dieses Feld wird für dieses Formular benötigt und kann nicht gelöscht werden.'
+    SHOW: Zeigen
+    SHOWOPTIONS: 'Optionen anzeigen'
+    SHOWTHISFIELD: 'Feld anzeigen'
+    VALIDATION: Validierung
+    VALUE: Wert
+    WHEN: Wann
+  EditableLiteralField:
+    HIDEFROMREPORT: 'Nich auf Reports anzeigen?'
+    PLURALNAME: 'HTML Blocks'
+    SINGULARNAME: 'HTML Block'
+  EditableMemberListField:
+    PLURALNAME: 'Member List Fields'
+    SINGULARNAME: 'Member List Field'
+  EditableMultipleOptionField:
+    PLURALNAME: 'Editable Multiple Option Fields'
+    SINGULARNAME: 'Editable Multiple Option Field'
+  EditableOption:
+    DELETE: 'Option entfernen'
+    DRAG: 'Ziehen um Optionen neu zu ordnen'
+    LOCKED: 'Diese Felder können nicht verändert werden'
+  Form:
+    FIELDISREQUIRED: '%s ist ein Pflichtfeld'
+  SubmittedFileField:
+    DOWNLOADFILE: 'Datei runterladen'
+    PLURALNAME: 'Submitted File Fields'
+    SINGULARNAME: 'Submitted File Field'
+  SubmittedForm:
+    PLURALNAME: 'Submitted Forms'
+    SINGULARNAME: 'Submitted Form'
+  SubmittedFormField:
+    PLURALNAME: 'Submitted Form Fields'
+    SINGULARNAME: 'Submitted Form Field'
+  UserDefinedForm:
+    DESCRIPTION: 'Fügt ein anpassbares Formular hinzu'
+    EMAILADDRESS: Email
+    EMAILBODY: Body
+    EMAILFROM: Von
+    EMAILRECIPIENTS: 'Email Empfänger'
+    EMAILSUBJECT: 'Email Subject'
+    EmailFromContent: 'Mit der Absenderadresse können Sie bestimmen, von welcher Adresse aus die E-Mail versendet wird. Meistens ist es eine Adresse der selben Domain wie die Webseite. Die Webseite meineseite.com benötigt z.B. irgendwas@meineseite.com. Sie können zusätzlich jede Adresse als "Antworten an" eintragen.'
+    FORM: Formular
+    FROMADDRESS: 'Email versendet von'
+    HIDEFORMDATA: 'Form Data in Email nicht anzeigen'
+    ONCOMPLETELABEL: 'Nach Vervollständigung anzeigen'
+    ORSELECTAFIELDTOUSEASFROM: '.. oder wähle ein form field als Gesendet-Von Adresse'
+    ORSELECTAFIELDTOUSEASTO: '.. oder wähle ein form field als Sende-An Adresse'
+    PLURALNAME: 'Anpassbares Formular'
+    REPLYADDRESS: 'E-Mail für "Antworten an"'
+    SAVESUBMISSIONS: 'Speichern von Einreichungen ausschalten'
+    SENDEMAILTO: 'Email senden an'
+    SENDPLAIN: 'Email als Text versenden (HTML wird entfernt)'
+    SHOWCLEARFORM: 'Form zurücksetzen Button anzeigen'
+    SINGULARNAME: 'Anpassbares Formular'
+    SUBMISSIONS: Einreichungen
+    SUBMITBUTTON: Senden
+    TEXTONSUBMIT: 'Text auf der Einreich-Schaltfläche'
+  UserDefinedForm_EmailRecipient:
+    PLURALNAME: 'Anpassbares Formular Email Empfänger'
+    SINGULARNAME: 'Anpassbares Formular Email Empfänger'

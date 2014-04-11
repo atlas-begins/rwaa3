@@ -145,17 +145,14 @@ class GroupPage_Controller extends GroupHolder_Controller {
     }
     
 	public function edit($request) {
+    	$resultsArray = array();
     	if($result = SSGroup::get()->byID($this->request->param('ID'))) {
-    		$resultsArray = array(
-    			'Title' => 'Edit "'. $result->GroupName . '"'
-    			, 'Form' => self::GroupForm($result->ID)
-    			, 'Group' => $result
-    		);
+    		$resultsArray['Title'] = 'Edit "'. $result->GroupName . '"';
+    		$resultsArray['Form'] = self::GroupForm($result->ID);
+    		$resultsArray['Group'] = $result;
     	} else {
-    		$resultsArray = array(
-    			'Title' => 'Group not found'
-    			, 'Content' => '<p>Sorry, we cannot locate records for that group.</p><p>Please return to the main page and make another selection.</p>'
-    		);
+    		$resultsArray['Title'] = 'Group not found';
+    		$resultsArray['Content'] = '<p>Sorry, we cannot locate records for that group.</p><p>Please return to the main page and make another selection.</p>';
     	}
     	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
     }
@@ -173,7 +170,7 @@ class GroupPage_Controller extends GroupHolder_Controller {
     			, 'Content' => '<p>Sorry, we cannot locate records for that group.</p><p>Please return to the main page and make another selection.</p>'
     		);
     	}
-    	return $this->customise($resultsArray)->renderWith(array('GroupPage_actions', 'Page'));
+    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
     }
     
 	public function addVessel($request) {
@@ -189,6 +186,6 @@ class GroupPage_Controller extends GroupHolder_Controller {
     			, 'Content' => '<p>Sorry, we cannot locate records for that group.</p><p>Please return to the main page and make another selection.</p>'
     		);
     	}
-    	return $this->customise($resultsArray)->renderWith(array('GroupPage_actions', 'Page'));
+    	return $this->customise($resultsArray)->ObjectPage_actions(array('ObjectPage_actions', 'Page'));
     }
 }

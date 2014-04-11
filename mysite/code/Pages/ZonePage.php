@@ -67,13 +67,13 @@ class ZonePage_Controller extends ZoneHolder_Controller {
     		$resultsArray['Title'] = 'Zone not found';
     		$resultsArray['Content'] = '<p>Sorry, we cannot locate records for that zone.</p><p>Please return to the main page and make another selection.</p>';
     	}
-    	return $this->customise($resultsArray)->renderWith(array('ZonePage_actions', 'Page'));
+    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
     }
     
 	public function add() {
 		$resultsArray = array();
 		$resultsArray['ObjectAction'] = 'add';
 		$resultsArray['Title'] = 'Add a Zone';
-    	return $this->customise($resultsArray)->renderWith(array('ZonePage_actions', 'Page'));
+    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
     }
 }

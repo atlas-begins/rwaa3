@@ -6,7 +6,9 @@
 			<table>
 			<thead><tr><th>Branch</th><th>Group</th><th>Zone</th></tr>
 			<tbody>
-			<tr><td colspan="3"><a href="$getGroupActionPageLink" class="addObject" title="Add a Group">add a Group</a></td></tr>
+			<% if CurrentMember %>
+				<tr><td colspan="3"><a href="$getGroupActionPageLink" class="addObject" title="Add a Group">add a Group</a></td></tr>
+			<% end_if %>
 			<% if getGroupInformation %>
 				<% loop getGroupInformation %>
 					<tr>
@@ -16,7 +18,7 @@
 					</tr>
 				<% end_loop %>
 			<% else %>
-				<tr><td colspan="3">Sorry, no groups available yet</td></tr>
+				<tr><td colspan="3">Sorry, no records available</td></tr>
 			<% end_if %>
 			</tbody>
 			</table>

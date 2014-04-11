@@ -44,7 +44,7 @@ class SSVessel extends DataObject {
 	}
 	
 	public function getVesselCertificates() {
-		if($results = SSVesselCert::get()->where("ScoutVesselID = '$this->ID'")->sort("SailingSeasonID DESC")) {
+		if($results = SSVesselCert::get()->where("ScoutVesselID = '$this->ID'")->sort("SailingSeasonID DESC")->sort("IssueDate DESC")) {
 			return $results;
 		}
 		return false;

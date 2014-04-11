@@ -11,7 +11,9 @@
 						<tr><th colspan="2"><% if VesselName %><% else %>$VesselClass <% end_if %>$VesselNumber $VesselName</th></tr>
 					</thead>
 					<tbody>
-						<tr><td colspan="2"><a href="$getVesselDetailPageLink(edit)" title="Edit details for this vessel" class="editObject">edit details</a></td></tr>
+						<% if CurrentMember %>
+							<tr><td colspan="2"><a href="$getVesselDetailPageLink(edit)" title="Edit details for this vessel" class="editObject">edit details</a></td></tr>
+						<% end_if %>
 						<tr><td>Currently with</td><td>
 							<% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupName ($GroupAcronym)</a><% end_loop %>
 						</td></tr>
@@ -34,7 +36,9 @@
 						<tr><th colspan="4">Survey certificates<% if VesselName %> for "$VesselName"<% end_if %></th></tr>
 					</thead>
 					<tbody>
-						<tr><td colspan="4"><a href="$getCertActionPageLink(add)" title="Add a certificate" class="addObject">add a certificate</a></td></tr>
+						<% if CurrentMember %>
+							<tr><td colspan="4"><a href="$getCertActionPageLink(add)" title="Add a certificate" class="addObject">add a certificate</a></td></tr>
+						<% end_if %>
 						<% loop getVesselCertificates %>
 							<tr>
 								<td><% loop SailingSeason %>$Season<% end_loop %></td>

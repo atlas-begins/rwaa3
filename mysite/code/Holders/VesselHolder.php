@@ -61,7 +61,7 @@ class VesselHolder_Controller extends Page_Controller {
 		$resultsArray['Title'] = 'Add a ' . $this->request->param('ID');
 		$resultsArray['Form'] = self::VesselForm($this->request->param('ID'));
 		
-    	return $this->customise($resultsArray)->renderWith(array('VesselHolder_actions', 'Page'));
+    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
     }
     
 	public function VesselForm($vtype) {

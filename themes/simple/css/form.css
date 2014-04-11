@@ -11,7 +11,8 @@
 
 form {
     max-width: 500px;
-    width: 50%;
+    width: 100%;
+    padding: 10px;
 }
 div.field {
     margin: 10px 0 15px;
@@ -37,12 +38,12 @@ form input.text,
 form textarea,
 form .textajaxuniquetext,   /* Not sure if this is used? */
 form select {
-    width: 100%;
+    width: 90%;
     max-width: 400px;
     padding: 6px 5px;
     font-size: 15px;
     background-color: #fff;
-    border: 1px solid #dad9d9;
+    border: 1px solid #999;
 }
     .ie7 form select { width: 400px; } /* fix for ie7's rendering of max-width property on select input */
 

@@ -7,7 +7,9 @@
 				<table>
 				<thead><tr><th>Zone</th></tr></thead>
 				<tbody>
-				<tr><td><a href="$getZoneLink(add)" title="Add a new Zone record" class="addObject">add a zone</a></td></tr>
+				<% if CurrentMember %>
+					<tr><td><a href="$getZoneLink(add)" title="Add a new Zone record" class="addObject">add a zone</a></td></tr>
+				<% end_if %>
 				<% if getAllZones %>
 					<% loop getAllZones %>
 						<tr><td><a href="$getZoneDetailPageLink" title="Show detail for zone $ZoneName">$ZoneName</a></td></tr>
@@ -18,7 +20,11 @@
 				</tbody></table>
 			</div>
 		</div>
+		<div id="map_canvas"></div>
 	</article>
+	
+	
+	
 		$Form
 		$PageComments
 </div>

@@ -101,11 +101,12 @@ The following fractions are supported: 1, 1/2, 1/3, 2/3, 1/4, 3/4, 1/5, 2/5, 3/5
 .opaque {
 	background-color: #fff;
 	padding: 6px;
+	border-radius: 6px;
 }
 /* MAIN LAYOUT */
 body {
     margin: 0;
-    background: #ededed;
+    background: #0E1E2B url("../images/rwaa_bg.jpg") top center no-repeat;   
     min-width: 240px; 
     -webkit-text-size-adjust: none; /* The text size is not adjusted for Safari on iPhone */
 }
@@ -562,6 +563,13 @@ body h1 span.amp {
     display: none;
     visibility: hidden;
 }
+/**** GOOGLE MAPS ****/
+#map_canvas {
+        width: 500px;
+        height: 400px;
+        background: #ffdead;
+        clear: both;
+      }
 
 /* BREAKPOINT 960px */
 
