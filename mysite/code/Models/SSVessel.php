@@ -27,6 +27,7 @@ class SSVessel extends DataObject {
 	private static $has_many = array(
 		'SurveyCertificate' => 'SSVesselCert'
 		, 'VesselNote' => 'SSNote'
+		, 'VesselImage' => 'Image'
 	);
 	
 	private static $defaults = array(

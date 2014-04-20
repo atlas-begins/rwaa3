@@ -22,9 +22,19 @@
 			
 			<div class="left">
 				<table>
-				<thead><tr><th colspan="3">For the current $getCurrentSeason.Season season, we have:</th></tr></thead>
+				<thead><tr><th colspan="3">For the current <a href="$getCalendarPage" title="Calendar page">$getCurrentSeason.Season season</a>, we have:</th></tr></thead>
 				<tbody>
-				<tr><td colspan="3"><a href="" title="Add an Event to this Season" class="addObject">add an Event</a></td></tr>
+				<% if getSeasonEvents %>
+					<% loop getSeasonEvents %>
+						<tr>
+							<td>$Title</td>
+							<td>$makeFullDate.Long</td>
+							<td>Location</td>
+						</tr>
+					<% end_loop %>
+				<% else %>
+					<tr><td colspan="3">No events </td></tr>
+				<% end_if %>
 				</tbody></table>
 			</div>
 		</div>

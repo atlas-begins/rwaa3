@@ -13,7 +13,7 @@
 							<% end_loop %>
 					<% end_loop %> 
 				<% else %>
-					<p><strong>There are no upcoming events.</strong></p>
+					<p><strong>There are no past events.</strong></p>
 				<% end_if %>
 			<% else %>
 				<% if getEvents(past) %><p class="pastfuture"><a href="$Link?past">&raquo; View Past Events</a></p><% end_if %>
@@ -28,6 +28,7 @@
 					<p><strong>There are no upcoming events.</strong></p>
 				<% end_if %>
 			<% end_if %>
+			<span class="clear">&nbsp;</span>
 		</div>
 	</article>
 		$Form

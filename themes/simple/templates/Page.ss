@@ -27,6 +27,7 @@ Change it, enhance it and most importantly enjoy it!
 	<% require themedCSS('form') %>
 	<% require themedCSS('layout') %>
 	<% require themedCSS('rwaa') %>
+	<% require themedCSS('calendar') %>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	

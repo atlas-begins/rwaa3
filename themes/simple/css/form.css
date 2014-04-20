@@ -28,6 +28,7 @@ form label {
     form label.left {
         display: block;
         font-weight: bold;
+        margin-right: 15px;
     }
     form label.right {
         font-size: 12px;
@@ -38,7 +39,6 @@ form input.text,
 form textarea,
 form .textajaxuniquetext,   /* Not sure if this is used? */
 form select {
-    width: 90%;
     max-width: 400px;
     padding: 6px 5px;
     font-size: 15px;

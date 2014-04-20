@@ -1,0 +1,39 @@
+/* Gallery Holder */
+div.calendarentry {
+	clear: both; 
+	border-top: 1px solid #ddd;
+	padding-top: 10px;
+	margin-bottom: 10px;
+	min-height: 10px;
+	position: relative;
+}
+
+p.calendarImage {
+	float: right;
+	margin-left: 15px;
+}
+
+div.calendarentry div.calendarDesc {
+	float: left;
+}
+
+div.calendarentry div.calendarDesc {
+	float: left;
+}
+
+p.pastfuture {
+  	float: right;
+  	margin-bottom: 0 !important;
+  	position: relative;
+  	top:15px;
+}
+ 
+div.calendarentry p.moreinfo {
+	margin-bottom: 0px;  
+	font-weight: bold;
+	margin-top: 5px;
+}
+
+div.eventEntry {
+	border-bottom: 1px solid #ddd;
+}

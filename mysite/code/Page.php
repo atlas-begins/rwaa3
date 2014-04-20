@@ -56,6 +56,13 @@ class Page extends SiteTree {
 		if(Controller::curr()->getRequest()->param('ID')) $returnURL .= Controller::curr()->getRequest()->param('Action') . '/' . Controller::curr()->getRequest()->param('ID');
 		return $returnURL;
 	}
+    
+	public function getCalendarPage() {
+    	if($result = DataObject::get_one("CalendarPage")) {
+			return $result->Link();
+		}
+		return false;
+    }
 }
 
 class Page_Controller extends ContentController {

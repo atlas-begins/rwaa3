@@ -3,7 +3,7 @@
 		<nav class="secondary">
 			<% with $Level(1) %>
 				<h3>
-					$MenuTitle
+					<a href="$Link" title="">$MenuTitle</a>
 				</h3>
 				<ul>
 					<% include SidebarMenu %>

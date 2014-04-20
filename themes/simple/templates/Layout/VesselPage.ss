@@ -21,9 +21,14 @@
 						<tr><td>Class</td><td>$VesselClass</td></tr>
 						<tr><td>Construction</td><td>$VesselConstruction</td></tr>
 						<tr><td>Year</td><td><% if VesselYear %>$VesselYear<% else %>unknown<% end_if %></td></tr>
-						<tr><td>Sailing capacities</td><td>Min $VesselSailCapacityMin<br>Max $VesselSailCapacityMax</td></tr>
-						<tr><td>Rowing capacities</td><td>Min $VesselOarCapacityMin<br>Max $VesselOarCapacityMax</td></tr>
-						<tr><td>Motor capacities</td><td>Min $VesselMotorCapacityMin<br>Max $VesselMotorCapacityMax</td></tr>
+						<tr><td>Sailing capacities (min/min)</td><td>$VesselSailCapacityMin / $VesselSailCapacityMax</td></tr>
+						<tr><td>Rowing capacities (min/max)</td><td>$VesselOarCapacityMin / $VesselOarCapacityMax</td></tr>
+						<tr><td>Motor capacities (min/max)</td><td>$VesselMotorCapacityMin / $VesselMotorCapacityMax</td></tr>
+						<% if CurrentMember %>
+							<tr><td colspan="2"><a href="/" title="Add photo for this vessel" class="addObject">add photo</a><br>
+							$VesselImageForm
+							</td></tr>
+						<% end_if %>
 					</tbody>
 					</table>
 				<% end_loop %>

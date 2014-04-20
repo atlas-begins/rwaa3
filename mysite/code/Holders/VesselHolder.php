@@ -42,31 +42,19 @@ class VesselHolder extends Page {
     
     public function getVesselActionPageLink($action = 'addCutter') {
     	if($result = DataObject::get_one("VesselPage")) {
-			return $this->Link() . substr($action, 0, 3) . '/' . substr($action, 3, 12);
+			return $result->Link() . substr($action, 0, 3) . '/' . substr($action, 3, 12);
 		}
 		return false;
     }
 }
 class VesselHolder_Controller extends Page_Controller {
 	private static $allowed_actions = array (
-		'view' => true
-		, 'edit' => true
-		, 'add' => true
-		, 'VesselForm' => true
+		'xVesselForm' => true
 	);
-	
-	public function add($request) {
-		$resultsArray = array();
-		$resultsArray['ObjectAction'] = $this->request->param('Action');
-		$resultsArray['Title'] = 'Add a ' . $this->request->param('ID');
-		$resultsArray['Form'] = self::VesselForm($this->request->param('ID'));
-		
-    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
-    }
     
-	public function VesselForm($vtype) {
+	public function xVesselForm($vtype) {
 		$fields = singleton('SSVessel')->getFrontendFields();
-		$allGroupsMap = SSGroup::get()->sort("GroupName")->map("ID", "GroupName");
+		$allGroupsMap = DataList::create("SSGroup")->sort("GroupName")->map("ID", "GroupName");
 		if($vtype == 'Vessel') {} else {
 			$vSpecs = SSVessel::vesselMinMax($vtype);
 			$fields->replaceField('VesselSailCapacityMin', new HiddenField("VesselSailCapacityMin", "ID", $vSpecs['MinSail']));

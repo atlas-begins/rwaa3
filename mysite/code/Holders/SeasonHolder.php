@@ -36,6 +36,11 @@ class SeasonHolder extends Page {
     	}
     }
     
+    public function getSeasonEvents() {
+    	$events = CalendarPage::getSeasonEvents(self::getCurrentSeason());
+    	return $events;
+    }
+    
 	public function getSeasonActionPageLink($action = 'add') {
     	if($result = DataObject::get_one("SeasonHolder")) {
 			return $result->Link() . $action;

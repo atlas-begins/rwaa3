@@ -6,7 +6,12 @@ class CalendarPage extends Page {
 	
 	public static $db = array(
 		"EventTabFirst" => "Boolean",
-		"ManageAllEvents" => "Boolean"
+		"ManageAllEvents" => "Boolean",
+		"DisplayEvents" => "Int"
+	);
+	
+	public static $defaults = array(
+		"DisplayEvents" => '5'
 	);
 	
 	public static $has_many = array(
@@ -23,18 +28,26 @@ class CalendarPage extends Page {
 		}
 		
 		$config = GridFieldConfig_RecordEditor::create();
-		$gridField = new GridField("Events", "Upcoming Events", $this->Events()->where("Date >= CURRENT_DATE OR Date IS NULL"), $config);
+		$gridField = new GridField("Events", "Upcoming Events", $this->Events()->where("StartDate >= CURRENT_DATE OR StartDate IS NULL"), $config);
 		$fields->addFieldToTab("Root.Events", $gridField);
 		
 		$config = GridFieldConfig_RecordEditor::create();
 		$config->removeComponentsByType('GridFieldAddNewButton');
-		$gridField = new GridField("PastEvents", "Past Events", $this->Events()->where("Date < CURRENT_DATE"), $config);
+		$gridField = new GridField("PastEvents", "Past Events", $this->Events()->where("StartDate < CURRENT_DATE"), $config);
 		$fields->addFieldToTab("Root.PastEvents", $gridField);
 		
-		$fields->addFieldToTab("Root.Main", new CheckboxField("EventTabFirst","CMS: Set Events Tab as Default"));
-		$fields->addFieldToTab("Root.Main", new CheckboxField("ManageAllEvents","Template: Display Events from other pages too"));
-				
+		$fields->addFieldToTab("Root.Main", new CheckboxField("EventTabFirst","CMS: Set Events Tab as Default"), "Content");
+		$fields->addFieldToTab("Root.Main", new CheckboxField("ManageAllEvents","Template: Display Events from other pages too"), "EventTabFirst");
+		$fields->addFieldToTab("Root.Main", new TextField("DisplayEvents", "How many events shown?"), "ManageAllEvents");	
 		return $fields;
+	}
+	
+	public static function getSeasonEvents($season) {
+		$sDate = $season->SeasonStart;
+		$eDate = $season->SeasonEnd;
+		$where = "StartDate >= '$sDate' AND StartDate <= '$eDate'";
+
+		return GroupedList::create(CalendarEntry::get()->Sort('StartDate, Time')->where($where) );
 	}
 
 }
@@ -52,20 +65,25 @@ class CalendarPage_Controller extends Page_Controller {
 		parent::init();
     }
 
-	function getEvents($dates = "all") {
+	function getEvents($dates = "all", $limit = '4') {
 		$where = null;
 		$filter = array();
+		if($this->DisplayEvents) $limit = $this->DisplayEvents;
 		
 		if ($dates == "future") {
-			$where = "Date >= CURRENT_DATE OR Date IS NULL";
+			$where = "StartDate >= CURRENT_DATE OR StartDate IS NULL";
+			$sort = 'StartDate, Time';
+			$sortOrder = 'ASC';
 		} else if ($dates == "past") {
-			$where = "Date < CURRENT_DATE";
+			$where = "StartDate < CURRENT_DATE";
+			$sort = 'StartDate, Time';
+			$sortOrder = 'DESC';
 		}
 		
 		if (!$this->ManageAllEvents) {
 			$filter =  array("CalendarPageID"=>$this->ID);
 		}
-		return GroupedList::create(CalendarEntry::get()->filter( $filter )->Sort('Date, Time')->where($where) );
+		return GroupedList::create(CalendarEntry::get()->filter( $filter )->Sort($sort, $sortOrder)->where($where)->limit($limit));
 	}
 	
 	function ShowPast() {
@@ -74,36 +92,35 @@ class CalendarPage_Controller extends Page_Controller {
 	
 	// THIS PAGE'S ENTRIES
 	function getFutureCalendarEntries() {
-		$entries = GroupedList::create(CalendarEntry::get()->filter( array("CalendarPageID"=>$this-ID) )->Sort('Date, Time')->where("Date >= CURRENT_DATE OR Date IS NULL") );
+		$entries = GroupedList::create(CalendarEntry::get()->filter( array("CalendarPageID"=>$this-ID) )->Sort('StartDate, Time')->where("StartDate >= CURRENT_DATE OR StartDate IS NULL") );
 		return $entries;
 	}
 	
 	function getGroupedPastCalendarEntries() {
-		$entries = GroupedList::create(CalendarEntry::get()->filter( array("CalendarPageID"=>$this-ID) )->Sort('Date, Time')->where("Date < CURRENT_DATE") );
+		$entries = GroupedList::create(CalendarEntry::get()->filter( array("CalendarPageID"=>$this-ID) )->Sort('StartDate, Time')->where("StartDate < CURRENT_DATE") );
 		return $entries;
 	}
 	
 	function getGroupedCalendarEntries() {
-		$entries = GroupedList::create(CalendarEntry::get()->filter( array("CalendarPageID"=>$this-ID) )->Sort('Date, Time') );
+		$entries = GroupedList::create(CalendarEntry::get()->filter( array("CalendarPageID"=>$this-ID) )->Sort('StartDate, Time') );
 		return $entries;
 	}
 	
 	// ALL ENTRIES - FROM ALL PAGES
 	function getAllGroupedFutureCalendarEntries() {
-		$entries = GroupedList::create(CalendarEntry::get()->Sort('Date, Time')->where("Date >= CURRENT_DATE OR Date IS NULL") );
+		$entries = GroupedList::create(CalendarEntry::get()->Sort('StartDate, Time')->where("StartDate >= CURRENT_DATE OR StartDate IS NULL") );
 		return $entries;
 	}
 	
 	function getAllGroupedPastCalendarEntries() {
-		$entries = GroupedList::create(CalendarEntry::get()->Sort('Date, Time')->where("Date < CURRENT_DATE") );
+		$entries = GroupedList::create(CalendarEntry::get()->Sort('StartDate, Time')->where("StartDate < CURRENT_DATE") );
 		return $entries;
 	}
 	
 	function getAllGroupedCalendarEntries() {
-		$entries = GroupedList::create(CalendarEntry::get()->Sort('Date, Time') );
+		$entries = GroupedList::create(CalendarEntry::get()->Sort('StartDate, Time') );
 		return $entries;
 	}
- 
 }
 
 ?>

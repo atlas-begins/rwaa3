@@ -24,6 +24,16 @@ class HomePage extends Page {
 		$result->CertCount = DataList::create("SSVesselCert")->filter(array('SailingSeasonID' => $this->getCurrentSeason()->ID))->Count();
 		return $result; 
 	}
+	
+	public function NextEvent() {
+		$where = "StartDate >= CURRENT_DATE OR StartDate IS NULL";
+		$sort = 'StartDate, Time';
+		$sortOrder = 'ASC';
+		if($result = GroupedList::create(CalendarEntry::get()->Sort($sort, $sortOrder)->where($where)->limit('1'))) {
+			return $result;
+		}
+		return false;
+	}
 }
 class HomePage_Controller extends Page_Controller {
 	

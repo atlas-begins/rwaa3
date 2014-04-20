@@ -4,30 +4,31 @@ class CalendarEntry extends DataObject{
 
  	public static $db = array(
  		"Title" => "Text",
- 		"Date" => "Date",
+ 		"StartDate" => "Date",
  		"Time" => "Text",
  		"Description" => "Text"
  	);
  	
  	static $has_one = array(
  		"CalendarPage" => "CalendarPage",
- 		"Image" => "Image"
+ 		"Image" => "Image",
+ 		"HostGroup" => "SSGroup"
  	);
 	
 	public static $summary_fields = array(
-    	"Date" => "Date",
+    	"StartDate" => "Date",
     	"Title" => "Title"
     );
 	
-	static $default_sort = "Date ASC, Time ASC";
+	static $default_sort = "StartDate ASC, Time ASC";
 	
  	public function validate() {
         $result = parent::validate();
         if(!$this->Title) {
             $result->error('Title is required');
         }
-        if(!$this->Date) {
-            $result->error('Date is required');
+        if(!$this->StartDate) {
+            $result->error('A start date is required');
         } 
         return $result;
     }
@@ -35,7 +36,7 @@ class CalendarEntry extends DataObject{
  	function getCMSFields() {
 		
 		$this->beforeUpdateCMSFields(function($fields) {
-			$datefield = new DateField('Date','Date (DD/MM/YYYY)*');
+			$datefield = new DateField('StartDate','Start date (DD/MM/YYYY)*');
 			$datefield->setConfig('showcalendar', true);
 			$datefield->setConfig('dateformat', 'dd/MM/YYYY');
 			
@@ -44,7 +45,10 @@ class CalendarEntry extends DataObject{
 			$imagefield->setFolderName("Managed/CalendarImages");
 			$imagefield->setCanPreviewFolder(false);
 			
+			$groupfield = new DropdownField("HostGroupID", "Which Group is hosting this event?");
+			
 			$fields->addFieldToTab('Root.Main', new TextField('Title',"Event Title*"));
+			$fields->addFieldToTab('Root.Main', $groupfield);
 			$fields->addFieldToTab('Root.Main', $datefield);
 			$fields->addFieldToTab('Root.Main', new TextField('Time',"Time (HH:MM)"));
 			$fields->addFieldToTab('Root.Main', new TextareaField('Description'));
@@ -61,13 +65,20 @@ class CalendarEntry extends DataObject{
 	}
 	
 	function getMonthDigit(){
-	 	$date = strtotime($this->Date);
+	 	$date = strtotime($this->StartDate);
 		return date('m',$date);
 	}
 	
 	function getYear(){
-		$date = strtotime($this->Date);
+		$date = strtotime($this->StartDate);
 		return date('Y',$date);
+	}
+	
+	function makeFullDate() {
+		$basetime = strtotime($this->StartDate . ' ' . $this->Time);
+		$result = new SS_Datetime();
+		$result->setValue($basetime);
+		return $result;
 	}
 		
 	function canCreate($members = null) {
