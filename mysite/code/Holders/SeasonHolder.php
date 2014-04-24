@@ -23,9 +23,10 @@ class SeasonHolder extends Page {
     	return false;
     }
     
-    public function getCurrentSeason() {
+    public function getCurrentSeason($uDate = null) {
     	$seasons = self::getAllSeasons();
     	$refDate = strtotime(date("Y-m-d"));
+    	if($uDate) $refDate = strtotime($uDate);
     	foreach($seasons as $season) {
 			$dateW1 = strtotime($season->SeasonStart);
 			$dateW2 = strtotime($season->SeasonEnd);

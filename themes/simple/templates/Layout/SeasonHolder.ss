@@ -15,9 +15,11 @@
 						<tr><td class="$SeasonClass"><a href="$getSeasonDetailPageLink" title="Show detail for season $Season">$Season</a></td><td class="$SeasonClass">$SeasonStart.Long</td><td class="$SeasonClass">$SeasonEnd.Long</td></tr>
 					<% end_loop %>
 				<% else %>
-					<tr><td colspan="2">No records available</td></tr>
+					<tr><td colspan="3">No records available</td></tr>
 				<% end_if %>
 				</tbody></table>
+				
+				
 			</div>
 			
 			<div class="left">

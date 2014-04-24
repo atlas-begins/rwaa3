@@ -37,8 +37,17 @@ class CalendarEntry extends DataObject{
     }
  	
  	function getCMSFields() {
-		
+ 		
 		$this->beforeUpdateCMSFields(function($fields) {
+			if(!$this->ID) {
+				$rightNow = date("Y-m-d");
+				$allSeasonsMap = DataList::create("SSSeason")->sort("SeasonStart", "ASC")->where("\"SeasonEnd\" > '$rightNow'")->map("ID", "Season");
+			} else {
+				$allSeasonsMap = DataList::create("SSSeason")->sort("SeasonStart", "ASC")->map("ID", "Season");
+			}
+			$seasonField = new DropdownField("SeasonID", "Sailing season", $allSeasonsMap);
+				$seasonField->setEmptyString('(Select a season)');
+				
 			$datefield = new DateField('StartDate','Start date (DD/MM/YYYY)*');
 			$datefield->setConfig('showcalendar', true);
 			$datefield->setConfig('dateformat', 'dd/MM/YYYY');
@@ -56,6 +65,7 @@ class CalendarEntry extends DataObject{
 			$locationField = new DropdownField("LocationID", "What location?", $allLocationsMap);
 				$locationField->setEmptyString('(Select a Location)');
 			
+			$fields->addFieldToTab('Root.Main', $seasonField);
 			$fields->addFieldToTab('Root.Main', new TextField('Title',"Event Title*"));
 			$fields->addFieldToTab('Root.Main', $groupField);
 			$fields->addFieldToTab('Root.Main', $datefield);
@@ -63,7 +73,6 @@ class CalendarEntry extends DataObject{
 			$fields->addFieldToTab('Root.Main', $locationField);
 			$fields->addFieldToTab('Root.Main', new TextField('AltLocation', 'Location if not selected above'));
 			$fields->addFieldToTab('Root.Main', new TextareaField('Description'));
-			
 			$fields->addFieldToTab('Root.Main', $imagefield);
 		});
 
@@ -72,7 +81,6 @@ class CalendarEntry extends DataObject{
 		$this->extend('updateCMSFields', $fields);	
 
 		$fields->removeFieldFromTab("Root.Main","CalendarPageID");
-		$fields->removeFieldFromTab("Root.Main","SeasonID");
 		return $fields;		
 	}
 	
