@@ -20,30 +20,39 @@ class VesselPage_Controller extends VesselHolder_Controller {
 		, 'add' => true
 		, 'VesselForm' => true
 		, 'VesselImageForm' => true
+		, 'VesselNoteForm' => true
 		, 'addCutter' => true
 		, 'addSunburst' => TRUE
 		, 'addKayak' => TRUE
 		, 'addOther' => true
+		, 'doSaveVessel' => TRUE
+		, 'doSaveVesselImage' => true
+		, 'doSaveVesselNote' => true
 	);
 	
 	// FORMS
 	public function VesselForm($vtype) {
-		$fields = singleton('SSVessel')->getFrontendFields();
 		$allGroupsMap = DataList::create("SSGroup")->sort("GroupName")->map("ID", "GroupName");
+		$groupField = new DropdownField('ScoutGroupID', 'Scout Group', $allGroupsMap);
+			$groupField->setEmptyString('(Select a Group)');
+		$fields = singleton('SSVessel')->getFrontendFields();
+		$fields->replaceField('ScoutGroupID', $groupField);
+		$actions = new FieldList(
+            new FormAction('doSaveVessel', 'Save changes')
+        );
+        $validator = new RequiredFields();
+        $form = new Form($this, 'VesselForm', $fields, $actions, $validator);
 		// if numerical value, assume refers to existing vessel object
 		// if string, assume refers to vessel class via add
 		if(is_numeric($vtype)) {
 			if($result = SSVessel::get_by_id("SSVessel", $vtype)) {
+				$fields->push(new HiddenField("ID", "ID", $vtype));
 	    		$form->loadDataFrom($result);
 	    	} else {
 	    		return FALSE;
 	    	}
 		} else {
 			$fields->replaceField('VesselActive', new HiddenField("VesselActive", "Vessel Active", '1'));
-			$fields->removeByName('ScoutGroupID');
-			$groupField = new DropdownField('ScoutGroupID', 'Scout Group', $allGroupsMap);
-				$groupField->setEmptyString('(Select a Group)');
-				$fields->push($groupField);
 			switch ($vtype) {
 				case 'Vessel':
 					// set default values for capacities fields to 0
@@ -71,22 +80,57 @@ class VesselPage_Controller extends VesselHolder_Controller {
 				break;
 			}
 		}
-		$actions = new FieldList(
-            new FormAction('doSaveVessel', 'Save changes')
+		return $form;
+    }
+    
+	public function VesselImageForm() {
+    	$fields = new FieldList();
+    	$fields->push(new FileField('VesselImage', ''));
+    	$actions = new FieldList(
+            new FormAction('doSaveVesselImage', 'Save image')
         );
         $validator = new RequiredFields();
-		$form = new Form($this, 'VesselForm', $fields, $actions, $validator);
+		$form = new Form($this, 'VesselImageForm', $fields, $actions, $validator);
 		
 		return $form;
     }
+    
+	public function VesselNoteForm() {
+    	$fields = new FieldList();
+    	$fields->push(new TextField('VesselNote', ''));
+    	$actions = new FieldList(
+            new FormAction('doSaveVesselNote', 'Save note')
+        );
+        $validator = new RequiredFields();
+		$form = new Form($this, 'VesselNoteForm', $fields, $actions, $validator);
+		
+		return $form;
+    }
+    
+    // FORM ACTIONS
+    public function doSaveVessel($data, $form) {
+    	if(isset($data['ID'])) {
+    		$vessel = SSVessel::get_by_id("SSVessel", $data['ID']);
+    		$returnURL = SSVessel::getVesselDetailPageLink();
+    		echo $returnURL;
+    		die();
+    	} else {
+    		$vessel = new SSVessel();
+    		$returnURL = '';
+    	}
+    	
+    }
 	
+    // OTHER ACTIONS
 	public function view($request) {
     	if($result = SSVessel::get_by_id("SSVessel", (int)$this->request->param('ID'))) {
+    		$result->VesselImageForm = self::VesselImageForm();
+    		$result->VesselNoteForm = self::VesselNoteForm();
     		$namedetail = '';
     		if($result->VesselName) $namedetail = ' for "' . $result->VesselName . '"';
     		$resultsArray = array(
     			'Title' => 'Details' . $namedetail
-    			, 'Vessel' => $result
+    			, 'Vessel' => $result 
     		);
     	} else {
     		$resultsArray = array(
@@ -109,7 +153,7 @@ class VesselPage_Controller extends VesselHolder_Controller {
 			}
     		$resultsArray['Title'] = 'Edit details' . $namedetail;
     		$resultsArray['Vessel'] = $result;
-    		//$resultsArray['Form'] = self::VesselForm($result->ID);
+    		$resultsArray['Form'] = self::VesselForm($result->ID);
     	} else {
     		$resultsArray['Title'] = 'Vessel not found';
     		$resultsArray['Content'] = '<p>Sorry, we cannot locate records for that vessel.</p><p>Please return to the main page and make another selection.</p>';

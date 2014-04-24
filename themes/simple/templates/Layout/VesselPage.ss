@@ -25,8 +25,11 @@
 						<tr><td>Rowing capacities (min/max)</td><td>$VesselOarCapacityMin / $VesselOarCapacityMax</td></tr>
 						<tr><td>Motor capacities (min/max)</td><td>$VesselMotorCapacityMin / $VesselMotorCapacityMax</td></tr>
 						<% if CurrentMember %>
-							<tr><td colspan="2"><a href="/" title="Add photo for this vessel" class="addObject">add photo</a><br>
-							$VesselImageForm
+							<tr><td colspan="2"><a href="#" title="Add note for this vessel" class="addObject" id="noteFormToggle">add note</a>
+							<div id="noteForm" style="display: none;">$VesselNoteForm</div>
+							</td></tr>
+							<tr><td colspan="2"><a href="#" title="Add photo for this vessel" class="addObject" id="imgFormToggle">add photo</a>
+							<div id="imgForm" style="display: none;">$VesselImageForm</div>
 							</td></tr>
 						<% end_if %>
 					</tbody>

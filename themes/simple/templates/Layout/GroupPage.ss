@@ -19,6 +19,7 @@
 							<% loop GroupZone %><a href="$getZoneDetailPageLink" title="View detail about $ZoneName Zone">$ZoneName</a><% end_loop %>
 						</td></tr>
 						<tr><td>Short label</td><td>$GroupAcronym</td></tr>
+						<tr><td>Meeting nights</td><td>Scouts: <br>Venturers: </td></tr>
 						<tr><td>Located</td><td>$GroupLocality
 						<% if GroupAddress %><br>$GroupAddress<% end_if %>
 						<% if GroupPhone %><br>$GroupPhone<% end_if %></td></tr>

@@ -29,7 +29,7 @@ Change it, enhance it and most importantly enjoy it!
 	<% require themedCSS('rwaa') %>
 	<% require themedCSS('calendar') %>
 	
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	<script>
@@ -52,8 +52,6 @@ Change it, enhance it and most importantly enjoy it!
 		    animation: google.maps.Animation.DROP
 		});
        marker.setMap(map);
-       
-       
       }
       function drop() {
 		  for (var i =0; i < markerArray.length; i++) {
@@ -63,6 +61,22 @@ Change it, enhance it and most importantly enjoy it!
 		  }
 		}
       google.maps.event.addDomListener(window, 'load', initialize);
+      
+      $(document).ready(function(){
+      $('a#imgFormToggle').click(function(e) {
+        e.preventDefault();
+        $('div#imgForm').fadeToggle(500);       
+        return false;
+      });
+      $('a#noteFormToggle').click(function(e) {
+        e.preventDefault();
+        $('div#noteForm').fadeToggle(500);       
+        return false;
+      });
+
+    }); 
+      
+      
     </script>
 	
 	<link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />

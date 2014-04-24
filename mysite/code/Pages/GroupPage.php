@@ -32,6 +32,7 @@ class GroupPage_Controller extends GroupHolder_Controller {
 		, 'GroupForm' => true
 		, 'PersonForm' => true
 		, 'doSaveGroup' => true
+		, 'doSavePerson' => true
 		, 'addPerson' => true
 	);
 	
@@ -82,7 +83,7 @@ class GroupPage_Controller extends GroupHolder_Controller {
 		return $form;
     }
     
-    // FORM PROCESSORS
+    // FORM ACTIONS
     public function doSaveGroup($data, $form) {
     	$groupID = isset($data['ID']) ? (int) $data['ID'] : false;
     	if(!$groupID) {

@@ -9,6 +9,8 @@ class SSGroup extends DataObject {
 		, 'GroupWebsite' => 'Varchar(128)'
 		, 'GroupAddress' => 'Varchar(128)'
 		, 'GroupPhone' => 'Varchar(24)'
+		, 'GroupScoutMeet' => 'Varchar(24)'
+		, 'GroupVenturerMeet' => 'Varchar(24)'
 	);
 	
 	static $has_one = array(
