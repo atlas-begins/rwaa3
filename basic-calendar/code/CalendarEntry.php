@@ -3,10 +3,11 @@
 class CalendarEntry extends DataObject{
 
  	public static $db = array(
- 		"Title" => "Text",
- 		"StartDate" => "Date",
- 		"Time" => "Text",
- 		"Description" => "Text"
+ 		"Title" => "Text"
+ 		, "StartDate" => "Date"
+ 		, "Time" => "Text"
+ 		, "Description" => "Text"
+ 		, 'AltLocation' => 'Varchar(128)'
  	);
  	
  	static $has_one = array(
@@ -14,6 +15,7 @@ class CalendarEntry extends DataObject{
  		, "Image" => "Image"
  		, "HostGroup" => "SSGroup"
  		, "Season" => "SSSeason"
+ 		, 'Location' => 'SSLocation'
  	);
 	
 	public static $summary_fields = array(
@@ -46,16 +48,22 @@ class CalendarEntry extends DataObject{
 			$imagefield->setFolderName("Managed/CalendarImages");
 			$imagefield->setCanPreviewFolder(false);
 			
-			//$groupfield = new DropdownField("HostGroupID", "Which Group is hosting this event?");
 			$allGroupsMap = DataList::create("SSGroup")->sort("GroupName")->map("ID", "GroupName");
 			$groupField = new DropdownField("HostGroupID", "Which Group is hosting this event?", $allGroupsMap);
 				$groupField->setEmptyString('(Select a Group)');
+				
+			$allLocationsMap = DataList::create("SSLocation")->sort("LocationDescription")->map("ID", "LocationDescription");
+			$locationField = new DropdownField("LocationID", "What location?", $allLocationsMap);
+				$locationField->setEmptyString('(Select a Location)');
 			
 			$fields->addFieldToTab('Root.Main', new TextField('Title',"Event Title*"));
 			$fields->addFieldToTab('Root.Main', $groupField);
 			$fields->addFieldToTab('Root.Main', $datefield);
 			$fields->addFieldToTab('Root.Main', new TextField('Time',"Time (HH:MM)"));
+			$fields->addFieldToTab('Root.Main', $locationField);
+			$fields->addFieldToTab('Root.Main', new TextField('AltLocation', 'Location if not selected above'));
 			$fields->addFieldToTab('Root.Main', new TextareaField('Description'));
+			
 			$fields->addFieldToTab('Root.Main', $imagefield);
 		});
 
@@ -66,12 +74,6 @@ class CalendarEntry extends DataObject{
 		$fields->removeFieldFromTab("Root.Main","CalendarPageID");
 		$fields->removeFieldFromTab("Root.Main","SeasonID");
 		return $fields;		
-	}
-	
-	function onBeforeWrite() {
-		$eDate = $this->record['StartDate'];
-		$this->record['SeasonID'] = '8';
-		parent::onBeforeWrite();
 	}
 	
 	function getMonthDigit(){
