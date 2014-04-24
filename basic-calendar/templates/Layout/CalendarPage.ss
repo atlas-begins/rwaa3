@@ -21,7 +21,7 @@
 				<% if getEvents(future) %>
 					<% loop getEvents(future).GroupedBy(Year) %>	
 						<% loop Children %>
-							<% include CalendarEntry %>						
+							<% include CalendarEntry %>
 						<% end_loop %>
 					<% end_loop %>
 				<% else %>

@@ -10,14 +10,15 @@ class CalendarEntry extends DataObject{
  	);
  	
  	static $has_one = array(
- 		"CalendarPage" => "CalendarPage",
- 		"Image" => "Image",
- 		"HostGroup" => "SSGroup"
+ 		"CalendarPage" => "CalendarPage"
+ 		, "Image" => "Image"
+ 		, "HostGroup" => "SSGroup"
+ 		, "Season" => "SSSeason"
  	);
 	
 	public static $summary_fields = array(
-    	"StartDate" => "Date",
-    	"Title" => "Title"
+    	"StartDate" => "Date"
+    	, "Title" => "Title"
     );
 	
 	static $default_sort = "StartDate ASC, Time ASC";
@@ -45,10 +46,13 @@ class CalendarEntry extends DataObject{
 			$imagefield->setFolderName("Managed/CalendarImages");
 			$imagefield->setCanPreviewFolder(false);
 			
-			$groupfield = new DropdownField("HostGroupID", "Which Group is hosting this event?");
+			//$groupfield = new DropdownField("HostGroupID", "Which Group is hosting this event?");
+			$allGroupsMap = DataList::create("SSGroup")->sort("GroupName")->map("ID", "GroupName");
+			$groupField = new DropdownField("HostGroupID", "Which Group is hosting this event?", $allGroupsMap);
+				$groupField->setEmptyString('(Select a Group)');
 			
 			$fields->addFieldToTab('Root.Main', new TextField('Title',"Event Title*"));
-			$fields->addFieldToTab('Root.Main', $groupfield);
+			$fields->addFieldToTab('Root.Main', $groupField);
 			$fields->addFieldToTab('Root.Main', $datefield);
 			$fields->addFieldToTab('Root.Main', new TextField('Time',"Time (HH:MM)"));
 			$fields->addFieldToTab('Root.Main', new TextareaField('Description'));
@@ -60,8 +64,14 @@ class CalendarEntry extends DataObject{
 		$this->extend('updateCMSFields', $fields);	
 
 		$fields->removeFieldFromTab("Root.Main","CalendarPageID");
-
+		$fields->removeFieldFromTab("Root.Main","SeasonID");
 		return $fields;		
+	}
+	
+	function onBeforeWrite() {
+		$eDate = $this->record['StartDate'];
+		$this->record['SeasonID'] = '8';
+		parent::onBeforeWrite();
 	}
 	
 	function getMonthDigit(){

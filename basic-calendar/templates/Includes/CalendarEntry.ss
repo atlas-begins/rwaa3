@@ -7,6 +7,9 @@
 		<% if Description %>
 			<br>$Description
 		<% end_if %>
+		<% if HostGroupID %>
+			<br>hosted by <% loop HostGroup %>$GroupName<% end_loop %>
+		<% end_if %>
 		</p>
 	</div>
 	<% if Image %>
