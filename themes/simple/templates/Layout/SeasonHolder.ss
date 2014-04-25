@@ -24,18 +24,20 @@
 			
 			<div class="left">
 				<table>
-				<thead><tr><th colspan="3">For the current <a href="$getCalendarPage" title="Calendar page">$getCurrentSeason.Season season</a>, we have:</th></tr></thead>
+				<thead><tr><th colspan="2">For the current <a href="$getCalendarPage" title="Calendar page">$getCurrentSeason.Season season</a>, we have:</th></tr></thead>
 				<tbody>
 				<% if getSeasonEvents %>
 					<% loop getSeasonEvents %>
 						<tr>
 							<td>$Title</td>
-							<td>$makeFullDate.Long</td>
-							<td>Location</td>
+							<td><strong>$makeFullDate.Long</strong><% if AltLocation %><br>$AltLocation<% end_if %>
+							<% if LocationID %>
+								<% loop Location %><br>$LocationDescription<% end_loop %>
+							<% end_if %></td>
 						</tr>
 					<% end_loop %>
 				<% else %>
-					<tr><td colspan="3">No events </td></tr>
+					<tr><td colspan="2">No events </td></tr>
 				<% end_if %>
 				</tbody></table>
 			</div>
