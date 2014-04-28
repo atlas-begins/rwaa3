@@ -4,6 +4,7 @@
 		<h1>$Title</h1>
 		<div class="content">
 			<div class="left ObjectTable opaque fullWidth">
+				$Content
 				$Form
 			</div>
 		</div>

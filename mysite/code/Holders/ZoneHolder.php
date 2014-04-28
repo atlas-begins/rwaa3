@@ -37,6 +37,13 @@ class ZoneHolder extends Page {
 			break;
 		}
     }
+
+	public static function getZoneActionPageLink($action = 'add') {
+    	if($result = DataObject::get_one("ZonePage")) {
+			return $result->Link() . $action;
+		}
+		return false;
+    }
 }
 class ZoneHolder_Controller extends Page_Controller {
 	

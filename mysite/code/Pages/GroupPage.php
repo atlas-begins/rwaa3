@@ -97,6 +97,8 @@ class GroupPage_Controller extends GroupHolder_Controller {
     	$result->GroupLocality = $data['GroupLocality'];
     	$result->GroupWebsite = $data['GroupWebsite'];
     	$result->GroupPhone = $data['GroupPhone'];
+    	$result->GroupScoutMeet = $data['GroupScoutMeet'];
+    	$result->GroupVenturerMeet = $data['GroupVenturerMeet'];
     	$result->GroupZoneID = $data['GroupZoneID'];
     	$result->write();
     	$returnURL = GroupHolder::getGroupActionPageLink('view') . '/' . $result->ID;
@@ -112,9 +114,6 @@ class GroupPage_Controller extends GroupHolder_Controller {
 	    	$result->ScoutGroupID = $groupID;
 	    	$result->PersonActive = $data['PersonActive'];
 	    	$result->write();
-	    	
-	    	
-	    	
 	    	$returnURL = GroupHolder::getGroupActionPageLink('view') . '/' . $result->ScoutGroupID;
 	    	return $this->redirect($returnURL);
     	}
@@ -150,7 +149,6 @@ class GroupPage_Controller extends GroupHolder_Controller {
     	if($result = SSGroup::get()->byID($this->request->param('ID'))) {
     		$resultsArray['Title'] = 'Edit "'. $result->GroupName . '"';
     		$resultsArray['Form'] = self::GroupForm($result->ID);
-    		$resultsArray['Group'] = $result;
     	} else {
     		$resultsArray['Title'] = 'Group not found';
     		$resultsArray['Content'] = '<p>Sorry, we cannot locate records for that group.</p><p>Please return to the main page and make another selection.</p>';

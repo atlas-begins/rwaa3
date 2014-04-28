@@ -14,15 +14,16 @@
 						<% if CurrentMember %>
 							<tr><td colspan="2"><a href="$getGroupDetailPageLink(edit)" title="Edit details for this group" class="editObject">edit details</a></td></tr>
 						<% end_if %>
-						<tr><td>Branch</td><td>$GroupBranch</td></tr>
+						<tr><td>Branch</td><td class="branch_{$GroupBranch}">$GroupBranch</td></tr>
 						<tr><td>Zone</td><td>
 							<% loop GroupZone %><a href="$getZoneDetailPageLink" title="View detail about $ZoneName Zone">$ZoneName</a><% end_loop %>
 						</td></tr>
 						<tr><td>Short label</td><td>$GroupAcronym</td></tr>
-						<tr><td>Meeting nights</td><td>Scouts: <br>Venturers: </td></tr>
+						<tr><td>Meeting nights</td><td>Scouts: $GroupScoutMeet<br>Venturers: $GroupVenturerMeet</td></tr>
 						<tr><td>Located</td><td>$GroupLocality
-						<% if GroupAddress %><br>$GroupAddress<% end_if %>
-						<% if GroupPhone %><br>$GroupPhone<% end_if %></td></tr>
+							<% if GroupAddress %><br>$GroupAddress<% end_if %>
+							<% if GroupPhone %><br>$GroupPhone<% end_if %>
+						</td></tr>
 						<tr><td>Website</td><td><% if GroupWebsite %><a href="$GroupWebsite" title="Group website" target="_blank">$GroupWebsite</a><% end_if %></td></tr>
 					</tbody>
 					</table>

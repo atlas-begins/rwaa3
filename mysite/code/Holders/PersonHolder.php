@@ -20,6 +20,13 @@ class PersonHolder extends Page {
     	$groups = GroupHolder::getGroupInformation();
     	return $groups;
     }
+    
+	public static function getPersonActionPageLink($action = 'add') {
+    	if($result = DataObject::get_one("PersonPage")) {
+			return $result->Link() . $action;
+		}
+		return false;
+    }
 }
 class PersonHolder_Controller extends Page_Controller {
 	

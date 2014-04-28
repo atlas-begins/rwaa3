@@ -18,30 +18,41 @@ class ZonePage_Controller extends ZoneHolder_Controller {
 		'view' => true
 		, 'add' => true
 		, 'edit' => true
+		, 'ZoneForm' => true
+		, 'doSaveZone' => true
 	);
 	
-	public function Form() {
-        // Create fields
-        $fields = new FieldList(
-            new TextField('Name'),
-            new OptionsetField('Browser', 'Your Favourite Browser', array(
-                'Firefox' => 'Firefox',
-                'Chrome' => 'Chrome',
-                'Internet Explorer' => 'Internet Explorer',
-                'Safari' => 'Safari',
-                'Opera' => 'Opera',
-                'Lynx' => 'Lynx'
-            ))
-        );
-         
-        // Create actions
+	// FORMS
+	public function ZoneForm() {
+        $fields = singleton('SSZone')->getFrontendFields();
         $actions = new FieldList(
-            new FormAction('doBrowserPoll', 'Submit')
+            new FormAction('doSaveZone', 'Save changes')
         );
-     
-        return new Form($this, 'BrowserPollForm', $fields, $actions);
+        $validator = new RequiredFields();
+        $form = new Form($this, 'ZoneForm', $fields, $actions, $validator);
+		if($this->urlParams['ID'] && $result = SSZone::get()->byID($this->urlParams['ID'])) {
+			$fields->push(new HiddenField("ID", "ID", $this->urlParams['ID']));
+			$form->loadDataFrom($result);
+		}
+        return $form;
+    }
+    
+    // FORM ACTIONS
+    public function doSaveZone($form) {
+    	$zID = isset($form['ID']) ? (int) $form['ID'] : false;
+    	if(!$zID) {
+    		$result = new SSZone();
+    	} else {
+    		$result = SSZone::get()->byID($form['ID']);
+    		$result->write();
+    	}
+    	$result->ZoneName = $form['ZoneName'];
+    	$result->write();
+    	$returnURL = ZoneHolder::getZoneActionPageLink('view') . '/' . $result->ID;
+    	return $this->redirect($returnURL);
     }
 	
+    // OTHER ACTIONS
     public function view($request) {
     	if($result = SSZone::get()->byID($this->request->param('ID'))) {
     		$resultsArray = array(
@@ -59,10 +70,9 @@ class ZonePage_Controller extends ZoneHolder_Controller {
     
 	public function edit() {
 		$resultsArray = array();
-		$resultsArray['ObjectAction'] = 'edit';
 		if($result = SSZone::get()->byID($this->request->param('ID'))) {
     		$resultsArray['Title'] = 'Edit ' . $result->ZoneName . ' Zone';
-    		$resultsArray['Zone'] = $result;
+    		$resultsArray['Form'] = self::ZoneForm($result->ID);
     	} else {
     		$resultsArray['Title'] = 'Zone not found';
     		$resultsArray['Content'] = '<p>Sorry, we cannot locate records for that zone.</p><p>Please return to the main page and make another selection.</p>';
@@ -71,9 +81,10 @@ class ZonePage_Controller extends ZoneHolder_Controller {
     }
     
 	public function add() {
-		$resultsArray = array();
-		$resultsArray['ObjectAction'] = 'add';
-		$resultsArray['Title'] = 'Add a Zone';
+		$resultsArray = array(
+    		'Title' => 'Add a Zone'
+    		, 'Form' => self::ZoneForm()
+   		);
     	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
     }
 }
