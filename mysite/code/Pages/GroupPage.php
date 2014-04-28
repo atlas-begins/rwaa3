@@ -114,7 +114,13 @@ class GroupPage_Controller extends GroupHolder_Controller {
 	    	$result->ScoutGroupID = $groupID;
 	    	$result->PersonActive = $data['PersonActive'];
 	    	$result->write();
-	    	$returnURL = GroupHolder::getGroupActionPageLink('view') . '/' . $result->ScoutGroupID;
+	    	if(isset($data['Roles'])) {
+	    		$pID = $result->ID;
+	    		foreach($data['Roles'] as $key => $value) {
+	    			DB::query("INSERT INTO SSPerson_PersonRole(SSPersonID,SSRoleID) VALUES('$pID', '$key')");
+	    		}
+	    	}
+	    	$returnURL = PersonHolder::getPersonActionPageLink('view') . '/' . $result->ID;
 	    	return $this->redirect($returnURL);
     	}
     }
