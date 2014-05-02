@@ -110,15 +110,17 @@ class VesselPage_Controller extends VesselHolder_Controller {
     // FORM ACTIONS
     public function doSaveVessel($data, $form) {
     	if(isset($data['ID'])) {
-    		$vessel = SSVessel::get_by_id("SSVessel", $data['ID']);
+    		$result = SSVessel::get_by_id("SSVessel", $data['ID']);
+    		$data->saveInto($result);
+    		$result->write();
     		$returnURL = SSVessel::getVesselDetailPageLink();
-    		echo $returnURL;
-    		die();
     	} else {
-    		$vessel = new SSVessel();
-    		$returnURL = '';
+    		$result = Object::create("SSVessel");
+    		$result->saveInto($result);
+    		$result->write();
+       		$returnURL = SSVessel::getVesselDetailPageLink('view') . '/' . $result->ID;
+	    	return $this->redirect($returnURL);
     	}
-    	
     }
 	
     // OTHER ACTIONS
@@ -145,6 +147,9 @@ class VesselPage_Controller extends VesselHolder_Controller {
 		$resultsArray = array();
 		$resultsArray['ObjectAction'] = 'edit';
 		if($result = SSVessel::get()->byID($this->request->param('ID'))) {
+			$imageFolder = Folder::find_or_make('Uploads/Vessels/Vessel' . $result->ID);
+			$result->VesselGalleryID = $imageFolder->ID;
+			$result->write();
 			$namedetail = ' for ';
 			if($result->VesselName) {
 				$namedetail .= '"' . $result->VesselName .'"';

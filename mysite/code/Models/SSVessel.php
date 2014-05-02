@@ -18,6 +18,7 @@ class SSVessel extends DataObject {
 
 	private static $has_one = array(
 		'ScoutGroup' => 'SSGroup'
+		, 'VesselGallery' => 'Folder'
 	);
 	
 	private static $belongs_one = array(
