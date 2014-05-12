@@ -32,25 +32,25 @@ class VesselPage_Controller extends VesselHolder_Controller {
 	
 	// FORMS
 	public function VesselForm($vtype) {
+		$actions = new FieldList(
+            new FormAction('doSaveVessel', 'Save changes')
+        );
+        $validator = new RequiredFields();
 		$allGroupsMap = DataList::create("SSGroup")->sort("GroupName")->map("ID", "GroupName");
 		$groupField = new DropdownField('ScoutGroupID', 'Scout Group', $allGroupsMap);
 			$groupField->setEmptyString('(Select a Group)');
 		$fields = singleton('SSVessel')->getFrontendFields();
 		$fields->replaceField('ScoutGroupID', $groupField);
-		$actions = new FieldList(
-            new FormAction('doSaveVessel', 'Save changes')
-        );
-        $validator = new RequiredFields();
-        $form = new Form($this, 'VesselForm', $fields, $actions, $validator);
+		$fields->removeByName('VesselGallery');
+		
+		// creates the form object
+		$form = new Form($this, 'VesselForm', $fields, $actions, $validator);
+		
 		// if numerical value, assume refers to existing vessel object
 		// if string, assume refers to vessel class via add
-		if(is_numeric($vtype)) {
-			if($result = SSVessel::get_by_id("SSVessel", $vtype)) {
-				$fields->push(new HiddenField("ID", "ID", $vtype));
-	    		$form->loadDataFrom($result);
-	    	} else {
-	    		return FALSE;
-	    	}
+		if(is_numeric($vtype) && $result = SSVessel::get_by_id("SSVessel", $vtype)) {
+			$fields->push(new HiddenField("ID", "ID", $vtype));
+			$form->loadDataFrom($result);
 		} else {
 			$fields->replaceField('VesselActive', new HiddenField("VesselActive", "Vessel Active", '1'));
 			switch ($vtype) {
@@ -64,19 +64,14 @@ class VesselPage_Controller extends VesselHolder_Controller {
 					$fields->replaceField('VesselMotorCapacityMax', new TextField("VesselMotorCapacityMax", "Maximum motoring capacity", '0'));
 				break;
 				default:
-					// creates array of default values for vessel classes
-					$vSpecs = SSVessel::vesselMinMax($vtype);
-					$fields->replaceField('VesselSailCapacityMin', new HiddenField("VesselSailCapacityMin", "ID", $vSpecs['MinSail']));
-					$fields->replaceField('VesselSailCapacityMax', new HiddenField("VesselSailCapacityMax", "ID", $vSpecs['MaxSail']));
-					$fields->replaceField('VesselOarCapacityMin', new HiddenField("VesselOarCapacityMin", "ID", $vSpecs['MinOar']));
-					$fields->replaceField('VesselOarCapacityMax', new HiddenField("VesselOarCapacityMax", "ID", $vSpecs['MaxOar']));
-					$fields->replaceField('VesselMotorCapacityMin', new HiddenField("VesselMotorCapacityMin", "ID", $vSpecs['MinMotor']));
-					$fields->replaceField('VesselMotorCapacityMax', new HiddenField("VesselMotorCapacityMax", "ID", $vSpecs['MaxMotor']));
-					$fields->replaceField('VesselClass', new HiddenField("VesselClass", "Vessel Class", strtolower($vtype)));
-					$fields->push(new LiteralField("VesselClassX", "Vessel class: <strong>" . $vtype . '</strong><br>'));
-					$fields->push(new LiteralField("VesselSailCapacityMinX", "Sail capacity (min/max): <strong>" . $vSpecs['MinSail'] . ' / ' . $vSpecs['MaxSail'] . '</strong><br>'));
-					$fields->push(new LiteralField("VesselOarCapacityMinX", "Rowing capacity (min/max): <strong>" . $vSpecs['MinOar'] . ' / ' . $vSpecs['MaxOar'] . '</strong><br>'));
-					$fields->push(new LiteralField("VesselMotorCapacityMaxX", "Motoring capacity (min/max): <strong>" . $vSpecs['MinMotor'] . ' / ' . $vSpecs['MaxMotor'] . '</strong><br>'));
+					$fields->replaceField('VesselClass', new HiddenField("VesselClass", "VesselType", $vtype));
+					// removes the capacities, populated on submit
+					$fields->removeByName('VesselSailCapacityMin');
+					$fields->removeByName('VesselSailCapacityMax');
+					$fields->removeByName('VesselOarCapacityMin');
+					$fields->removeByName('VesselOarCapacityMax');
+					$fields->removeByName('VesselMotorCapacityMin');
+					$fields->removeByName('VesselMotorCapacityMax');
 				break;
 			}
 		}
@@ -109,18 +104,28 @@ class VesselPage_Controller extends VesselHolder_Controller {
     
     // FORM ACTIONS
     public function doSaveVessel($data, $form) {
-    	if(isset($data['ID'])) {
-    		$result = SSVessel::get_by_id("SSVessel", $data['ID']);
-    		$data->saveInto($result);
-    		$result->write();
-    		$returnURL = SSVessel::getVesselDetailPageLink();
+    	print_r('saving record ');
+    	die();
+    	if(isset($form['ID'])) {
+    		$result = SSVessel::get_by_id("SSVessel", $form['ID']);
+    		$form->saveInto($result);
     	} else {
     		$result = Object::create("SSVessel");
-    		$result->saveInto($result);
-    		$result->write();
-       		$returnURL = SSVessel::getVesselDetailPageLink('view') . '/' . $result->ID;
-	    	return $this->redirect($returnURL);
+    		if(isset($data['VesselClass'])) {
+    			if($vcaps = SSVessel::vesselMinMax($data['VesselClass'])) {
+    				$data['VesselSailCapacityMin'] = $vcaps['MinSail'];
+	    			$data['VesselSailCapacityMax'] = $vcaps['MaxSail'];
+	    			$data['VesselOarCapacityMin'] = $vcaps['MinOar'];
+	    			$data['VesselOarCapacityMax'] = $vcaps['MaxOar'];
+	    			$data['VesselMotorCapacityMin'] = $vcaps['MinMotor'];
+	    			$data['VesselMotorCapacityMax'] = $vcaps['MaxMotor'];
+    			}
+    		}
+    		$data->saveInto($result);
     	}
+    	//$result->write();
+    	//$returnURL = SSVessel::getVesselDetailPageLink('view') . '/' . $result->ID;
+    	return $this->redirect($returnURL);
     }
 	
     // OTHER ACTIONS
@@ -179,5 +184,10 @@ class VesselPage_Controller extends VesselHolder_Controller {
 		$resultsArray['Title'] = 'Add a ' . $this->request->param('ID');
 		$resultsArray['Form'] = self::VesselForm($this->request->param('ID'));
     	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
+    }
+    
+    public function justTesting() {
+    	echo 'hello';
+    	die();
     }
 }

@@ -14,7 +14,7 @@ class VesselFoldersTask extends BuildTask {
     		foreach($results as $result) {
     			echo '<br>Vessel ' . $result->ID;
     			$imageFolder = Folder::find_or_make('Uploads/Vessels/Vessel' . $result->ID);
-    			if($imageFolder->ID == $result->ID) {
+    			if($imageFolder->ID == $result->VesselGalleryID) {
     				echo ' has a folder';
     			} else {
     				$result->VesselGalleryID = $imageFolder->ID;
