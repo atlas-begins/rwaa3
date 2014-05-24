@@ -40,15 +40,14 @@
 				<thead><tr><th colspan="2">$getVesselCount(kayak) Kayaks</th></tr>
 				<tbody>
 				<% if CurrentMember %>
-					<tr><td colspan="3"><a href="$getVesselActionPageLink(addKayak)" title="Add a kayak" class="addObject">add a Kayak</a></td></tr>
+					<tr><td colspan="2"><a href="$getVesselActionPageLink(addKayak)" title="Add a kayak" class="addObject">add a Kayak</a></td></tr>
 				<% end_if %>
 				<% if getVesselInformation(kayak) %>
 					<% loop getVesselInformation(kayak) %>
-						<tr><td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $ID">$VesselNumber</a></td><td>
-							<% loop ScoutGroup %>
-								$GroupAcronym
-							<% end_loop %>
-						</td><td>Group</td></tr>
+						<tr>
+							<td>$VesselNumber</td>
+							<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $ID">$VesselName</a></td>
+						</tr>
 					<% end_loop %>
 				<% else %>
 					<tr><td colspan="2">No records available</td></tr>

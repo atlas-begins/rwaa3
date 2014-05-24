@@ -1,18 +1,16 @@
 <?php
-class SSVessel extends DataObject {
+class SSKayak extends DataObject {
 
 	private static $db = array(
 		'VesselName' => 'Varchar(128)'
 		, 'VesselNumber' => 'Varchar(8)'
 		, 'VesselYear' => 'Int'
-		, 'VesselSailCapacityMin' => 'Int'
-		, 'VesselSailCapacityMax' => 'Int'
 		, 'VesselOarCapacityMin' => 'Int'
 		, 'VesselOarCapacityMax' => 'Int'
-		, 'VesselMotorCapacityMin' => 'Int'
-		, 'VesselMotorCapacityMax' => 'Int'
-		, 'VesselConstruction' => "Enum(array('wood','fibreglass','RIB','plastic'))"
-		, 'VesselClass' => "Enum(array('cutter','kayak','dinghy','sunburst','crown','whaler','RIB','optimist'))"
+		, 'VesselConstruction' => "Enum(array('plastic','fibreglass','wood'))"
+		, 'VesselConfiguration' => "Enum(array('sit-in','sit-on'))"
+		, 'VesselModel' => 'Varchar(48)'
+		, 'VesselMake' => 'Varchar(48)'
 		, 'VesselActive' => 'Boolean'
 	);
 
@@ -32,13 +30,9 @@ class SSVessel extends DataObject {
 	);
 	
 	private static $defaults = array(
-		'VesselActive' => 1
-		, 'VesselSailCapacityMin' => 0
-		, 'VesselOarCapacityMin' => 0
-		, 'VesselMotorCapacityMin' => 0
-		, 'VesselSailCapacityMax' => 0
-		, 'VesselOarCapacityMax' => 0
-		, 'VesselMotorCapacityMax' => 0
+		"VesselActive" => "1"
+		, "VesselOarCapacityMin" => "1"
+		, "VesselOarCapacityMax" => "1"
 	);
 	
 	public function getVesselDetailPageLink($action = 'view') {
@@ -59,9 +53,5 @@ class SSVessel extends DataObject {
 		if($result = DataObject::get_one("CertificatePage")) {
 			return $result->Link() . $action . '/' . $this->ID;
 		}
-	}
-	
-	public static function vesselCapacityArray() {
-		return array('0'=>'0', '1'=>'1', '2'=>'2', '3'=>'3', '7'=>'7', '10'=>'10');
 	}
 }

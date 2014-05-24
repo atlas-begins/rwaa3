@@ -11,6 +11,45 @@ class VesselPage extends VesselHolder {
         $fields = parent::getCMSFields();
         return $fields;
     }
+    
+	public function vesselMinMax($vtype = null) {
+		$vSpecs = array();
+		switch ($vtype) {
+			case 'Cutter':
+				$vSpecs["MinSail"] = '3';
+				$vSpecs["MaxSail"] = '7';
+				$vSpecs["MinOar"] = '3';
+				$vSpecs["MaxOar"] = '10';
+				$vSpecs["MinMotor"] = '0';
+				$vSpecs["MaxMotor"] = '0';
+			break;
+			case 'Sunburst':
+				$vSpecs["MinSail"] = '2';
+				$vSpecs["MaxSail"] = '3';
+				$vSpecs["MinOar"] = '1';
+				$vSpecs["MaxOar"] = '3';
+				$vSpecs["MinMotor"] = '0';
+				$vSpecs["MaxMotor"] = '0';
+			break;
+			case 'Kayak':
+				$vSpecs["MinSail"] = '0';
+				$vSpecs["MaxSail"] = '0';
+				$vSpecs["MinOar"] = '1';
+				$vSpecs["MaxOar"] = '1';
+				$vSpecs["MinMotor"] = '0';
+				$vSpecs["MaxMotor"] = '0';
+			break;
+			default:
+				$vSpecs["MinSail"] = '0';
+				$vSpecs["MaxSail"] = '0';
+				$vSpecs["MinOar"] = '0';
+				$vSpecs["MaxOar"] = '0';
+				$vSpecs["MinMotor"] = '0';
+				$vSpecs["MaxMotor"] = '0';
+			break;	
+		}
+		return $vSpecs;
+	}
 }
 class VesselPage_Controller extends VesselHolder_Controller {
 
@@ -103,29 +142,52 @@ class VesselPage_Controller extends VesselHolder_Controller {
     }
     
     // FORM ACTIONS
-    public function doSaveVessel($data, $form) {
-    	print_r('saving record ');
-    	die();
-    	if(isset($form['ID'])) {
-    		$result = SSVessel::get_by_id("SSVessel", $form['ID']);
-    		$form->saveInto($result);
+    public function doSaveVessel($form, $data) {
+    	$vp = DataObject::get_one("VesselPage");
+    	$returnURL = $vp->Link();
+    	$vID = isset($form['ID']) ? (int) $form['ID'] : false;
+    	if($vID) {
+    		$result = SSVessel::get()->byID($form['ID']);
+    		$result->VesselName = $form['VesselName'];
+    		$result->VesselNumber = $form['VesselNumber'];
+    		$result->VesselYear = $form['VesselYear'];
+   			$result->VesselConstruction = $form['VesselConstruction'];
+   			$result->ScoutGroupID = $form['ScoutGroupID'];
+   			$result->VesselSailCapacityMin = $form["VesselSailCapacityMin"];
+	    	$result->VesselSailCapacityMax = $form["VesselSailCapacityMax"];
+	   		$result->VesselOarCapacityMax = $form["VesselOarCapacityMax"];
+	   		$result->VesselOarCapacityMin = $form["VesselOarCapacityMin"];
+	   		$result->VesselMotorCapacityMin = $form["VesselMotorCapacityMin"];
+	   		$result->VesselMotorCapacityMax = $form["VesselMotorCapacityMax"];
+    		$imageFolder = Folder::find_or_make('Uploads/Vessels/Vessel' . $result->ID);
+			$result->VesselGalleryID = $imageFolder->ID;
+			$result->write();
     	} else {
-    		$result = Object::create("SSVessel");
-    		if(isset($data['VesselClass'])) {
-    			if($vcaps = SSVessel::vesselMinMax($data['VesselClass'])) {
-    				$data['VesselSailCapacityMin'] = $vcaps['MinSail'];
-	    			$data['VesselSailCapacityMax'] = $vcaps['MaxSail'];
-	    			$data['VesselOarCapacityMin'] = $vcaps['MinOar'];
-	    			$data['VesselOarCapacityMax'] = $vcaps['MaxOar'];
-	    			$data['VesselMotorCapacityMin'] = $vcaps['MinMotor'];
-	    			$data['VesselMotorCapacityMax'] = $vcaps['MaxMotor'];
-    			}
+    		if($form['VesselClass']) {
+    			$vcaps = self::vesselMinMax($form['VesselClass']);
+    			$result = new SSVessel();
+    			$result->VesselClass = $form['VesselClass'];
+    			$result->VesselName = $form['VesselName'];
+    			$result->VesselNumber = $form['VesselNumber'];
+    			$result->VesselYear = $form['VesselYear'];
+    			$result->VesselConstruction = $form['VesselConstruction'];
+    			$result->ScoutGroupID = $form['ScoutGroupID'];
+    			$result->VesselSailCapacityMin = $vcaps["MinSail"];
+	    		$result->VesselSailCapacityMax = $vcaps["MaxSail"];
+	    		$result->VesselOarCapacityMax = $vcaps["MinOar"];
+	    		$result->VesselOarCapacityMin = $vcaps["MaxOar"];
+	    		$result->VesselMotorCapacityMin = $vcaps["MinMotor"];
+	    		$result->VesselMotorCapacityMax = $vcaps["MaxMotor"];
+	    		$result->write();
+	    		$imageFolder = Folder::find_or_make('Uploads/Vessels/Vessel' . $result->ID);
+				$result->VesselGalleryID = $imageFolder->ID;
+				$result->write();
+    		} else {
+	    		return $this->redirect($returnURL);
     		}
-    		$data->saveInto($result);
     	}
-    	//$result->write();
-    	//$returnURL = SSVessel::getVesselDetailPageLink('view') . '/' . $result->ID;
-    	return $this->redirect($returnURL);
+		$returnURL .= 'view/' . $result->ID;
+		return $this->redirect($returnURL);
     }
 	
     // OTHER ACTIONS
@@ -184,10 +246,5 @@ class VesselPage_Controller extends VesselHolder_Controller {
 		$resultsArray['Title'] = 'Add a ' . $this->request->param('ID');
 		$resultsArray['Form'] = self::VesselForm($this->request->param('ID'));
     	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
-    }
-    
-    public function justTesting() {
-    	echo 'hello';
-    	die();
     }
 }

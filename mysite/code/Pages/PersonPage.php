@@ -19,6 +19,7 @@ class PersonPage_Controller extends PersonHolder_Controller {
 		, 'add' => true
 		, 'edit' => true
 		, 'doSavePerson' => true
+		, 'PersonForm' => true
 	);
 	
 	// FORMS
