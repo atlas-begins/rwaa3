@@ -100,7 +100,7 @@ form .message {
     margin-bottom: 20px;
 }
     a.btn, button, input[type="submit"], .Actions .action {
-        background: #b80000;
+        background: #395E9E;
         color: #fff;
         display: inline-block;
         border-radius: 4px;
@@ -115,7 +115,7 @@ form .message {
         float: left;
     }
     a.btn:hover, button, input[type="submit"]:hover, .Actions .action:hover {
-        background: #C80000;
+        background: #1A8CC9;
         color: #fff;
     }
     a.btn {

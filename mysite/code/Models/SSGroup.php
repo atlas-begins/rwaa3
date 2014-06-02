@@ -37,4 +37,11 @@ class SSGroup extends DataObject {
 		}
 		return false;
 	}
+	
+	public function getGroupAddVesselLink($action = 'view', $groupID = null) {
+		if($result = DataObject::get_one("VesselPage")) {
+			return $result->Link() . 'add/Vessel';
+		}
+		return false;
+	}
 }

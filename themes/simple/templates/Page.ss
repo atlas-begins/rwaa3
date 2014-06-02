@@ -30,54 +30,8 @@ Change it, enhance it and most importantly enjoy it!
 	<% require themedCSS('calendar') %>
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-	<script>
-      function initialize() {
-        var mapCanvas = document.getElementById('map_canvas');
-        var mapOptions = {
-          center: new google.maps.LatLng(-41.221441, 174.879710),
-          zoom: 10,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-        // builds the map
-        var map = new google.maps.Map(mapCanvas, mapOptions);
-        
-        // adds optional stuff like markers and event listeners
-        var myLatlng = new google.maps.LatLng(-41.221441, 174.879710);
-        var marker = new google.maps.Marker({
-		    position: myLatlng,
-		    map: map,
-		    title:"Hello World!",
-		    animation: google.maps.Animation.DROP
-		});
-       marker.setMap(map);
-      }
-      function drop() {
-		  for (var i =0; i < markerArray.length; i++) {
-		    setTimeout(function() {
-		      addMarkerMethod();
-		    }, i * 200);
-		  }
-		}
-      google.maps.event.addDomListener(window, 'load', initialize);
-      
-      $(document).ready(function(){
-      $('a#imgFormToggle').click(function(e) {
-        e.preventDefault();
-        $('div#imgForm').fadeToggle(500);       
-        return false;
-      });
-      $('a#noteFormToggle').click(function(e) {
-        e.preventDefault();
-        $('div#noteForm').fadeToggle(500);       
-        return false;
-      });
-
-    }); 
-      
-      
-    </script>
+	<script type="text/javascript" src="{$ThemeDir}/javascript/jquery.ui.map.js"></script>
 	
 	<link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />
 </head>

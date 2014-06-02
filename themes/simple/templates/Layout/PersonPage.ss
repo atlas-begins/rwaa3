@@ -11,7 +11,9 @@
 						<tr><th colspan="2">$FirstName $Surname</th></tr>
 					</thead>
 					<tbody>
-						<tr><td colspan="2"><a href="$getPersonDetailPageLink(edit)" title="Edit details for $FirstName $Surname" class="editObject">edit details</a></td></tr>
+						<% if CurrentMember %>
+							<tr><td colspan="2"><a href="$getPersonDetailPageLink(edit)" title="Edit details for $FirstName $Surname" class="editObject">edit details</a></td></tr>
+						<% end_if %>
 						<tr><td>Currently with</td><td>
 							<% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupName</a><% end_loop %>
 						</td></tr>
@@ -33,11 +35,15 @@
 						<tr><th colspan="2">Charge endorsements</th></tr>
 					</thead>
 					<tbody>
+					<% if PersonCharge %>
 						<% loop PersonCharge %>
 							<tr><td>Year</td><td>
 							($ChargeType) $ChargeDescription<br>
 							</td></tr>
 						<% end_loop %>
+					<% else %>
+						<tr><td colspan="2">No records yet</td></tr>
+					<% end_if %>
 					</tbody>
 					</table>
 				<% end_loop %>

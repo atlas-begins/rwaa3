@@ -63,7 +63,7 @@
 					</thead>
 					<tbody>
 						<% if CurrentMember %>
-							<tr><td colspan="3"><a href="$getGroupDetailPageLink(addVessel)" title="Add a vessel to this group" class="addObject">add a vessel</a></td></tr>
+							<tr><td colspan="3"><a href="$getGroupAddVesselLink" title="Add a vessel to this group" class="addObject">add a vessel</a></td></tr>
 						<% end_if %>
 						<% loop GroupVessels %>
 							<tr><td>$VesselClass</td><td>$VesselNumber</td><td><a href="$getVesselDetailPageLink" title="View details for $VesselName">$VesselName</a></td></tr>
