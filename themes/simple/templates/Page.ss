@@ -30,12 +30,14 @@ Change it, enhance it and most importantly enjoy it!
 	<% require themedCSS('calendar') %>
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript" src="{$ThemeDir}/javascript/jquery.ui.map.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 	<link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />
 </head>
-<body class="$ClassName<% if not $Menu(2) %> no-sidebar<% end_if %>" <% if $i18nScriptDirection %>dir="$i18nScriptDirection"<% end_if %>>
+<body class="$ClassName<% if not $Menu(2) %> no-sidebar<% end_if %>">
 <% include Header %>
 <div class="main" role="main">
 	<div class="inner typography line">
