@@ -17,14 +17,11 @@
 				<% else %>
 					<tr><td>No records available</td></tr>
 				<% end_if %>
-				</tbody></table>
+				</tbody>
+				</table>
 			</div>
 		</div>
-		<div id="map_canvas"></div>
 	</article>
-	
-	
-	
 		$Form
 		$PageComments
 </div>

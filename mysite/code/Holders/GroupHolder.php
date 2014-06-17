@@ -21,6 +21,12 @@ class GroupHolder extends Page {
     	return $results;
     }
     
+	public static function getGroupMarkerArray() {
+    	if($results = DataList::create('SSGroup')->sort("GroupName")->where('"Lng" > 0')) {
+    		return $results;
+    	}
+    }
+    
 	public static function getGroupActionPageLink($action = 'add') {
     	if($result = DataObject::get_one("GroupPage")) {
 			return $result->Link() . $action;

@@ -90,6 +90,9 @@ The following fractions are supported: 1, 1/2, 1/3, 2/3, 1/4, 3/4, 1/5, 2/5, 3/5
 .size4of5 {
 	width:80%;
 }
+.size3of8 {
+	width:37.5%;
+}
 .lastUnit { /* lastUnit - Extends unit. Applied to the last child of every line. */
 	float:none;
 	width:auto;
@@ -569,9 +572,9 @@ body h1 span.amp {
 }
 /**** GOOGLE MAPS ****/
 #map_canvas {
-        width: 500px;
+        min-width: 400px;
         height: 400px;
-        background: #ffdead;
+        background: #ffffff;;
         clear: both;
       }
 

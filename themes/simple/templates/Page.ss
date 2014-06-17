@@ -20,21 +20,17 @@ Change it, enhance it and most importantly enjoy it!
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	$MetaTags(false)
 	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+	
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	
 	<% require themedCSS('reset') %>
 	<% require themedCSS('typography') %>
 	<% require themedCSS('form') %>
 	<% require themedCSS('layout') %>
 	<% require themedCSS('rwaa') %>
 	<% require themedCSS('calendar') %>
-	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script type="text/javascript" src="{$ThemeDir}/javascript/jquery.ui.map.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-	
-	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 	<link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />
 </head>
 <body class="$ClassName<% if not $Menu(2) %> no-sidebar<% end_if %>">
