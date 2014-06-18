@@ -31,8 +31,9 @@
 	</article>
 </div>
 
-<script>
+<script type="text/javascript">
 	var map,marker,markers,latlng,contentString,infoWindow,bounds,boundsPoint,mapOptions,timeoutInt;
+	var markerSrc = {$getGroupMarkerArray};
 	function initialize() {
 		markers = [];
 		// defines map options
@@ -46,39 +47,34 @@
 		map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 		bounds = new google.maps.LatLngBounds();
 		timeoutInt = 0;
-		<% loop getGroupMarkerArray %>
+		var i = 0;
+		<% loop getGroupMarkers %>
 			setTimeout(function() {
 				// creates new map point
-				latlng = new google.maps.LatLng('{$Lat}', '{$Lng}');
-				
+				latlng = new google.maps.LatLng(markerSrc[i][4], markerSrc[i][5]);
+				var infowindow = new google.maps.InfoWindow({
+					content:'<p><strong>'+markerSrc[i][0]+'</strong><br>This is a <strong>'+markerSrc[i][1]+'</strong> group based in '+markerSrc[i][2]+'</p>',
+					maxWidth:200
+				});
 				// creates new marker
-				marker = new google.maps.Marker({
+				var marker = new google.maps.Marker({
 					position: latlng, 
 					map: map, 
 					animation: google.maps.Animation.DROP,
-					title: '{$GroupName}'
+					title: markerSrc[i][0],
+					icon: markerSrc[i][3]
 				});
-				switch('{$GroupBranch}') {
-					case 'Air':
-						marker.setIcon('../themes/simple/images/map_icons/paleblue_Marker.png');
-					break;
-					case 'Land':
-						marker.setIcon('../themes/simple/images/map_icons/green_Marker.png');
-					break;
-					default:
-						marker.setIcon('../themes/simple/images/map_icons/blue_Marker.png');
-				}
-				markers.push(marker);
-				
-				// need infowindows
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.open(map,marker);
+				});
 				
 				// updates map bounds
 				bounds.extend(latlng);
 				map.fitBounds(bounds);
+				++i;
 			}, timeoutInt * 150);
 			timeoutInt++;
 		<% end_loop %>
-		
 	}
 
 	google.maps.event.addDomListener(window, 'load', initialize);

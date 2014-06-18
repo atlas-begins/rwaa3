@@ -23,7 +23,7 @@ Change it, enhance it and most importantly enjoy it!
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 	
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	
 	<% require themedCSS('reset') %>
 	<% require themedCSS('typography') %>
@@ -32,6 +32,7 @@ Change it, enhance it and most importantly enjoy it!
 	<% require themedCSS('rwaa') %>
 	<% require themedCSS('calendar') %>
 	<link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />
+	
 </head>
 <body class="$ClassName<% if not $Menu(2) %> no-sidebar<% end_if %>">
 <% include Header %>
