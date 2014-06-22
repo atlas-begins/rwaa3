@@ -8,6 +8,7 @@ class CalendarEntry extends DataObject{
  		, "Time" => "Text"
  		, "Description" => "Text"
  		, 'AltLocation' => 'Varchar(128)'
+ 		, 'EventType' => "Enum(array('Regatta','Water Activities Meeting','Swimming Sports','Prizegiving','Raft Race','ANZAC Day','Other'))"
  	);
  	
  	static $has_one = array(
@@ -47,6 +48,9 @@ class CalendarEntry extends DataObject{
 			}
 			$seasonField = new DropdownField("SeasonID", "Sailing season", $allSeasonsMap);
 				$seasonField->setEmptyString('(Select a season)');
+			$typeMap = singleton('CalendarEntry')->dbObject('EventType')->enumValues();
+			$eventTypeField = new DropdownField("EventType", "What type of event is this?", $typeMap);
+				$eventTypeField->setEmptyString('(Select an Event type)');
 				
 			$datefield = new DateField('StartDate','Start date (DD/MM/YYYY)*');
 			$datefield->setConfig('showcalendar', true);
@@ -66,6 +70,7 @@ class CalendarEntry extends DataObject{
 				$locationField->setEmptyString('(Select a Location)');
 			
 			$fields->addFieldToTab('Root.Main', $seasonField);
+			$fields->addFieldToTab('Root.Main', $eventTypeField);
 			$fields->addFieldToTab('Root.Main', new TextField('Title',"Event Title*"));
 			$fields->addFieldToTab('Root.Main', $groupField);
 			$fields->addFieldToTab('Root.Main', $datefield);

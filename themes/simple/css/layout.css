@@ -119,7 +119,7 @@ body {
 	    min-width: 860px; /* media queries are not supported in ie7/8 without a polyfill */
 	}
 	.main {
-	    padding: 40px 0 60px;
+	    padding: 15px 0 60px;
 	    min-height: 300px;
 	}
 	.inner {
@@ -573,7 +573,7 @@ body h1 span.amp {
 /**** GOOGLE MAPS ****/
 #map_canvas {
         min-width: 400px;
-        height: 400px;
+        height: 600px;
         background: #ffffff;;
         clear: both;
       }
