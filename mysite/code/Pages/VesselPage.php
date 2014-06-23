@@ -152,6 +152,7 @@ class VesselPage_Controller extends VesselHolder_Controller {
     		$result->VesselNumber = $form['VesselNumber'];
     		$result->VesselYear = $form['VesselYear'];
    			$result->VesselConstruction = $form['VesselConstruction'];
+   			$result->VesselRig = $form['VesselRig'];
    			$result->ScoutGroupID = $form['ScoutGroupID'];
    			$result->VesselSailCapacityMin = $form["VesselSailCapacityMin"];
 	    	$result->VesselSailCapacityMax = $form["VesselSailCapacityMax"];

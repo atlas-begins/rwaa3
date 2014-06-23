@@ -14,6 +14,7 @@ class SSVessel extends DataObject {
 		, 'VesselConstruction' => "Enum(array('wood','fibreglass','RIB','plastic'))"
 		, 'VesselClass' => "Enum(array('cutter','kayak','dinghy','sunburst','crown','whaler','RIB','optimist'))"
 		, 'VesselActive' => 'Boolean'
+		, 'VesselRig' => "Enum(array('none','Bermuda','Gunter','other'))"
 	);
 
 	private static $has_one = array(

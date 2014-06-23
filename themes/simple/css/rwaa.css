@@ -91,6 +91,9 @@ div.left {
 .ObjectTable {
 	margin-right: 30px;
 }
+.ObjectTable table.left {
+	margin-right: 15px;
+}
 .fullWidth {
 	min-width: 70%;
 }

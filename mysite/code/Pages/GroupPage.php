@@ -91,15 +91,7 @@ class GroupPage_Controller extends GroupHolder_Controller {
     	} else {
     		$result = SSGroup::get()->byID($data['ID']);
     	}
-    	$result->GroupName = $data['GroupName'];
-    	$result->GroupAcronym = $data['GroupAcronym'];
-    	$result->GroupBranch = $data['GroupBranch'];
-    	$result->GroupLocality = $data['GroupLocality'];
-    	$result->GroupWebsite = $data['GroupWebsite'];
-    	$result->GroupPhone = $data['GroupPhone'];
-    	$result->GroupScoutMeet = $data['GroupScoutMeet'];
-    	$result->GroupVenturerMeet = $data['GroupVenturerMeet'];
-    	$result->GroupZoneID = $data['GroupZoneID'];
+    	$form->saveInto($result);
     	$result->write();
     	$returnURL = GroupHolder::getGroupActionPageLink('view') . '/' . $result->ID;
     	return $this->redirect($returnURL);
