@@ -73,5 +73,6 @@ class Page_Controller extends ContentController {
 
 	public function init() {
 		parent::init();
+		Requirements::javascript('themes/simple/javascript/tabcontent.js');
 	}
 }

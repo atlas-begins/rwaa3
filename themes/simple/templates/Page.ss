@@ -22,8 +22,10 @@ Change it, enhance it and most importantly enjoy it!
 	<!--[if lt IE 9]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="themes/simple/javascript/rwaa-query.js"></script>
 	
 	<% require themedCSS('reset') %>
 	<% require themedCSS('typography') %>
@@ -31,7 +33,7 @@ Change it, enhance it and most importantly enjoy it!
 	<% require themedCSS('layout') %>
 	<% require themedCSS('rwaa') %>
 	<% require themedCSS('calendar') %>
-	<link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />
+	<link rel="shortcut icon" href="{$ThemeDir}/images/favicon.ico" />
 	
 </head>
 <body class="$ClassName<% if not $Menu(2) %> no-sidebar<% end_if %>">
@@ -47,5 +49,10 @@ Change it, enhance it and most importantly enjoy it!
 <%-- Please move: Theme javascript (below) should be moved to mysite/code/page.php  --%>
 <script type="text/javascript" src="{$ThemeDir}/javascript/script.js"></script>
 
+	<script>
+		$(function() {
+			$( "#tabs" ).tabs();
+		});
+	</script>
 </body>
 </html>
