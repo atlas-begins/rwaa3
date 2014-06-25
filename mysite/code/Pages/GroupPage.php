@@ -21,6 +21,16 @@ class GroupPage extends GroupHolder {
 		return false;
     }
     
+	public function writeGroupNote($sgroup = null, $msg = null) {
+    	if($sgroup && $msg) {
+    		$result = new SSNote();
+    		$result->NoteContents = $msg;
+    		$result->AuthorID = Member::currentUser()->ID;
+    		$result->GroupID = $sgroup->ID;
+    		$result->write();
+    	}
+    	return true;
+    }
 }
 
 class GroupPage_Controller extends GroupHolder_Controller {
@@ -31,8 +41,10 @@ class GroupPage_Controller extends GroupHolder_Controller {
 		, 'edit' => true
 		, 'GroupForm' => true
 		, 'PersonForm' => true
+		, 'GroupNoteForm' => true
 		, 'doSaveGroup' => true
 		, 'doSavePerson' => true
+		, 'doSaveGroupNote' => true
 		, 'addPerson' => true
 	);
 	
@@ -83,16 +95,31 @@ class GroupPage_Controller extends GroupHolder_Controller {
 		return $form;
     }
     
+	public function GroupNoteForm() {
+    	$fields = new FieldList();
+    	$fields->push(new TextareaField('NoteContents', ''));
+    	$fields->push(new HiddenField('GroupID', 'GroupID', $this->request->param('ID')));
+    	$actions = new FieldList(
+            new FormAction('doSaveGroupNote', 'Save note')
+        );
+        $validator = new RequiredFields();
+		$form = new Form($this, 'GroupNoteForm', $fields, $actions, $validator);
+		return $form;
+    }
+    
     // FORM ACTIONS
     public function doSaveGroup($data, $form) {
     	$groupID = isset($data['ID']) ? (int) $data['ID'] : false;
     	if(!$groupID) {
     		$result = new SSGroup();
+    		$msg = 'Created group record';
     	} else {
     		$result = SSGroup::get()->byID($data['ID']);
+    		$msg = 'Edited group record';
     	}
     	$form->saveInto($result);
     	$result->write();
+    	self::writeGroupNote($result, $msg);
     	$returnURL = GroupHolder::getGroupActionPageLink('view') . '/' . $result->ID;
     	return $this->redirect($returnURL);
     }
@@ -116,7 +143,14 @@ class GroupPage_Controller extends GroupHolder_Controller {
 	    	return $this->redirect($returnURL);
     	}
     }
-	
+
+    public function doSaveGroupNote($data, $form) {
+    	if($result = SSGroup::get_by_id("SSGroup", $form['GroupID'])) {
+    		self::writeGroupNote($result, $form['NoteContents']);
+    		$returnURL = $this->Link() . 'view/' . $form['GroupID'];
+    	}
+    	return $this->redirect($returnURL);
+    }
     // ACTIONS
     public function view($request) {
     	if($result = SSGroup::get()->byID($this->request->param('ID'))) {

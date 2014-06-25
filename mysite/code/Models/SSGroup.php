@@ -22,7 +22,7 @@ class SSGroup extends DataObject {
 	static $has_many = array(
 		'GroupVessels' => 'SSVessel'
 		, 'GroupPeople' => 'SSPerson'
-		, 'VesselNote' => 'SSNote'
+		, 'GroupNote' => 'SSNote'
 	);
 	
 	private static $defaults = array(
@@ -45,5 +45,9 @@ class SSGroup extends DataObject {
 			return $result->Link() . 'add/Vessel';
 		}
 		return false;
+	}
+	
+	public function sortedGroupNote() {
+		return $results = $this->GroupNote()->sort("Created", "DESC");
 	}
 }

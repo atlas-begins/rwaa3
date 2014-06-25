@@ -1,4 +1,6 @@
-<% include SideBar %>
+<aside class="sidebar unit size1of4">
+	<% include SecondaryNav %>
+</aside>
 <div class="content-container unit size3of4 lastUnit">
 	<article>
 		<h1>$Title</h1>

@@ -65,4 +65,8 @@ class SSVessel extends DataObject {
 	public static function vesselCapacityArray() {
 		return array('0'=>'0', '1'=>'1', '2'=>'2', '3'=>'3', '7'=>'7', '10'=>'10');
 	}
+	
+	public function sortedVesselNote() {
+		return $results = $this->VesselNote()->sort("Created", "DESC");
+	}
 }

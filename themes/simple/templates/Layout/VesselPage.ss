@@ -1,4 +1,6 @@
-<% include SideBar %>
+<aside class="sidebar unit size1of4">
+	<% include SecondaryNav %>
+</aside>
 <div class="content-container unit size3of4 lastUnit">
 	<article>
 		<h1>$Title</h1>
@@ -74,10 +76,12 @@
 								</thead>
 								<tbody>
 									<% if CurrentMember %>
-										<tr><td colspan="2"><a href="#" title="Add note for this vessel" class="addObject" id="noteFormToggle">add note</a>
-										<div id="noteForm" style="display: none;">$VesselNoteForm</div>
-										</td></tr>
+										<tr><td colspan="2">$VesselNoteForm</td></tr>
 									<% end_if %>
+									<% loop sortedVesselNote %>
+										<tr><td nowrap><% loop Author %>$FirstName $Surname<% end_loop %><br>$Created.Nice</td>
+										<td>$NoteContents</td></tr>
+									<% end_loop %>
 								</tbody>
 							<% end_loop %>
 							</table>
@@ -101,8 +105,6 @@
 			            </div>
 			        </div>
 		        </div>
-				
-				
 			</div>
 		</div>
 	</article>

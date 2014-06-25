@@ -49,35 +49,34 @@ class VesselHolder extends Page {
 }
 class VesselHolder_Controller extends Page_Controller {
 	private static $allowed_actions = array (
-		'xVesselForm' => true
+		'VesselSearchForm' => TRUE
+		, 'doVesselSearch' => TRUE
 	);
-    
-	public function xVesselForm($vtype) {
-		$fields = singleton('SSVessel')->getFrontendFields();
-		$allGroupsMap = DataList::create("SSGroup")->sort("GroupName")->map("ID", "GroupName");
-		if($vtype == 'Vessel') {} else {
-			$vSpecs = SSVessel::vesselMinMax($vtype);
-			$fields->replaceField('VesselSailCapacityMin', new HiddenField("VesselSailCapacityMin", "ID", $vSpecs['MinSail']));
-			$fields->replaceField('VesselSailCapacityMax', new HiddenField("VesselSailCapacityMax", "ID", $vSpecs['MaxSail']));
-			$fields->replaceField('VesselOarCapacityMin', new HiddenField("VesselOarCapacityMin", "ID", $vSpecs['MinOar']));
-			$fields->replaceField('VesselOarCapacityMax', new HiddenField("VesselOarCapacityMax", "ID", $vSpecs['MaxOar']));
-			$fields->replaceField('VesselMotorCapacityMin', new HiddenField("VesselMotorCapacityMin", "ID", $vSpecs['MinMotor']));
-			$fields->replaceField('VesselMotorCapacityMax', new HiddenField("VesselMotorCapacityMax", "ID", $vSpecs['MaxMotor']));
-			$fields->replaceField('VesselClass', new HiddenField("VesselClass", "Vessel Class", strtolower($vtype)));
-		}
-		$fields->replaceField('VesselActive', new HiddenField("VesselActive", "Vessel Active", '1'));
-		$fields->removeByName('ScoutGroupID');
-		$groupField = new DropdownField('ScoutGroupID', 'Scout Group', $allGroupsMap);
-			$groupField->setEmptyString('(Select a Group)');
-			$fields->push($groupField);
-		$actions = new FieldList(
-            new FormAction('doSaveVessel', 'Save changes')
-        );
-        $validator = new RequiredFields();
-		$form = new Form($this, 'VesselForm', $fields, $actions, $validator);
-		if($this->urlParams['ID'] && $result = SSVessel::get()->byID($this->urlParams['ID'])) {
-			$form->loadDataFrom($result);
-		}
+	
+	public function VesselSearchForm() {
+		$actions = new FieldList(new FormAction('doVesselSearch', 'search'));
+		$fields = new FieldList(new TextField('vesselClue', 'Search by name, number or class:'));
+		$validator = new RequiredFields();
+		$form = new Form($this, 'VesselSearchForm', $fields, $actions, $validator);
 		return $form;
-    }
+	}
+	
+	public function doVesselSearch($data, $form) {
+		// decide if we are searching by number or name
+		if(is_numeric($data['vesselClue'])) {
+			
+		} else {
+			
+		}
+		
+		$resultsArray = array();
+		$resultsArray['ObjectAction'] = 'searchVessels';
+
+    	$resultsArray['Title'] = 'Vessels not found';
+    	$resultsArray['Content'] = '<p>Sorry, we cannot locate records for any vessels by that name, number or class.</p><p>Please return to the <a href="' . $this->Link() . '" title="">main page</a> and try another search term.</p>';
+    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
+		
+		
+		
+	}
 }

@@ -50,6 +50,18 @@ class VesselPage extends VesselHolder {
 		}
 		return $vSpecs;
 	}
+	
+    public function writeVesselNote($vessel = null, $msg = null) {
+    	if($vessel && $msg) {
+    		$result = new SSNote();
+    		$result->NoteContents = $msg;
+    		$result->AuthorID = Member::currentUser()->ID;
+    		$result->GroupID = $vessel->ScoutGroupID;
+    		$result->VesselID = $vessel->ID;
+    		$result->write();
+    	}
+    	return true;
+    }
 }
 class VesselPage_Controller extends VesselHolder_Controller {
 
@@ -131,7 +143,8 @@ class VesselPage_Controller extends VesselHolder_Controller {
     
 	public function VesselNoteForm() {
     	$fields = new FieldList();
-    	$fields->push(new TextField('VesselNote', ''));
+    	$fields->push(new TextareaField('NoteContents', ''));
+    	$fields->push(new HiddenField('VesselID', 'Vessel ID', $this->request->param('ID')));
     	$actions = new FieldList(
             new FormAction('doSaveVesselNote', 'Save note')
         );
@@ -163,6 +176,7 @@ class VesselPage_Controller extends VesselHolder_Controller {
     		$imageFolder = Folder::find_or_make('Uploads/Vessels/Vessel' . $result->ID);
 			$result->VesselGalleryID = $imageFolder->ID;
 			$result->write();
+			self::writeVesselNote($result, 'Edited vessel record');
     	} else {
     		if($form['VesselClass']) {
     			$vcaps = self::vesselMinMax($form['VesselClass']);
@@ -183,12 +197,21 @@ class VesselPage_Controller extends VesselHolder_Controller {
 	    		$imageFolder = Folder::find_or_make('Uploads/Vessels/Vessel' . $result->ID);
 				$result->VesselGalleryID = $imageFolder->ID;
 				$result->write();
+				self::writeVesselNote($result, 'Created vessel record');
     		} else {
 	    		return $this->redirect($returnURL);
     		}
     	}
 		$returnURL .= 'view/' . $result->ID;
 		return $this->redirect($returnURL);
+    }
+    
+    public function doSaveVesselNote($form, $data) {
+    	if($result = SSVessel::get_by_id("SSVessel", $form['VesselID'])) {
+    		self::writeVesselNote($result, $form['NoteContents']);
+    		$returnURL = $this->Link() . 'view/' . $form['VesselID'];
+    	}
+    	return $this->redirect($returnURL);
     }
 	
     // OTHER ACTIONS
