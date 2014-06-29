@@ -27,6 +27,11 @@ class PersonHolder extends Page {
 		}
 		return false;
     }
+    
+    public function getLoosePeople() {
+    	if($results = DataList::create("SSPerson")->where("\"ScoutGroupID\" = '0'")) return $results;
+    	return false;
+    }
 }
 class PersonHolder_Controller extends Page_Controller {
 	

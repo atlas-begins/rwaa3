@@ -111,7 +111,7 @@
 								</thead>
 								<tbody>
 									<% if CurrentMember %>
-										<tr><td colspan="2">$GroupNoteForm</td></tr>
+										<tr><td colspan="2"><% if GroupNoteForm %>gnf<% else %>noform<% end_if %></td></tr>
 									<% end_if %>
 									<% loop sortedGroupNote %>
 										<tr><td nowrap><% loop Author %>$FirstName $Surname<% end_loop %><br>$Created.Nice</td>

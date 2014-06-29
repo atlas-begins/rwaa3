@@ -25,6 +25,7 @@ class PersonPage_Controller extends PersonHolder_Controller {
 		, 'edit' => true
 		, 'doSavePerson' => true
 		, 'PersonForm' => true
+		, 'PersonNoteForm' => true
 	);
 	
 	// FORMS
@@ -63,6 +64,19 @@ class PersonPage_Controller extends PersonHolder_Controller {
 		return $form;
     }
     
+	public function PersonNoteForm() {
+    	$fields = new FieldList();
+    	$fields->push(new TextareaField('NoteContents', ''));
+    	$fields->push(new HiddenField('PersonID', 'Person ID', $this->request->param('ID')));
+    	$actions = new FieldList(
+            new FormAction('doSavePersonNote', 'Save note')
+        );
+        $validator = new RequiredFields();
+		$form = new Form($this, 'PersonNoteForm', $fields, $actions, $validator);
+		
+		return $form;
+    }
+    
     // FORMS ACTIONS
 	public function doSavePerson($data) {
     	$groupID = isset($data['ScoutGroupID']) ? (int) $data['ScoutGroupID'] : false;
@@ -71,14 +85,22 @@ class PersonPage_Controller extends PersonHolder_Controller {
     	} else {
     		$result = SSPerson::get()->byID($data['ID']);
     	}
+    	if(isset($data['PersonActive'])) {
+    		$result->PersonActive = true;
+    	} else {
+    		$result->PersonActive = false;
+    	}
+    	if(isset($data['ScoutGroupID'])) {
+    		$result->ScoutGroupID = $groupID;
+    	} else {
+    		$result->ScoutGroupID = 0;
+    	}
     	$result->FirstName = $data['FirstName'];
 	   	$result->Surname = $data['Surname'];
-	   	$result->ScoutGroupID = $groupID;
-	   	$result->PersonActive = $data['PersonActive'];
 	   	$result->write();
+	   	self::clearRoles($result->ID);
     	if(isset($data['Roles'])) {
     		$pID = $result->ID;
-    		self::clearRoles($pID);
     		foreach($data['Roles'] as $key => $value) {
     			DB::query("INSERT INTO SSPerson_PersonRole(SSPersonID,SSRoleID) VALUES('$pID', '$key')");
     		}

@@ -2,12 +2,6 @@
 class GroupPage extends GroupHolder {
 	
 	private static $icon = array("mysite/images/treeicons/Group.png");
-
-	private static $db = array(
-	);
-
-	private static $has_one = array(
-	);
 	
 	public function getCMSFields() {
         $fields = parent::getCMSFields();
@@ -41,7 +35,7 @@ class GroupPage_Controller extends GroupHolder_Controller {
 		, 'edit' => true
 		, 'GroupForm' => true
 		, 'PersonForm' => true
-		, 'GroupNoteForm' => true
+		//, 'GroupNoteForm' => true
 		, 'doSaveGroup' => true
 		, 'doSavePerson' => true
 		, 'doSaveGroupNote' => true
@@ -96,15 +90,19 @@ class GroupPage_Controller extends GroupHolder_Controller {
     }
     
 	public function GroupNoteForm() {
-    	$fields = new FieldList();
+		/*
+    	$fields = singleton('SSNote')->getFrontendFields();
+    	$fields->removeByName('VesselID');
     	$fields->push(new TextareaField('NoteContents', ''));
-    	$fields->push(new HiddenField('GroupID', 'GroupID', $this->request->param('ID')));
+    	$fields->replaceField('GroupID', new HiddenField('GroupID', 'Group ID', $this->request->param('ID')));
     	$actions = new FieldList(
             new FormAction('doSaveGroupNote', 'Save note')
         );
         $validator = new RequiredFields();
 		$form = new Form($this, 'GroupNoteForm', $fields, $actions, $validator);
 		return $form;
+		*/
+		return true;
     }
     
     // FORM ACTIONS
