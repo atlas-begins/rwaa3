@@ -178,8 +178,8 @@ body {
 
 	.search-bar {
 		position: absolute;
-		right: 13px;
-		top: 12px;
+		right: 0;
+		top: 0;
 	}
 		.search-bar .field {
 			margin: 0;
@@ -191,16 +191,16 @@ body {
 		    color: #888;
 		    margin: 0;
 		    border: none;
-		    -moz-border-radius: 14px;
-		    border-radius: 14px;
+		    -moz-border-radius: 5px;
+		    border-radius: 5px;
 		    background: #fff;
 		}
 
 		.search-bar form input.action { /* positions the search button icon over the top of the search input */
 		    font-size: 14px;
 		    position: absolute;
-		    right: 5px;
-		    top: 0;
+		    right: 10px;
+		    top: 10px;
 		    cursor: pointer;
 		    border: none;
 		    padding: 5px;

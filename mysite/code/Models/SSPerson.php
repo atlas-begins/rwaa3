@@ -16,6 +16,10 @@ class SSPerson extends DataObject {
 		'ScoutGroup' => 'SSGroup'
 	);
 	
+	private static $has_many = array(
+		'PersonNote' => 'SSNote'
+	);
+	
 	private static $defaults = array(
 		'PersonActive' => 1
 	);
@@ -26,4 +30,8 @@ class SSPerson extends DataObject {
 		}
 		return false;
 	}
+	public function sortedPersonNote() {
+		return $results = $this->PersonNote()->sort("Created", "DESC");
+	}
+	
 }

@@ -97,7 +97,6 @@
 								<% if CurrentMember %>
 									<tr><td colspan="3"><a href="$getGroupAddVesselLink" title="Add an activity to this group" class="addObject">add an activity</a></td></tr>
 								<% end_if %>
-
 							</tbody>
 							</table>
 						<% end_loop %>
@@ -105,21 +104,21 @@
 		    		</div>
 		    		<div id="viewtab5">
 		        		<table>
-			            	<% loop Group %>
-								<thead>
-									<tr><th colspan="2">Notes</th></tr>
-								</thead>
-								<tbody>
-									<% if CurrentMember %>
-										<tr><td colspan="2"><% if GroupNoteForm %>gnf<% else %>noform<% end_if %></td></tr>
-									<% end_if %>
+							<thead>
+								<tr><th colspan="2">Notes</th></tr>
+							</thead>
+							<tbody>
+								<% if CurrentMember %>
+									<tr><td colspan="2">$GroupNoteForm</td></tr>
+								<% end_if %>
+								<% loop Group %>
 									<% loop sortedGroupNote %>
 										<tr><td nowrap><% loop Author %>$FirstName $Surname<% end_loop %><br>$Created.Nice</td>
 										<td>$NoteContents</td></tr>
 									<% end_loop %>
-								</tbody>
-							<% end_loop %>
-							</table>
+								<% end_loop %>
+							</tbody>
+						</table>
 		    			<div class="clear"></div>
 		    		</div>
 		    	</div>

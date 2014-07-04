@@ -35,18 +35,20 @@ class GroupPage_Controller extends GroupHolder_Controller {
 		, 'edit' => true
 		, 'GroupForm' => true
 		, 'PersonForm' => true
-		//, 'GroupNoteForm' => true
+		, 'GroupNoteForm' => true
 		, 'doSaveGroup' => true
 		, 'doSavePerson' => true
 		, 'doSaveGroupNote' => true
 		, 'addPerson' => true
+		, 'doCancel' => true
 	);
-	
+
 	// FORMS
 	public function GroupForm() {
 		$allZonesMap = SSZone::get()->sort("ZoneName")->map("ID", "ZoneName");
 		$fields = singleton('SSGroup')->getFrontendFields();
 		$fields->removeByName('GroupZoneID');
+		$returnURL = $this->Link() . 'view/' . $this->urlParams['ID'];
 		if($this->urlParams['ID']) {
 			$idField = new HiddenField("ID", "ID", $this->urlParams['ID']);
 			$fields->push($idField);
@@ -90,19 +92,15 @@ class GroupPage_Controller extends GroupHolder_Controller {
     }
     
 	public function GroupNoteForm() {
-		/*
-    	$fields = singleton('SSNote')->getFrontendFields();
-    	$fields->removeByName('VesselID');
+    	$fields = new FieldList();
     	$fields->push(new TextareaField('NoteContents', ''));
-    	$fields->replaceField('GroupID', new HiddenField('GroupID', 'Group ID', $this->request->param('ID')));
+    	$fields->push(new HiddenField('GroupID', 'Group ID', $this->request->param('ID')));
     	$actions = new FieldList(
             new FormAction('doSaveGroupNote', 'Save note')
         );
         $validator = new RequiredFields();
 		$form = new Form($this, 'GroupNoteForm', $fields, $actions, $validator);
 		return $form;
-		*/
-		return true;
     }
     
     // FORM ACTIONS
@@ -141,14 +139,22 @@ class GroupPage_Controller extends GroupHolder_Controller {
 	    	return $this->redirect($returnURL);
     	}
     }
-
-    public function doSaveGroupNote($data, $form) {
+    
+	public function doSaveGroupNote($form, $data) {
     	if($result = SSGroup::get_by_id("SSGroup", $form['GroupID'])) {
     		self::writeGroupNote($result, $form['NoteContents']);
     		$returnURL = $this->Link() . 'view/' . $form['GroupID'];
     	}
     	return $this->redirect($returnURL);
     }
+    
+	public function doCancel($form, $data) {
+    	if($result = SSGroup::get_by_id("SSGroup", $form['ID'])) {
+    		$returnURL = $this->Link() . 'view/' . $form['ID'];
+    	}
+    	return $this->redirect($returnURL);
+    }
+
     // ACTIONS
     public function view($request) {
     	if($result = SSGroup::get()->byID($this->request->param('ID'))) {

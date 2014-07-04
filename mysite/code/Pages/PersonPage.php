@@ -16,6 +16,17 @@ class PersonPage extends PersonHolder {
 		DB::query("DELETE FROM SSPerson_PersonRole WHERE SSPersonID = '$pID'");
 		return true;
 	}
+    
+	public function writePersonNote($person = null, $msg = null) {
+    	if($person && $msg) {
+    		$result = new SSNote();
+    		$result->NoteContents = $msg;
+    		$result->AuthorID = Member::currentUser()->ID;
+    		$result->PersonID = $person->ID;
+    		$result->write();
+    	}
+    	return true;
+    }
 }
 class PersonPage_Controller extends PersonHolder_Controller {
 
@@ -26,6 +37,7 @@ class PersonPage_Controller extends PersonHolder_Controller {
 		, 'doSavePerson' => true
 		, 'PersonForm' => true
 		, 'PersonNoteForm' => true
+		, 'doSavePersonNote' => true
 	);
 	
 	// FORMS
@@ -82,8 +94,10 @@ class PersonPage_Controller extends PersonHolder_Controller {
     	$groupID = isset($data['ScoutGroupID']) ? (int) $data['ScoutGroupID'] : false;
     	if(!$data['ID']) {
     		$result = new SSPerson();
+    		$msg = 'Created new person record';
     	} else {
     		$result = SSPerson::get()->byID($data['ID']);
+    		$msg = 'Edited person record';
     	}
     	if(isset($data['PersonActive'])) {
     		$result->PersonActive = true;
@@ -98,6 +112,7 @@ class PersonPage_Controller extends PersonHolder_Controller {
     	$result->FirstName = $data['FirstName'];
 	   	$result->Surname = $data['Surname'];
 	   	$result->write();
+	   	self::writePersonNote($result, $msg);
 	   	self::clearRoles($result->ID);
     	if(isset($data['Roles'])) {
     		$pID = $result->ID;
@@ -107,6 +122,14 @@ class PersonPage_Controller extends PersonHolder_Controller {
     	}
 	   	$returnURL = PersonHolder::getPersonActionPageLink('view') . '/' . $result->ID;
 	   	return $this->redirect($returnURL);
+    }
+    
+	public function doSavePersonNote($form, $data) {
+    	if($result = SSPerson::get_by_id("SSPerson", $form['PersonID'])) {
+    		self::writePersonNote($result, $form['NoteContents']);
+    		$returnURL = $this->Link() . 'view/' . $form['PersonID'];
+    	}
+    	return $this->redirect($returnURL);
     }
 	
     public function view($request) {

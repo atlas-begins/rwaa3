@@ -16,15 +16,17 @@
 					<% end_loop %>
 				</div>
 				<h1>LNI Statistics</h1>
-				<% loop HomePageStats %>
-					<table>
-					<tr><td>Zones:</a></td><td>$ZoneCount</td></tr>
-					<tr><td>Scout groups:</a></td><td>$GroupCount</td></tr>
-					<tr><td>Scout vessels (active):</td><td>$VesselCount</td></tr>
-					<tr><td>People (active):</td><td>$PersonCount</td></tr>
-					<tr><td>Vessel certificates issued this season:</td><td>$CertCount</td></tr>
-					</table>
-				<% end_loop %>
+				<div class="opaque">
+					<% loop HomePageStats %>
+						<table>
+						<tr><td>Zones:</a></td><td>$ZoneCount</td></tr>
+						<tr><td>Scout groups:</a></td><td>$GroupCount</td></tr>
+						<tr><td>Scout vessels (active):</td><td>$VesselCount</td></tr>
+						<tr><td>People (active):</td><td>$PersonCount</td></tr>
+						<tr><td>Vessel certificates issued this season:</td><td>$CertCount</td></tr>
+						</table>
+					<% end_loop %>
+				</div>
 			</div>
 		</div>
 	</article>

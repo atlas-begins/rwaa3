@@ -59,7 +59,6 @@
 			            </div>
 			            <div id="viewtab3">
 			            	<table>
-			            	<% loop Person %>
 								<thead>
 									<tr><th colspan="2">Notes</th></tr>
 								</thead>
@@ -67,12 +66,13 @@
 									<% if CurrentMember %>
 										<tr><td colspan="2">$PersonNoteForm</td></tr>
 									<% end_if %>
-									<% loop sortedPersonNote %>
-										<tr><td nowrap><% loop Author %>$FirstName $Surname<% end_loop %><br>$Created.Nice</td>
-										<td>$NoteContents</td></tr>
+									<% loop Person %>
+										<% loop sortedPersonNote %>
+											<tr><td nowrap><% loop Author %>$FirstName $Surname<% end_loop %><br>$Created.Nice</td>
+											<td>$NoteContents</td></tr>
+										<% end_loop %>
 									<% end_loop %>
 								</tbody>
-							<% end_loop %>
 							</table>
 			            	<div class="clear"></div>
 			            </div>

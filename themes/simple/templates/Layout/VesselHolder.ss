@@ -1,6 +1,5 @@
 <aside class="sidebar unit size1of4">
 	<% include SecondaryNav %>
-	<% include VesselSearch %>
 </aside>
 <div class="content-container unit size4of5 lastUnit">
 	<article>
