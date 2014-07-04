@@ -10,5 +10,6 @@ class SSNote extends DataObject {
         , 'Group' => 'SSGroup'
         , 'Person' => 'SSPerson'
         , 'Author' => 'Member'
+        , 'Certificate' => 'SSVesselCert'
     );
 }

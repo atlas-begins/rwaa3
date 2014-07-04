@@ -49,17 +49,18 @@
 								</thead>
 								<tbody>
 									<% if CurrentMember %>
-										<tr><td colspan="4"><a href="$getCertActionPageLink(add)" title="Add a certificate" class="addObject">add a certificate</a></td></tr>
+										<tr><td colspan="5"><a href="$getCertActionPageLink(add)" title="Add a certificate" class="addObject">add a certificate</a></td></tr>
 									<% end_if %>
 									<% loop getVesselCertificates %>
 										<tr>
 											<td><% loop SailingSeason %>$Season<% end_loop %></td>
+											<td><% if CertValid %><img src="{$ThemeDir}/images/valid.png" alt="valid" class="icon" /><% else %><img src="{$ThemeDir}/images/invalid.png" alt="invalid" class="icon" /><% end_if %></td>
 											<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupAcronym</a><% end_loop %></td>
 											<% if VesselCertNumber %>
 												<td><a href="$getCertDetailPageLink" title="view detail about this certificate">$completeCertNumber</a></td>
 												<td><% loop VesselSurveyor %>Srv: $FirstName $Surname<% end_loop %></td>
 											<% else %>
-												<td colspan="3">not issued</td>
+												<td colspan="4">not issued</td>
 											<% end_if %>
 											</tr>
 									<% end_loop %>

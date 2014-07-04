@@ -237,7 +237,9 @@ body {
   font-style: italic;
   color: #888;
 }
-
+.typography img.icon {
+	border: 0;
+}
 
 /* BLOCKQUOTES
 -------------------------------------------- */

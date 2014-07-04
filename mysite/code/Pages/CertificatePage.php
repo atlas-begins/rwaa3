@@ -11,6 +11,17 @@ class CertificatePage extends CertificateHolder {
         $fields = parent::getCMSFields();
         return $fields;
     }
+    
+	public function writeCertNote($cert = null, $msg = null) {
+    	if($cert && $msg) {
+    		$result = new SSNote();
+    		$result->NoteContents = $msg;
+    		$result->AuthorID = Member::currentUser()->ID;
+    		$result->CertificateID = $cert->ID;
+    		$result->write();
+    	}
+    	return true;
+    }
 }
 class CertificatePage_Controller extends CertificateHolder_Controller {
     
@@ -18,7 +29,29 @@ class CertificatePage_Controller extends CertificateHolder_Controller {
 		'view' => true
 		, 'add' => 'ADMIN'
 		, 'edit' => 'ADMIN'
+		, 'CertNoteForm' => true
+		, 'doSaveCertNote' => true
 	);
+	
+	public function CertNoteForm() {
+    	$fields = new FieldList();
+    	$fields->push(new TextareaField('NoteContents', ''));
+    	$fields->push(new HiddenField('CertificateID', 'Certificate ID', $this->request->param('ID')));
+    	$actions = new FieldList(
+            new FormAction('doSaveCertNote', 'Save note')
+        );
+        $validator = new RequiredFields();
+		$form = new Form($this, 'CertNoteForm', $fields, $actions, $validator);
+		return $form;
+    }
+    
+	public function doSaveCertNote($form, $data) {
+    	if($result = SSVesselCert::get_by_id("SSVesselCert", $form['CertificateID'])) {
+    		self::writeCertNote($result, $form['NoteContents']);
+    		$returnURL = $this->Link() . 'view/' . $form['CertificateID'];
+    	}
+    	return $this->redirect($returnURL);
+    }
 	
     public function view($request) {
     	if($result = SSVesselCert::get()->byID($this->request->param('ID'))) {

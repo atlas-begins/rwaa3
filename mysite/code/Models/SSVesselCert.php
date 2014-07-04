@@ -5,8 +5,13 @@ class SSVesselCert extends DataObject {
 		'VesselCertNumber' => 'Int'
 		, 'SurveyDate' => 'Date'
 		, 'IssueDate' => 'Date'
+		, 'CertValid' => 'Boolean'
 	);
-	
+
+	private static $defaults = array(
+		'CertValid' => true
+	);
+
 	private static $has_one = array(
 		'VesselSurveyor' => 'SSPerson'
 		, 'ScoutVessel' => 'SSVessel'
@@ -15,7 +20,11 @@ class SSVesselCert extends DataObject {
 		, 'SurveyForm' => 'File'
 		, 'IssuedBy' => 'SSPerson'
 	);
-	
+
+	static $has_many = array(
+		'CertificateNote' => 'SSNote'
+	);
+
 	public function completeCertNumber($region = 'LNI') {
 		$season = SSSeason::get()->byID($this->SailingSeasonID);
 		return $region . '-' . $season->Season . '-' . $this->VesselCertNumber;
@@ -26,5 +35,9 @@ class SSVesselCert extends DataObject {
 			return $result->Link() . $action . '/' . $this->ID;
 		}
 		return false;
+	}
+
+	public function sortedCertNote() {
+		return $results = $this->CertificateNote()->sort("Created", "DESC");
 	}
 }
