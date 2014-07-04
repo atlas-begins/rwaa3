@@ -28,7 +28,7 @@
 									<tr><td>Currently with</td><td>
 										<% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupName ($GroupAcronym)</a><% end_loop %>
 									</td></tr>
-									<tr><td>Active?</td><td><% if VesselActive %>yes<% else %>no<% end_if %></td></tr>
+									<tr><td>Active?</td><td>$Top.validIcon($VesselActive)</td></tr>
 									<tr><td>Class</td><td>$VesselClass</td></tr>
 									<tr><td>Construction</td><td>$VesselConstruction</td></tr>
 									<tr><td>Rig</td><td>$VesselRig</td></tr>
@@ -45,7 +45,7 @@
 			                <table>
 			                <% loop Vessel %>
 								<thead>
-									<tr><th colspan="4">Survey certificates<% if VesselName %> for "$VesselName"<% end_if %></th></tr>
+									<tr><th colspan="5">Survey certificates<% if VesselName %> for "$VesselName"<% end_if %></th></tr>
 								</thead>
 								<tbody>
 									<% if CurrentMember %>
@@ -54,7 +54,7 @@
 									<% loop getVesselCertificates %>
 										<tr>
 											<td><% loop SailingSeason %>$Season<% end_loop %></td>
-											<td><% if CertValid %><img src="{$ThemeDir}/images/valid.png" alt="valid" class="icon" /><% else %><img src="{$ThemeDir}/images/invalid.png" alt="invalid" class="icon" /><% end_if %></td>
+											<td>$Top.validIcon($CertValid)</td>
 											<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupAcronym</a><% end_loop %></td>
 											<% if VesselCertNumber %>
 												<td><a href="$getCertDetailPageLink" title="view detail about this certificate">$completeCertNumber</a></td>
@@ -90,18 +90,19 @@
 			            </div>
 			            <div id="viewtab4">
 			                <table width="100%">
-			            	<% loop Vessel %>
-								<thead>
-									<tr><th colspan="2">Images<% if VesselName %> of "$VesselName"<% end_if %></th></tr>
-								</thead>
-								<tbody>
-								<% if CurrentMember %>
-									<tr><td colspan="2"><a href="#" title="Add image for this vessel" class="addObject" id="imgFormToggle">add image</a>
-									<div id="imgForm" style="display: none;">$VesselImageForm</div>
-									</td></tr>
-								<% end_if %>
-								</tbody>
+							<thead>
+								<tr><th colspan="2">Images<% if VesselName %><% loop Vessel %> of "$VesselName"<% end_loop %><% end_if %></th></tr>
+							</thead>
+							<tbody>
+							<% if CurrentMember %>
+								<tr><td colspan="2"><a href="#" title="Add image for this vessel" class="addObject" id="imgFormToggle">add image</a>
+								<div id="imgForm" style="display: none;">$VesselImageForm</div>
+								</td></tr>
+							<% end_if %>
+							<% loop Vessel %>
+								
 							<% end_loop %>
+							</tbody>
 							</table>
 			            </div>
 			        </div>

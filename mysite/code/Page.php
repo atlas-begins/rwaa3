@@ -63,6 +63,14 @@ class Page extends SiteTree {
 		}
 		return false;
     }
+    
+    public function validIcon($vstate = true) {
+    	if($vstate) {
+    		return '<img src="/themes/simple/images/valid.gif" alt="valid" class="icon" /> yes';
+    	} else {
+    		return '<img src="/themes/simple/images/invalid.gif" alt="invalid" class="icon" /> no';
+    	}
+    }
 }
 
 class Page_Controller extends ContentController {

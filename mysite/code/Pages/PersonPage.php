@@ -77,9 +77,11 @@ class PersonPage_Controller extends PersonHolder_Controller {
     }
     
 	public function PersonNoteForm() {
+		$person = SSPerson::get()->byID($this->request->param('ID'));
     	$fields = new FieldList();
     	$fields->push(new TextareaField('NoteContents', ''));
-    	$fields->push(new HiddenField('PersonID', 'Person ID', $this->request->param('ID')));
+    	$fields->push(new HiddenField('PersonID', 'Person ID', $person->ID));
+    	$fields->push(new HiddenField('GroupID', 'Group ID', $person->ScoutGroupID));
     	$actions = new FieldList(
             new FormAction('doSavePersonNote', 'Save note')
         );

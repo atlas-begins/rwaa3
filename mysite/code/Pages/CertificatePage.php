@@ -34,9 +34,12 @@ class CertificatePage_Controller extends CertificateHolder_Controller {
 	);
 	
 	public function CertNoteForm() {
+		$cert = SSVesselCert::get()->byID($this->request->param('ID'));
     	$fields = new FieldList();
     	$fields->push(new TextareaField('NoteContents', ''));
-    	$fields->push(new HiddenField('CertificateID', 'Certificate ID', $this->request->param('ID')));
+    	$fields->push(new HiddenField('CertificateID', 'Certificate ID', $cert->ID));
+    	$fields->push(new HiddenField('VesselID', 'Vessel ID', $cert->ScoutVesselID));
+    	$fields->push(new HiddenField('GroupID', 'Group ID', $cert->ScoutGroupID));
     	$actions = new FieldList(
             new FormAction('doSaveCertNote', 'Save note')
         );

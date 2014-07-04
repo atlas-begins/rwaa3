@@ -136,9 +136,11 @@ class VesselPage_Controller extends VesselHolder_Controller {
     }
     
 	public function VesselNoteForm() {
+		$vessel = SSVessel::get()->byID($this->request->param('ID'));
     	$fields = new FieldList();
     	$fields->push(new TextareaField('NoteContents', ''));
-    	$fields->push(new HiddenField('VesselID', 'Vessel ID', $this->request->param('ID')));
+    	$fields->push(new HiddenField('VesselID', 'Vessel ID', $vessel->ID));
+    	$fields->push(new HiddenField('GroupID', 'Group ID', $vessel->ScoutGroupID));
     	$actions = new FieldList(
             new FormAction('doSaveVesselNote', 'Save note')
         );
