@@ -95,6 +95,14 @@ class VesselPage_Controller extends VesselHolder_Controller {
 		// if string, assume refers to vessel class via add
 		if(is_numeric($vtype) && $result = SSVessel::get_by_id("SSVessel", $vtype)) {
 			$fields->push(new HiddenField("ID", "ID", $vtype));
+			$vActive = new OptionsetField(
+			   $name = "VesselActive",
+			   $title = "Vessel active?",
+			   $source = array(
+			      "0" => "no",
+			      "1" => "yes"
+			   ));
+			$fields->replaceField('VesselActive', $vActive);
 			$form->loadDataFrom($result);
 		} else {
 			$fields->replaceField('VesselActive', new HiddenField("VesselActive", "Vessel Active", '1'));
@@ -155,6 +163,7 @@ class VesselPage_Controller extends VesselHolder_Controller {
     	$vp = DataObject::get_one("VesselPage");
     	$returnURL = $vp->Link();
     	$vID = isset($form['ID']) ? (int) $form['ID'] : false;
+    	$vActive = isset($form['VesselActive']) ? (int) $form['VesselActive'] : false;
     	if($vID) {
     		$result = SSVessel::get()->byID($form['ID']);
     		$result->VesselName = $form['VesselName'];
@@ -171,6 +180,7 @@ class VesselPage_Controller extends VesselHolder_Controller {
 	   		$result->VesselMotorCapacityMax = $form["VesselMotorCapacityMax"];
     		$imageFolder = Folder::find_or_make('Uploads/Vessels/Vessel' . $result->ID);
 			$result->VesselGalleryID = $imageFolder->ID;
+			$result->VesselActive = $form["VesselActive"];
 			$result->write();
 			self::writeVesselNote($result, 'Edited vessel record');
     	} else {
@@ -192,6 +202,7 @@ class VesselPage_Controller extends VesselHolder_Controller {
 	    		$result->write();
 	    		$imageFolder = Folder::find_or_make('Uploads/Vessels/Vessel' . $result->ID);
 				$result->VesselGalleryID = $imageFolder->ID;
+				$result->VesselActive = $form["VesselActive"];
 				$result->write();
 				self::writeVesselNote($result, 'Created vessel record');
     		} else {

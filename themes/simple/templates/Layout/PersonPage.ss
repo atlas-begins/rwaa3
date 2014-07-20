@@ -7,9 +7,9 @@
 			<div class="left ObjectTable">
 				<div>
 					<ul class="tabs" data-persist="true">
-			            <li><a href="#viewtab1">Person details</a></li>
+			            <li><a href="#viewtab1"><% loop Person %>{$FirstName}'s details<% end_loop %></a></li>
 			            <li><a href="#viewtab2">Charge certs</a></li>
-			            <li><a href="#viewtab3">Notes</a></li>
+			            <li><a href="#viewtab3">Notes <% loop Person %>($sortedPersonNote.Count)<% end_loop %></a></li>
 			        </ul>
 					<div class="tabcontents">
 			            <div id="viewtab1">
@@ -23,9 +23,15 @@
 										<tr><td colspan="2"><a href="$getPersonDetailPageLink(edit)" title="Edit details for $FirstName $Surname" class="editObject">edit details</a></td></tr>
 									<% end_if %>
 									<tr><td>Currently with</td><td>
-										<% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupName</a><% end_loop %>
+										<% if ScoutGroup %>
+											<% loop ScoutGroup %>
+												<a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupName</a>
+											<% end_loop %>
+										<% else %>
+											Not affiliated with a Group
+										<% end_if %>
 									</td></tr>
-									<tr><td>Active?</td><td><% if PersonActive %>yes<% else %>no<% end_if %></td></tr>
+									<tr><td>Active?</td><td>$Top.validIcon($PersonActive)</td></tr>
 									<tr><td>Roles</td><td>
 										<% loop PersonRole %>
 											($RoleAbbrev) $Role<br>

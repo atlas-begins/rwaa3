@@ -11,7 +11,7 @@
 					<div>
 						<ul class="tabs" data-persist="true">
 				            <li><a href="#viewtab1">Certificate details</a></li>
-				            <li><a href="#viewtab2">Notes</a></li>
+				            <li><a href="#viewtab2">Notes <% loop Certificate %>($sortedCertNote.Count)<% end_loop %></a></li>
 				        </ul>
 				        <div class="tabcontents">
 				            <div id="viewtab1">
