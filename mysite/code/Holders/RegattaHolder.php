@@ -5,6 +5,8 @@ class RegattaHolder extends Page {
 
 	private static $db = array(
 	);
+	
+	private static $default_child = 'RegattaPage';
 
 	private static $has_one = array(
 	);

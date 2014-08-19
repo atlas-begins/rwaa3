@@ -26,7 +26,7 @@
 				    	<% if Trophies %>
 				    		<% loop Trophies %>
 				    			<tr>
-				    			<td><strong>$TrophyName</strong><br><em>for $AwardedFor</em></td>
+				    			<td><strong><a href="$getTrophyDetailPage">$TrophyName</a></strong><br><em>for $AwardedFor</em></td>
 				    			<td>$TrophyImage.SetRatioSize(30,40)</td>
 				    			<td><% if Year %>$Year<% end_if %></td>
 				    			<td>$History</td>

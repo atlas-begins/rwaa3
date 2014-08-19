@@ -1,8 +1,3 @@
-<script>
-  $(function() {
-    $( "#tabs" ).tabs();
-  });
-  </script>
 <% include SideBar %>
 <div class="content-container unit size3of4 lastUnit">
 	<article>

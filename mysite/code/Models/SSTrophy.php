@@ -43,4 +43,11 @@ class SSTrophy extends DataObject {
     public function getTrophySeasonPlaceResults($sID, $tID, $fID) {
     	return DataList::create("SeasonGroupPrize")->where("SeasonID = '$sID' AND TrophyID = '$tID' AND Finish = '$fID'");
     }
+    
+    public function getTrophyDetailPage($action = 'view') {
+    	if($result = DataObject::get_one("TrophyPage")) {
+    		return $result->Link() . $action . '/' . $this->ID;
+    	}
+    	return false;
+    }
 }
