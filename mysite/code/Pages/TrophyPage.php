@@ -16,6 +16,17 @@ class TrophyPage extends Page {
         $fields = parent::getCMSFields();
         return $fields;
 	}
+	
+	public function writeTrophyNote($trophy = null, $msg = null) {
+    	if($trophy && $msg) {
+    		$result = new SSNote();
+    		$result->NoteContents = $msg;
+    		$result->AuthorID = Member::currentUser()->ID;
+    		$result->TrophyID = $trophy->ID;
+    		$result->write();
+    	}
+    	return true;
+    }
 }
 class TrophyPage_Controller extends Page_Controller {
 	
@@ -26,6 +37,8 @@ class TrophyPage_Controller extends Page_Controller {
 	private static $allowed_actions = array (
 		'view' => true
 		, 'edit' => 'ADMIN'
+		, 'TrophyNoteForm' => TRUE
+		, 'doSaveTrophy' => TRUE
 	);
 	
     public function view($request) {
@@ -41,5 +54,25 @@ class TrophyPage_Controller extends Page_Controller {
     		);
     	}
     	return $this->customise($resultsArray)->renderWith(array('TrophyPage', 'Page'));
+    }
+    
+	public function TrophyNoteForm() {
+    	$fields = new FieldList();
+    	$fields->push(new TextareaField('NoteContents', ''));
+    	$fields->push(new HiddenField('TrophyID', 'Trophy ID', $this->request->param('ID')));
+    	$actions = new FieldList(
+            new FormAction('doSaveTrophyNote', 'Save note')
+        );
+        $validator = new RequiredFields();
+		$form = new Form($this, 'TrophyNoteForm', $fields, $actions, $validator);
+		return $form;
+    }
+    
+	public function doSaveTrophyNote($form, $data) {
+    	if($result = SSTrophy::get_by_id("SSTrophy", $form['TrophyID'])) {
+    		self::writeTrophyNote($result, $form['NoteContents']);
+    		$returnURL = $this->Link() . 'view/' . $form['TrophyID'];
+    	}
+    	return $this->redirect($returnURL);
     }
 }

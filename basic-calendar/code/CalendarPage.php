@@ -46,8 +46,8 @@ class CalendarPage extends Page {
 		$sDate = $season->SeasonStart;
 		$eDate = $season->SeasonEnd;
 		$where = "StartDate >= '$sDate' AND StartDate <= '$eDate'";
-
-		return GroupedList::create(CalendarEntry::get()->Sort('StartDate, Time')->where($where) );
+		$results = GroupedList::create(CalendarEntry::get()->Sort('StartDate, Time')->where($where));
+		return $results->sort("StartDate", "DESC");
 	}
 
 }

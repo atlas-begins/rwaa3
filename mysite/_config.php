@@ -17,4 +17,4 @@ $databaseConfig = array(
 i18n::set_locale('en_US');
 
 // enable fulltext index searching
-// FulltextSearchable::enable();
+FulltextSearchable::enable();

@@ -36,6 +36,7 @@
 								<tr><td>Website</td><td><% if GroupWebsite %><a href="$GroupWebsite" title="Group website" target="_blank">$GroupWebsite</a><% end_if %></td></tr>
 							</tbody>
 							</table>
+							<p>google map will go here</p>
 						<% end_loop %>
 		    			<div class="clear"></div>
 		    		</div>

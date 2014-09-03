@@ -131,7 +131,6 @@ class SearchForm extends Form {
 
 		if(!$pageLength) $pageLength = $this->pageLength;
 		$start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-		
 		if(strpos($keywords, '"') !== false || strpos($keywords, '+') !== false || strpos($keywords, '-') !== false || strpos($keywords, '*') !== false) {
 			$results = DB::getConn()->searchEngine($this->classesToSearch, $keywords, $start, $pageLength, "\"Relevance\" DESC", "", true);
 		} else {

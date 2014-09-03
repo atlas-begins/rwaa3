@@ -173,3 +173,10 @@ div.tabcontents
     margin: 4px 0 15px 0;
     width: 100%;
 }
+
+.cancelButton {
+	background-color: #ee3333;
+}
+	span#cancelButton:hover {
+		background-color: #ee9999;
+	}

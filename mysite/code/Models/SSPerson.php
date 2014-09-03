@@ -24,6 +24,12 @@ class SSPerson extends DataObject {
 		'PersonActive' => 1
 	);
 	
+	private static $searchable_fields = array(
+		'FirstName'
+		, 'Surname'
+		, 'PersonRole.Role'
+	);
+	
 	public function getPersonDetailPageLink($action = 'view') {
 		if($result = DataObject::get_one("PersonPage")) {
 			return $result->Link() . $action . '/' . $this->ID;

@@ -20,12 +20,11 @@ class SeasonGroupPrize extends DataObject {
 	 * returns record based on trophy, season and position
 	 * @param int $tItem trophy id
 	 * @param int $sID season id
-	 * @param int $pID position id
+	 * @param int $fID finish id
 	 */
-	public static function getSeasonPlaceResult($tID, $sID, $pID) {
-		if($placeResults = DataObject::get("SeasonGroupPrize")->filter(array("SeasonID" => $sID, "Finish" => $pID, "TrophyID" => $tID))) {
+	public static function getSeasonPlaceResult($tID, $sID, $fID) {
+		if($placeResults = DataObject::get("SeasonGroupPrize")->filter(array("SeasonID" => $sID, "Finish" => $fID, "TrophyID" => $tID))) {
 			return $placeResults;
 		}
-		
 	}
 }

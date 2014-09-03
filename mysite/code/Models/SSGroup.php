@@ -28,6 +28,13 @@ class SSGroup extends DataObject {
 	private static $defaults = array(
 		'GroupBranch' => 'Sea'
 	);
+	
+	private static $searchable_fields = array(
+		'GroupName'
+		, 'GroupZone.ZoneName'
+		, 'GroupPeople.FirstName'
+		, 'GroupPeople.Surname'
+	);
     
 	public function getGroupDetailPageLink($action = 'view', $groupID = null) {
 		if($result = DataObject::get_one("GroupPage")) {

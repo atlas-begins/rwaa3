@@ -32,6 +32,12 @@ class SSTrophy extends DataObject {
     	$result->ThirdPlace = self::getTrophySeasonPlaceResults($sID, $tID, 3);
     }
     
+	public function getTrophyWinner() {
+		$tID = $this->ID;
+		$result = SeasonGroupPrize::getTrophyWinners($tID);
+    	return true;
+    }
+    
     /**
      * 
      * retrieves a record of finishes for a particular trophy 
@@ -50,4 +56,27 @@ class SSTrophy extends DataObject {
     	}
     	return false;
     }
+    
+	public function sortedTrophyNote() {
+		return $results = $this->TrophyNote()->sort("Created", "DESC");
+	}
+	
+	public function getWinnerList() {
+		if($seasonlist = DB::query("SELECT distinct seasonid FROM seasongroupprize inner join ssseason on seasongroupprize.seasonid = ssseason.id ORDER BY ssseason.season desc")) {
+			$results = new ArrayList();
+			foreach($seasonlist as $seasonObj) {
+				$sID = $seasonObj['seasonid'];
+				$tID = $this->ID;
+				$result = new DataObject();
+				$result->Season = DataObject::get_by_id("SSSeason", $sID);
+	    		$result->FirstPlace = self::getTrophySeasonPlaceResults($sID, $tID, 1);
+	    		$result->SecondPlace = self::getTrophySeasonPlaceResults($sID, $tID, 2);
+	    		$result->ThirdPlace = self::getTrophySeasonPlaceResults($sID, $tID, 3);
+				$results->push($result);
+    		}
+    		return $results;
+    	} else {
+    		return false;
+    	}
+	}
 }

@@ -127,6 +127,8 @@ class VesselPage_Controller extends VesselHolder_Controller {
 					$fields->removeByName('VesselMotorCapacityMax');
 				break;
 			}
+			$anotherField = new CheckboxField('AnotherVessel','Process this form then add another ' . $vtype . '?', false);
+			$fields->push($anotherField);
 		}
 		return $form;
     }
@@ -209,7 +211,11 @@ class VesselPage_Controller extends VesselHolder_Controller {
 	    		return $this->redirect($returnURL);
     		}
     	}
-		$returnURL .= 'view/' . $result->ID;
+    	if(isset($form['AnotherVessel'])) {
+    		$returnURL .= 'add/' . $form['VesselClass'];
+    	} else {
+    		$returnURL .= 'view/' . $result->ID;
+    	}
 		return $this->redirect($returnURL);
     }
     

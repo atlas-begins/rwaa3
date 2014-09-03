@@ -30,7 +30,10 @@
 				<% end_if %>
 				<% if getVesselInformation(sunburst) %>
 					<% loop getVesselInformation(sunburst) %>
-						<tr><td>$VesselNumber</td><td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td></tr>
+						<tr>
+							<td>$VesselNumber</td>
+							<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
+						</tr>
 					<% end_loop %>
 				<% else %>
 					<tr><td colspan="2">No records available</td></tr>

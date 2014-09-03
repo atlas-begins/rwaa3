@@ -324,6 +324,7 @@ body {
 		    position: relative;
 		    list-style-type: none;
 		    margin-bottom: 0;
+		    background: -webkit-linear-gradient(top, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.5) 100%);
 		}
 			.main .secondary li .arrow { 
 			    color: #b80000;

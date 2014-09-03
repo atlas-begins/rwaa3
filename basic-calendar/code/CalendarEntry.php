@@ -23,6 +23,11 @@ class CalendarEntry extends DataObject{
     	"StartDate" => "Date"
     	, "Title" => "Title"
     );
+    
+    private static $searchable_fields = array(
+    	'Title'
+    	, 'Description'
+    );
 	
 	static $default_sort = "StartDate ASC, Time ASC";
 	

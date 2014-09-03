@@ -42,8 +42,15 @@ class PersonPage_Controller extends PersonHolder_Controller {
 	
 	// FORMS
 	public function PersonForm() {
+		//Create form Action
+		$cancelButton = new FormAction("cancelForm");
+		//Set it to use button
+		$cancelButton->useButtonTag = true;
+		$cancelButton->setButtonContent('No, changed my mind');
+		$cancelButton->addExtraClass('cancelButton');
 		$actions = new FieldList(
             new FormAction('doSavePerson', 'Save changes')
+            , $cancelButton
         );
         $validator = new RequiredFields('FirstName', 'Surname');
 		$allGroupsMap = SSGroup::get()->sort("GroupName")->map("ID", "GroupName");
@@ -73,6 +80,7 @@ class PersonPage_Controller extends PersonHolder_Controller {
 		}
 		
 		$fields->push($roleField);
+		// $fields->push(new LiteralField('CancelForm', '<a id="cancelButton" href="" title="Changed my mind about this">No, changed my mind</a>'));
 		return $form;
     }
     

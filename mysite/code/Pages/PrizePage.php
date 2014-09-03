@@ -38,7 +38,6 @@ class PrizePage extends PrizeHolder {
     	if($tItems = $this->Trophies()->sort("SortOrder")) {
     		$results = new ArrayList();
     		foreach($tItems as $tItem) {
-    			//$tItem->TrophyPageLink = 'hello';
     			$tItem->FirstPlace = SeasonGroupPrize::getSeasonPlaceResult($tItem->ID, $sID, '1');
     			$tItem->SecondPlace = SeasonGroupPrize::getSeasonPlaceResult($tItem->ID, $sID, '2');
     			$tItem->ThirdPlace = SeasonGroupPrize::getSeasonPlaceResult($tItem->ID, $sID, '3');

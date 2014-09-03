@@ -42,6 +42,11 @@ class SSVessel extends DataObject {
 		, 'VesselMotorCapacityMax' => 0
 	);
 	
+	private static $searchable_fields = array(
+		'VesselName'
+		, 'VesselNumber'
+	);
+	
 	public function getVesselDetailPageLink($action = 'view') {
 		if($result = DataObject::get_one("VesselPage")) {
 			return $result->Link() . $action . '/' . $this->ID;

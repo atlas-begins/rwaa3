@@ -52,4 +52,11 @@ class SSSeason extends DataObject {
     		return false;
     	}
 	}
+	
+	public static function getCurrentSeason() {
+		$refDate = strtotime(date("Y-m-d"));
+		$dateW1 = strtotime($this->SeasonStart);
+		$dateW2 = strtotime($this->SeasonEnd);
+		return DataList::create("SSSeason")->filter(array($refDate > 'SeasonStart', $refDate < 'SeasonEnd'))->first();
+	}
 }
