@@ -134,12 +134,20 @@ class VesselPage_Controller extends VesselHolder_Controller {
     }
     
 	public function VesselImageForm() {
+		$vessel = SSVessel::get()->byID($this->request->param('ID'));
+		// fields
     	$fields = new FieldList();
-    	$fields->push(new FileField('VesselImage', ''));
+    	$fields->push(new HiddenField('VesselID', 'Vessel ID', $vessel->ID));
+    	$vesselImgs = new UploadField('VesselImages', 'Upload new images');
+    	$vesselImgs->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif'));
+    	$fields->push($vesselImgs);
+    	// actions
     	$actions = new FieldList(
             new FormAction('doSaveVesselImage', 'Save image')
         );
+        // validator
         $validator = new RequiredFields();
+        // assemble form
 		$form = new Form($this, 'VesselImageForm', $fields, $actions, $validator);
 		
 		return $form;
@@ -222,6 +230,20 @@ class VesselPage_Controller extends VesselHolder_Controller {
     public function doSaveVesselNote($form, $data) {
     	if($result = SSVessel::get_by_id("SSVessel", $form['VesselID'])) {
     		self::writeVesselNote($result, $form['NoteContents']);
+    		$returnURL = $this->Link() . 'view/' . $form['VesselID'];
+    	}
+    	return $this->redirect($returnURL);
+    }
+    
+	public function doSaveVesselImage($form, $data) {
+    	if($result = SSVessel::get_by_id("SSVessel", $form['VesselID'])) {
+    		if(isset($form['VesselImages'])) {
+    			print_r($form['VesselImages']);
+    			
+    		}
+    		die();
+    		
+    		
     		$returnURL = $this->Link() . 'view/' . $form['VesselID'];
     	}
     	return $this->redirect($returnURL);

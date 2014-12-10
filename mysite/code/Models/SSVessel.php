@@ -11,10 +11,10 @@ class SSVessel extends DataObject {
 		, 'VesselOarCapacityMax' => 'Int'
 		, 'VesselMotorCapacityMin' => 'Int'
 		, 'VesselMotorCapacityMax' => 'Int'
-		, 'VesselConstruction' => "Enum(array('wood','fibreglass','RIB','plastic'))"
+		, 'VesselConstruction' => "Enum(array('wood','fibreglass', 'GRP', 'RIB','plastic'))"
 		, 'VesselClass' => "Enum(array('cutter','kayak','dinghy','sunburst','crown','whaler','RIB','optimist'))"
 		, 'VesselActive' => 'Boolean'
-		, 'VesselRig' => "Enum(array('none','Bermuda','Gunter','other'))"
+		, 'VesselRig' => "Enum(array('none','Bermuda','Gunter','Sloop', 'Sunburst', 'Optimist', 'other'))"
 	);
 
 	private static $has_one = array(

@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<!--
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Simple. by Sara (saratusar.com, @saratusar) for Innovatif - an awesome Slovenia-based digital agency (innovatif.com/en)
-Change it, enhance it and most importantly enjoy it!
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
--->
-
 <!--[if !IE]><!-->
 <html lang="en-US">
 <!--<![endif]-->
@@ -13,7 +6,7 @@ Change it, enhance it and most importantly enjoy it!
 <!--[if IE 7 ]><html lang="en-US" class="ie ie7"><![endif]-->
 <!--[if IE 8 ]><html lang="en-US" class="ie ie8"><![endif]-->
 <head>
-	<base href="http://localhost:8888/"><!--[if lte IE 6]></base><![endif]-->
+	<base href="http://rwaa:8888/"><!--[if lte IE 6]></base><![endif]-->
 	<title>Server error &raquo; Your Site Name</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -22,23 +15,33 @@ Change it, enhance it and most importantly enjoy it!
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 
 	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="themes/simple/javascript/rwaa-query.js"></script>
+	
+	
+	
 	
 	
 	
 	
 	<link rel="shortcut icon" href="themes/simple/images/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="/themes/simple/css/reset.css?m=1384281859" />
-<link rel="stylesheet" type="text/css" href="/themes/simple/css/layout.css?m=1384281859" />
-<link rel="stylesheet" type="text/css" href="/themes/simple/css/typography.css?m=1384281859" />
-<link rel="stylesheet" type="text/css" href="/themes/simple/css/form.css?m=1384281859" />
+	
+<link rel="stylesheet" type="text/css" href="/themes/simple/css/reset.css?m=1393898099" />
+<link rel="stylesheet" type="text/css" href="/themes/simple/css/typography.css?m=1406584613" />
+<link rel="stylesheet" type="text/css" href="/themes/simple/css/form.css?m=1408654677" />
+<link rel="stylesheet" type="text/css" href="/themes/simple/css/layout.css?m=1409732569" />
+<link rel="stylesheet" type="text/css" href="/themes/simple/css/rwaa.css?m=1408654701" />
+<link rel="stylesheet" type="text/css" href="/themes/simple/css/calendar.css?m=1402355583" />
 </head>
-<body class="ErrorPage no-sidebar" dir="ltr">
+<body class="ErrorPage no-sidebar">
 <header class="header" role="banner">
 	<div class="inner">
 		<div class="unit size4of4 lastUnit">
-			<a href="http://localhost:8888/" class="brand" rel="home">
+			<a href="http://rwaa:8888/" class="brand" rel="home">
 				<h1>Your Site Name</h1>
 				
 				<p>your tagline here</p>
@@ -54,6 +57,9 @@ Change it, enhance it and most importantly enjoy it!
 			<li class="link"><a href="/about-us/" title="About Us">About Us</a></li>
 		
 			<li class="link"><a href="/contact-us/" title="Contact Us">Contact Us</a></li>
+		
+		
+			<li class="link"><a href="/Security/login?BackURL=/server-error/" title="Server error">Log in</a></li>
 		
 	</ul>
 </nav>
@@ -73,8 +79,8 @@ Change it, enhance it and most importantly enjoy it!
 		<h1>Server error</h1>
 		<div class="content"><p>Sorry, there was a problem with handling your request.</p></div>
 	</article>
-		
-		
+	
+	
 </div>
 	</div>
 </div>
@@ -82,7 +88,7 @@ Change it, enhance it and most importantly enjoy it!
 	<div class="inner">
 		<div class="unit size4of4 lastUnit">
 			<div class="left">
-				<a href="http://localhost:8888/" class="brand" rel="home">Your Site Name</a>
+				<a href="http://rwaa:8888/" class="brand" rel="home">Your Site Name</a>
 				<span class="arrow">&rarr;</span> <nav class="primary">
 	<span class="nav-open-button">²</span>
 	<ul>
@@ -93,17 +99,25 @@ Change it, enhance it and most importantly enjoy it!
 		
 			<li class="link"><a href="/contact-us/" title="Contact Us">Contact Us</a></li>
 		
+		
+			<li class="link"><a href="/Security/login?BackURL=/server-error/" title="Server error">Log in</a></li>
+		
 	</ul>
 </nav>
 </div>
-			<small class="right"><a href="http://simple.innovatif.com/about/">Theme</a> by <a href="http://www.saratusar.com">Sara</a> (Innovatif) / Powered by <a href="http://silverstripe.org">SilverStripe</a></small>
+			<small class="right">Powered by <a href="http://silverstripe.org">SilverStripe</a></small>
 		</div>
 	</div>
 </footer>
 
 
 
-<script type="text/javascript" src="/framework/thirdparty/jquery/jquery.js?m=1384281856"></script><script type="text/javascript" src="themes/simple/javascript/script.js"></script>
+<script type="text/javascript" src="/themes/simple/javascript/tabcontent.js?m=1403586680"></script><script type="text/javascript" src="/framework/thirdparty/jquery/jquery.js?m=1384281856"></script><script type="text/javascript" src="themes/simple/javascript/script.js"></script>
 
+	<script>
+		$(function() {
+			$( "#tabs" ).tabs();
+		});
+	</script>
 </body>
 </html>

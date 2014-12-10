@@ -57,4 +57,27 @@ class SSGroup extends DataObject {
 	public function sortedGroupNote() {
 		return $results = $this->GroupNote()->sort("Created", "DESC");
 	}
+	
+	/*
+	public static function requireDefaultRecords() {
+		parent::requireDefaultRecords();
+		if(class_exists('SSGroup')) {
+			$gArray = new ArrayList();
+			$gArray[] = array('GroupName' => 'Britannia', 'GroupAcronym' => 'BR', 'GroupBranch' => 'Sea', 'GroupLocality' => 'Wellington');
+			$gArray[] = array('GroupName' => 'Eastern Bays', 'GroupAcronym' => 'EB', 'GroupBranch' => 'Sea', 'GroupLocality' => 'Miramar');
+			$gArray[] = array('GroupName' => 'St James', 'GroupAcronym' => 'SJ', 'GroupBranch' => 'Sea', 'GroupLocality' => 'Petone');
+			$gArray[] = array('GroupName' => 'Ngati Toa', 'GroupAcronym' => 'NT', 'GroupBranch' => 'Sea', 'GroupLocality' => 'Mana');
+			$gArray[] = array('GroupName' => 'Paraparaumu Beach', 'GroupAcronym' => 'PB', 'GroupBranch' => 'Sea', 'GroupLocality' => 'Paraparaumu Beach');
+			$gArray[] = array('GroupName' => 'Kotuku', 'GroupAcronym' => 'KT', 'GroupBranch' => 'Sea', 'GroupLocality' => 'Levin');
+			$gArray[] = array('GroupName' => 'Westshore', 'GroupAcronym' => 'WS', 'GroupBranch' => 'Sea', 'GroupLocality' => 'Napier');
+			$gArray[] = array('GroupName' => 'St Augustines', 'GroupAcronym' => 'SA', 'GroupBranch' => 'Land', 'GroupLocality' => 'Lower Hutt');
+			foreach($gArray as $gArrayV) {
+				if(!$xGrp = DataList::create("SSGroup")->filter("GroupName", $gArrayV['GroupName'])) {
+					$result = new SSGroup($gArrayV);
+					$result->write();
+				}
+			}
+		}
+	}
+	*/
 }

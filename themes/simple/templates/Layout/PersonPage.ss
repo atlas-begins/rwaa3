@@ -8,7 +8,7 @@
 				<div>
 					<ul class="tabs" data-persist="true">
 			            <li><a href="#viewtab1"><% loop Person %>{$FirstName}'s details<% end_loop %></a></li>
-			            <li><a href="#viewtab2">Charge certs</a></li>
+			            <li><a href="#viewtab2">Charge certificate</a></li>
 			            <li><a href="#viewtab3">Notes <% loop Person %>($sortedPersonNote.Count)<% end_loop %></a></li>
 			        </ul>
 					<div class="tabcontents">
@@ -46,7 +46,7 @@
 							<% loop Person %>
 								<table>
 								<thead>
-									<tr><th colspan="2">Charge endorsements</th></tr>
+									<tr><th colspan="2">Charge certificate and endorsements</th></tr>
 								</thead>
 								<tbody>
 								<% if PersonCharge %>

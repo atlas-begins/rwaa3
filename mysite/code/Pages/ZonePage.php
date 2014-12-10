@@ -11,6 +11,8 @@ class ZonePage extends ZoneHolder {
         $fields = parent::getCMSFields();
         return $fields;
     }
+    
+	
 }
 class ZonePage_Controller extends ZoneHolder_Controller {
 	

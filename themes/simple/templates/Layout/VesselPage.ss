@@ -19,7 +19,8 @@
 			            	<table width="100%">
 			            	<% loop Vessel %>
 								<thead>
-									<tr><th colspan="2">Vessel details for $VesselClass $VesselNumber "$VesselName"</th></tr>
+									<tr><th colspan="2">Vessel details for $VesselClass $VesselNumber
+									<% if VesselName %> "$VesselName"<% end_if %></th></tr>
 								</thead>
 								<tbody>
 									<% if CurrentMember %>
@@ -96,8 +97,8 @@
 								</thead>
 								<tbody>
 								<% if CurrentMember %>
-									<tr><td colspan="2"><a href="#" title="Add image for this vessel" class="addObject" id="imgFormToggle">add image</a>
-									<div id="imgForm" style="display: none;">$VesselImageForm</div>
+									<tr><td colspan="2">
+										$VesselImageForm
 									</td></tr>
 								<% end_if %>
 								</tbody>

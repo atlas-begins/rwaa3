@@ -18,11 +18,17 @@ class VesselHolder extends Page {
     
 	public function getVesselInformation($vtype = 'null') {
 		switch ($vtype) {
-			case 'cutter'; case 'sunburst'; case 'kayak';
-				$results = DataList::create("SSVessel")->where('"VesselClass" = \'' . $vtype . '\'')->sort('VesselName');
+			case 'cutter'; case 'sunburst';
+				$results = DataList::create("SSVessel")->filter(array("VesselClass" => $vtype, "VesselActive" => 1))->sort('VesselName');
+			break;
+			case 'kayak';
+				$results = DataList::create("SSVessel")->filter(array("VesselClass" => $vtype, "VesselActive" => 1))->sort('VesselNumber');
+			break;
+			case 'inactive';
+				$results = DataList::create("SSVessel")->filter(array("VesselActive" => '0'));
 			break;
 			default:
-				$results = DataList::create("SSVessel")->where('"VesselClass" NOT IN(\'cutter\', \'sunburst\', \'kayak\')')->sort("VesselClass ASC, VesselName ASC");
+				$results = DataList::create("SSVessel")->filter("VesselActive", '1')->exclude("VesselClass", array('cutter', 'sunburst', 'kayak'))->sort("ScoutGroupID");
 			break;
 		}
 		return $results;
@@ -31,13 +37,16 @@ class VesselHolder extends Page {
 	public function getVesselCount($vtype = 'null') {
 		switch ($vtype) {
 			case 'cutter'; case 'sunburst'; case 'kayak';
-				$result = DataList::create("SSVessel")->where('"VesselClass" = \'' . $vtype . '\'')->Count();
+				$results = DataList::create("SSVessel")->filter(array("VesselClass" => $vtype, "VesselActive" => 1))->Count();
+			break;
+			case 'inactive';
+				$results = DataList::create("SSVessel")->filter("VesselActive", '0')->Count();
 			break;
 			default:
-				$result = DataList::create("SSVessel")->where('"VesselClass" NOT IN(\'cutter\', \'sunburst\', \'kayak\')')->Count();
+				$results = DataList::create("SSVessel")->filter("VesselActive", '1')->exclude("VesselClass", array('cutter', 'sunburst', 'kayak'))->Count();
 			break;
 		}
-    	return $result;
+    	return $results;
     }
     
     public function getVesselActionPageLink($action = 'addCutter') {

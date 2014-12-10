@@ -25,4 +25,41 @@ class SSZone extends DataObject {
 		
 		return false;
 	}
+	
+	public function getZoneByID($zID) {
+		if($result = DataList::create("SSZone")->byID($zID)) {
+			return $result;
+		}
+	}
+	
+	public function getZoneByName($zName) {
+		if($result = DataList::create("SSZone")->filter('GroupName', $zName)->First()) {
+			return $result;
+		}
+	}
+	
+	/*
+	public function requireDefaultRecords() {
+		parent::requireDefaultRecords();
+		if(class_exists('SSZone')) {
+			$acts = array(
+				'Taranaki'
+				, 'New Horizons'
+				, 'Waiapu'
+				, 'Manawatu Rivers'
+				, 'Kapiti Coastal'
+				, 'Rimutaka'
+				, 'Lower Hutt'
+				, 'Wellington'
+			);
+			foreach($acts as $key => $value) {
+				if(!$xZone = DataList::create("SSZone")->filter("ZoneName", $value)) {
+					$result = Object::create("SSZone");
+					$result->ZoneName = $value;
+					$result->write();
+				}
+			}
+		}
+	}
+	*/
 }

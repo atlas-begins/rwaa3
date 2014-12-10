@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="themes/simple/javascript/rwaa-query.js"></script>
+	<link rel="stylesheet" href="{$ThemeDir}/font-awesome/css/font-awesome.min.css">
 	
 	<% require themedCSS('reset') %>
 	<% require themedCSS('typography') %>

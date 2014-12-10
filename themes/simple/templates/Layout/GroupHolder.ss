@@ -14,7 +14,7 @@
 					<% loop getGroupInformation %>
 						<tr>
 							<td class="branch_{$GroupBranch}">$GroupBranch</td>
-							<td><a href="$getGroupDetailPageLink" title="Edit details for $GroupName">$GroupName</a></td>
+							<td><a href="$getGroupDetailPageLink" title="Edit details for $GroupName">($GroupAcronym) $GroupName</a></td>
 							<td nowrap><% loop GroupZone %><a href="$getZoneLink" title="View details for $ZoneName">$ZoneName</a><% end_loop %></td>
 						</tr>
 					<% end_loop %>

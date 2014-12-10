@@ -9,11 +9,12 @@ class SSPerson extends DataObject {
 	
 	private static $many_many = array(
 		'PersonRole' => 'SSRole'
-		, 'PersonCharge' => 'SSCharge'
 	);
 	
 	static $has_one = array(
 		'ScoutGroup' => 'SSGroup'
+		, 'PersonCharge' => 'SSCharge'
+		
 	);
 	
 	private static $has_many = array(
