@@ -18,7 +18,7 @@
 									$RoleAbbrev 
 								<% end_loop %>
 							</td>
-							<td width="75%"><a href="$getPersonDetailPageLink" title="View details about $FirstName $Surname">$FirstName $Surname</a></td></tr>
+							<td width="75%">$Top.validIcon($PersonActive) <a href="$getPersonDetailPageLink" title="View details about $FirstName $Surname">$FirstName $Surname</a></td></tr>
 						<% end_loop %>
 					<% else %>
 						<tr><td colspan="2">No records available</td></tr>
@@ -41,7 +41,7 @@
 							$RoleAbbrev 
 						<% end_loop %>
 					</td>
-					<td width="75%"><a href="$getPersonDetailPageLink" title="View details about $FirstName $Surname">$FirstName $Surname</a></td></tr>
+					<td width="75%">$Top.validIcon($PersonActive) <a href="$getPersonDetailPageLink" title="View details about $FirstName $Surname">$FirstName $Surname</a></td></tr>
 				<% end_loop %>
 				</tbody>
 				</table>

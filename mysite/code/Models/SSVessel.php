@@ -54,8 +54,15 @@ class SSVessel extends DataObject {
 		return false;
 	}
 	
+	public function getVesselNewestCertificate() {
+		if($result = DataList::create("SSVesselCert")->where("ScoutVesselID = '$this->ID'")->sort("SailingSeasonID DESC")->limit(1)) {
+			return $result;
+		}
+		return false;
+	}
+	
 	public function getVesselCertificates() {
-		if($results = SSVesselCert::get()->where("ScoutVesselID = '$this->ID'")->sort("SailingSeasonID DESC")->sort("IssueDate DESC")) {
+		if($results = SSVesselCert::get()->where("ScoutVesselID = '$this->ID'")->sort("SailingSeasonID DESC")) {
 			return $results;
 		}
 		return false;
@@ -65,6 +72,18 @@ class SSVessel extends DataObject {
 		if($result = DataObject::get_one("CertificatePage")) {
 			return $result->Link() . $action . '/' . $this->ID;
 		}
+	}
+	
+	public static function getGroupVesselMap($gID) {
+		if($vessels = DataList::create("SSVessel")->filter(array('ScoutGroupID' => $gID))->sort('VesselClass')) {
+			$results = new ArrayList();
+			foreach($vessels as $vessel) {
+				$vessel->Fullname = '[' . $vessel->VesselClass . '] ' . $vessel->VesselName;
+				$results->push($vessel);
+			}
+			return $results;
+		}
+		return false;
 	}
 	
 	public static function vesselCapacityArray() {

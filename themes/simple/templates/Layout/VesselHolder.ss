@@ -23,9 +23,9 @@
 								<% loop getVesselInformation(cutter) %>
 									<tr>
 										<td>$VesselNumber</td>
-										<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
-										<td>$Top.validIcon($VesselActive)</td>
+										<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
 										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink">$GroupName</a><% end_loop %></td>
+										<td><% loop getVesselNewestCertificate %><a href="$getCertDetailPageLink" title="View detail for certificate $ID">$Top.validIcon($CertValid) $completeCertNumber</a><% end_loop %></td>
 									</tr>
 								<% end_loop %>
 							<% else %>
@@ -36,22 +36,22 @@
 					</div>
 					<div id="viewtab2">
 						<table>
-							<thead><tr><th colspan="4">$getVesselCount(sunburst) Sunbursts</th></tr></thead>
+							<thead><tr><th colspan="5">$getVesselCount(sunburst) Sunbursts</th></tr></thead>
 							<tbody>
 							<% if CurrentMember %>
-								<tr><td colspan="4"><a href="$getVesselActionPageLink(addSunburst)" title="Add a sunburst" class="addObject">add a Sunburst</a></td></tr>
+								<tr><td colspan="5"><a href="$getVesselActionPageLink(addSunburst)" title="Add a sunburst" class="addObject">add a Sunburst</a></td></tr>
 							<% end_if %>
 							<% if getVesselInformation(sunburst) %>
 								<% loop getVesselInformation(sunburst) %>
 									<tr>
 										<td>$VesselNumber</td>
-										<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
-										<td>$Top.validIcon($VesselActive)</td>
+										<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
 										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink">$GroupName</a><% end_loop %></td>
+										<td><% loop getVesselNewestCertificate %>$completeCertNumber<% end_loop %></td>
 									</tr>
 								<% end_loop %>
 							<% else %>
-								<tr><td colspan="4">No records available</td></tr>
+								<tr><td colspan="5">No records available</td></tr>
 							<% end_if %>
 							</tbody>
 						</table>
@@ -67,16 +67,15 @@
 								<% loop getVesselInformation(kayak) %>
 									<tr>
 										<td>$VesselNumber</td>
-										<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $ID $VesselName">
+										<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $ID $VesselName">
 										<% if VesselName %>
 											$VesselName
 										<% else %>
 											$VesselClass
 										<% end_if %></a>
 										</td>
-										
-										<td>$Top.validIcon($VesselActive)</td>
 										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink">$GroupName</a><% end_loop %></td>
+										<td><% loop getVesselNewestCertificate %>$completeCertNumber<% end_loop %></td>
 									</tr>
 								<% end_loop %>
 							<% else %>
@@ -97,9 +96,9 @@
 									<tr>
 										<td>$VesselNumber</td>
 										<td>$VesselClass</td>
-										<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
-										<td>$Top.validIcon($VesselActive)</td>
+										<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
 										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink">$GroupName</a><% end_loop %></td>
+										<td><% loop getVesselNewestCertificate %>$completeCertNumber<% end_loop %></td>
 									</tr>
 								<% end_loop %>
 							<% else %>
@@ -117,9 +116,9 @@
 									<tr>
 										<td>$VesselNumber</td>
 										<td>$VesselClass</td>
-										<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
-										<td>$Top.validIcon($VesselActive)</td>
+										<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
 										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink">$GroupName</a><% end_loop %></td>
+										<td><% loop getVesselNewestCertificate %>$completeCertNumber<% end_loop %></td>
 									</tr>
 								<% end_loop %>
 							<% else %>

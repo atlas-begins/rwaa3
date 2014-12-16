@@ -66,9 +66,9 @@ class Page extends SiteTree {
     
     public function validIcon($vstate = true) {
     	if($vstate) {
-    		return '<img src="/themes/simple/images/valid.gif" alt="valid" class="icon" /> yes';
+    		return '<img src="/themes/simple/images/valid.gif" alt="valid" class="icon" /> ';
     	} else {
-    		return '<img src="/themes/simple/images/invalid.gif" alt="invalid" class="icon" /> no';
+    		return '<img src="/themes/simple/images/invalid.gif" alt="invalid" class="icon" /> ';
     	}
     }
 }

@@ -54,6 +54,13 @@ class SSGroup extends DataObject {
 		return false;
 	}
 	
+	public function getGroupAddCertificates() {
+		if($result = DataObject::get_one("GroupPage")) {
+			return $result->Link() . 'certificates/' . $this->ID;
+		}
+		return false;
+	}
+	
 	public function sortedGroupNote() {
 		return $results = $this->GroupNote()->sort("Created", "DESC");
 	}

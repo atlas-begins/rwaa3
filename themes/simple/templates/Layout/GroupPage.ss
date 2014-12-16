@@ -74,14 +74,15 @@
 							</thead>
 							<tbody>
 								<% if CurrentMember %>
+									<tr><td colspan="4"><a href="$getGroupAddCertificates" title="Generate new certificates" class="addCertificates">generate new certificates</a></td></tr>
 									<tr><td colspan="4"><a href="$getGroupAddVesselLink" title="Add a vessel to this group" class="addObject">add a vessel</a></td></tr>
 								<% end_if %>
 								<% loop GroupVessels %>
 									<tr>
 									<td>$VesselClass</td>
 									<td>$VesselNumber</td>
-									<td><a href="$getVesselDetailPageLink" title="View details for $VesselName">$VesselName</a></td>
-									<td>$Top.validIcon($VesselActive)</td>
+									<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="View details for $VesselName">$VesselName</a></td>
+									<td><% loop getVesselNewestCertificate %><a href="$getCertDetailPageLink" title="View detail for certificate $ID">$Top.validIcon($CertValid) $completeCertNumber</a><% end_loop %></td>
 									</tr>
 								<% end_loop %>
 							</tbody>

@@ -33,6 +33,7 @@ class GroupPage_Controller extends GroupHolder_Controller {
 		'view' => true
 		, 'add' => true
 		, 'edit' => true
+		, 'certificates' => true
 		, 'GroupForm' => true
 		, 'PersonForm' => true
 		, 'GroupNoteForm' => true
@@ -100,6 +101,24 @@ class GroupPage_Controller extends GroupHolder_Controller {
         );
         $validator = new RequiredFields();
 		$form = new Form($this, 'GroupNoteForm', $fields, $actions, $validator);
+		return $form;
+    }
+    
+	public function CertificateForm() {
+		$gID = $this->request->param('ID');
+		$vesselSrc = SSVessel::getGroupVesselMap($gID)->map('ID', 'Fullname');
+    	$gField = new HiddenField('GroupID', 'Group ID', $gID);
+    	$sField = new DropdownField('SailingSeasonID', 'Season');
+    	$mField = new LiteralField('selector', 'Please select vessels which will get a new certificate');
+		$vField = new CheckboxsetField('Vessels', '', $vesselSrc);
+    	
+		$fields = new FieldList($gField, $sField, $mField, $vField);
+    	
+    	$actions = new FieldList(
+            new FormAction('doGenerateCertificates', 'Generate certificates')
+        );
+        $validator = new RequiredFields();
+		$form = new Form($this, 'CertificateForm', $fields, $actions, $validator);
 		return $form;
     }
     
@@ -222,5 +241,17 @@ class GroupPage_Controller extends GroupHolder_Controller {
     		);
     	}
     	return $this->customise($resultsArray)->ObjectPage_actions(array('ObjectPage_actions', 'Page'));
+    }
+    
+	public function certificates($request) {
+    	$resultsArray = array();
+    	if($result = SSGroup::get()->byID($this->request->param('ID'))) {
+    		$resultsArray['Title'] = 'Generate certificates for "'. $result->GroupName . '"';
+    		$resultsArray['Form'] = self::CertificateForm($result->ID);
+    	} else {
+    		$resultsArray['Title'] = 'Group not found';
+    		$resultsArray['Content'] = '<p>Sorry, we cannot locate records for that group.</p><p>Please return to the main page and make another selection.</p>';
+    	}
+    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
     }
 }

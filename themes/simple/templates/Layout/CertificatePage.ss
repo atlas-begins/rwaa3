@@ -44,6 +44,10 @@
 											<tr><td>Surveyed by</td>
 											<td>$FirstName $Surname</td></tr>
 										<% end_loop %>
+										
+										<tr><td>Survey date</td>
+										<td>$SurveyDate.Long</td></tr>
+										
 										<tr><td>Issue date</td>
 										<td>$IssueDate.Long</td></tr>
 										<% loop IssuedBy %>

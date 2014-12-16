@@ -2,7 +2,7 @@
 
 /* LINK DECORATORS
 ------------------------------------ */
-.typography a.editObject, .typography a.addObject, .typography a.deleteObject {
+.typography a.editObject, .typography a.addObject, .typography a.deleteObject, .typography a.addCertificates {
 	padding: 0 2px 2px 20px;
 }
 	.typography a.editObject {
@@ -13,6 +13,9 @@
 	}
 	.typography a.deleteObject {
 		background: url(../images/icons/actions_sprite.png) no-repeat left -96px;
+	}
+	.typography a.addCertificates {
+		background: url(../images/icons/generate.png) no-repeat left center;
 	}
 
 /* GENERAL DECORATORS
