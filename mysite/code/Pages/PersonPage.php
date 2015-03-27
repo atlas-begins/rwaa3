@@ -34,10 +34,13 @@ class PersonPage_Controller extends PersonHolder_Controller {
 		'view' => true
 		, 'add' => true
 		, 'edit' => true
-		, 'doSavePerson' => true
+		, 'createCharge' => true
 		, 'PersonForm' => true
 		, 'PersonNoteForm' => true
+		, 'PersonChargeForm' => TRUE
+		, 'doSavePerson' => true
 		, 'doSavePersonNote' => true
+		, 'doSavePersonCharge' => true
 	);
 	
 	// FORMS
@@ -99,6 +102,28 @@ class PersonPage_Controller extends PersonHolder_Controller {
 		return $form;
     }
     
+	public function PersonChargeForm() {
+		$person = SSPerson::get()->byID($this->request->param('ID'));
+    	$fields = new FieldList();
+    		$pField = new HiddenField('PersonID', 'Person ID', $this->request->param('ID'));
+    			$fields->push($pField);
+    		$cField = new TextField('ChargeNumber', 'Charge Number');
+    			$fields->push($cField);
+    		$dField = new DateField('IssueDate', 'Issue Date');
+				$dField->setConfig('datavalueformat', 'yyyy-MM-dd'); // global setting
+				$dField->setConfig('showcalendar', 1); // field-specific setting
+				$dField->setLocale('en_NZ');
+    			$fields->push($dField);
+    		
+    	$actions = new FieldList(
+            new FormAction('doSavePersonCharge', 'Save Charge')
+        );
+        $validator = new RequiredFields('Issue Date', 'Charge Number');
+		$form = new Form($this, 'PersonChargeForm', $fields, $actions, $validator);
+		
+		return $form;
+    }
+    
     // FORMS ACTIONS
 	public function doSavePerson($data) {
     	$groupID = isset($data['ScoutGroupID']) ? (int) $data['ScoutGroupID'] : false;
@@ -141,6 +166,20 @@ class PersonPage_Controller extends PersonHolder_Controller {
     	}
     	return $this->redirect($returnURL);
     }
+    
+	public function doSavePersonCharge($form, $data) {
+		print_r($form['PersonID'] . '<br>');
+		
+		die();
+		
+    	if($result = SSPerson::get_by_id("SSPerson", $form['PersonID'])) {
+    		$result = new SSCharge();
+    		$form->saveInto($result);
+    		$result->write();
+    		$returnURL = $this->Link() . 'view/' . $form['PersonID'];
+    	}
+    	return $this->redirect($returnURL);
+    }
 	
     public function view($request) {
     	$resultsArray = array();
@@ -159,6 +198,18 @@ class PersonPage_Controller extends PersonHolder_Controller {
     	if($result = SSPerson::get_by_id("SSPerson", (int)$this->request->param('ID'))) {
     		$resultsArray['Title'] = 'Edit details for ' . $result->FirstName . ' ' . $result->Surname;
     		$resultsArray['Form'] = self::PersonForm($result->ID);
+    	} else {
+    		$resultsArray['Title'] = 'Person not found';
+    		$resultsArray['Content'] = '<p>Sorry, we cannot locate records for that person.</p><p>Please return to the main page and make another selection.</p>';
+    	}
+    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
+    }
+    
+	public function createCharge($request) {
+    	$resultsArray = array();
+    	if($result = SSPerson::get_by_id("SSPerson", (int)$this->request->param('ID'))) {
+    		$resultsArray['Title'] = 'Create a charge certificate for ' . $result->FirstName . ' ' . $result->Surname;
+    		$resultsArray['Form'] = self::PersonChargeForm($result->ID);
     	} else {
     		$resultsArray['Title'] = 'Person not found';
     		$resultsArray['Content'] = '<p>Sorry, we cannot locate records for that person.</p><p>Please return to the main page and make another selection.</p>';

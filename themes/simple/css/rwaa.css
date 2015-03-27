@@ -183,3 +183,13 @@ div.tabcontents
 	span#cancelButton:hover {
 		background-color: #ee9999;
 	}
+	
+i.fa-check-circle {
+	color: #33aa33;
+}
+i.fa-plus-circle {
+	color: #5093df;
+}
+i.fa-times-circle {
+	color: #b80000;
+}

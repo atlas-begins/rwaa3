@@ -6,10 +6,10 @@
 			<div class="left size3of8">
 				<% loop allGroupPeople %>
 					<table width="100%">
-					<thead><tr><th colspan="2">$GroupName</th></tr>
+					<thead><tr><th colspan="2"><i class="fa fa-users"></i> $GroupName</th></tr>
 					<tbody>
 					<% if CurrentMember %>
-						<tr><td colspan="2"><a href="$getGroupDetailPageLink(addPerson)" title="Add a person to this group" class="addObject">add a person to this group</a></td></tr>
+						<tr><td colspan="2"><a href="$getGroupDetailPageLink(addPerson)" title="Add a person to this group"><i class="fa fa-plus-circle fa-lg"></i> add a person to this group</a></td></tr>
 					<% end_if %>
 					<% if GroupPeople %>
 						<% loop GroupPeople %>
@@ -33,7 +33,7 @@
 				<thead><tr><th colspan="2">Not with a Group</th></tr>
 				<tbody>
 				<% if CurrentMember %>
-					<tr><td colspan="2"><a href="$getGroupDetailPageLink(addPerson)" title="Add a person" class="addObject">add a person</a></td></tr>
+					<tr><td colspan="2"><a href="$getGroupDetailPageLink(addPerson)" title="Add a person"><i class="fa fa-plus-circle fa-lg"></i> add a person</a></td></tr>
 				<% end_if %>
 				<% loop getLoosePeople %>
 					<tr><td width="25%">

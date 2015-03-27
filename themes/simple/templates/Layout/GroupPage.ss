@@ -6,11 +6,12 @@
 			$Content
 		    <div class="left ObjectTable">
 		    	<ul class="tabs" data-persist="true">
-		            <li><a href="#viewtab1">Group details</a></li>
-		            <li><a href="#viewtab2">People <% loop Group %>($GroupPeople.Count)<% end_loop %></a></li>
-		            <li><a href="#viewtab3">Vessels <% loop Group %>($GroupVessels.Count)<% end_loop %></a></li>
-		            <li><a href="#viewtab4">Activities</a></li>
-		            <li><a href="#viewtab5">Notes <% loop Group %>($sortedGroupNote.Count)<% end_loop %></a></li>
+		            <li><a href="#viewtab1"><i class="fa fa-users"></i> Group details</a></li>
+		            <li><a href="#viewtab2"><i class="fa fa-user"></i> People <% loop Group %>($GroupPeople.Count)<% end_loop %></a></li>
+		            <li><a href="#viewtab3"><i class="fa fa-anchor"></i> Vessels <% loop Group %>($GroupVessels.Count)<% end_loop %></a></li>
+		            <li><a href="#viewtab4"><i class="fa fa-flag-checkered"></i> Activities</a></li>
+		            <li><a href="#viewtab5"><i class="fa fa-file-text-o"></i> Notes <% loop Group %>($sortedGroupNote.Count)<% end_loop %></a></li>
+		            <li><a href="#viewtab6"><i class="fa fa-compass"></i> Map</a></li>
 		        </ul>
 		        <div class="tabcontents">
 					<div id="viewtab1">
@@ -20,12 +21,13 @@
 								<tr><th colspan="2">($GroupAcronym) $GroupName</th></tr>
 							</thead>
 							<tbody>
+							<tr><td colspan="2"><a href="$getReportPageLink()" title="View PDF report for this group" target="_blank"><i class="fa fa-file-pdf-o fa-lg"></i> view PDF report</a></td></tr>
 								<% if CurrentMember %>
-									<tr><td colspan="2"><a href="$getGroupDetailPageLink(edit)" title="Edit details for this group" class="editObject">edit details</a></td></tr>
+									<tr><td colspan="2"><a href="$getGroupDetailPageLink(edit)" title="Edit details for this group"><i class="fa fa-pencil-square-o fa-lg"></i> edit details</a></td></tr>
 								<% end_if %>
 								<tr><td>Branch</td><td class="branch_{$GroupBranch}">$GroupBranch</td></tr>
 								<tr><td>Zone</td><td>
-									<% loop GroupZone %><a href="$getZoneDetailPageLink" title="View detail about $ZoneName Zone">$ZoneName</a><% end_loop %>
+									<% loop GroupZone %><a href="$getZoneDetailPageLink" title="View detail about $ZoneName Zone"><i class="fa fa-puzzle-piece fa-lg"></i> $ZoneName</a><% end_loop %>
 								</td></tr>
 								<tr><td>Short label</td><td>$GroupAcronym</td></tr>
 								<tr><td>Meeting nights</td><td>Scouts: $GroupScoutMeet<br>Venturers: $GroupVenturerMeet</td></tr>
@@ -36,7 +38,6 @@
 								<tr><td>Website</td><td><% if GroupWebsite %><a href="$GroupWebsite" title="Group website" target="_blank">$GroupWebsite</a><% end_if %></td></tr>
 							</tbody>
 							</table>
-							<p>google map will go here</p>
 						<% end_loop %>
 		    			<div class="clear"></div>
 		    		</div>
@@ -48,7 +49,7 @@
 							</thead>
 							<tbody>
 								<% if CurrentMember %>
-									<tr><td colspan="3"><a href="$getGroupDetailPageLink(addPerson)" title="Add a person to this group" class="addObject">add a person</a></td></tr>
+									<tr><td colspan="3"><a href="$getGroupDetailPageLink(addPerson)" title="Add a person to this group"><i class="fa fa-plus-circle fa-lg"></i> add a person</a></td></tr>
 								<% end_if %>
 								<% loop GroupPeople %>
 									<tr>
@@ -57,7 +58,7 @@
 										$RoleAbbrev 
 									<% end_loop %>
 									</td>
-									<td><a href="$getPersonDetailPageLink" title="View details about $FirstName $Surname">$FirstName $Surname</a></td>
+									<td><a href="$getPersonDetailPageLink" title="View details about $FirstName $Surname"><i class="fa fa-user"></i> $FirstName $Surname</a></td>
 									<td>$Top.validIcon($PersonActive)</td>
 									</tr>
 								<% end_loop %>
@@ -74,8 +75,8 @@
 							</thead>
 							<tbody>
 								<% if CurrentMember %>
-									<tr><td colspan="4"><a href="$getGroupAddCertificates" title="Generate new certificates" class="addCertificates">generate new certificates</a></td></tr>
-									<tr><td colspan="4"><a href="$getGroupAddVesselLink" title="Add a vessel to this group" class="addObject">add a vessel</a></td></tr>
+									<tr><td colspan="4"><a href="$getGroupAddCertificates" title="Generate new certificates"><i class="fa fa-recycle fa-lg"></i> generate new certificates</a></td></tr>
+									<tr><td colspan="4"><a href="$getGroupAddVesselLink" title="Add a vessel to this group"><i class="fa fa-plus-circle fa-lg"></i> add a vessel</a></td></tr>
 								<% end_if %>
 								<% loop GroupVessels %>
 									<tr>
@@ -98,7 +99,7 @@
 							</thead>
 							<tbody>
 								<% if CurrentMember %>
-									<tr><td colspan="3"><a href="$getGroupAddVesselLink" title="Add an activity to this group" class="addObject">add an activity</a></td></tr>
+									<tr><td colspan="3"><a href="$getGroupAddVesselLink" title="Add an activity to this group"><i class="fa fa-plus-circle fa-lg"></i> add an activity</a></td></tr>
 								<% end_if %>
 							</tbody>
 							</table>
@@ -133,6 +134,12 @@
 								<% end_loop %>
 							</tbody>
 						</table>
+		    			<div class="clear"></div>
+		    		</div>
+		    		<div id="viewtab6">
+		        		<% loop Group %>
+							<p>map will go here</p>
+						<% end_loop %>
 		    			<div class="clear"></div>
 		    		</div>
 		    	</div>

@@ -66,9 +66,9 @@ class Page extends SiteTree {
     
     public function validIcon($vstate = true) {
     	if($vstate) {
-    		return '<img src="/themes/simple/images/valid.gif" alt="valid" class="icon" /> ';
+    		return '<i class="fa fa-check-circle fa-lg"></i> ';
     	} else {
-    		return '<img src="/themes/simple/images/invalid.gif" alt="invalid" class="icon" /> ';
+    		return '<i class="fa fa-times-circle fa-lg"></i> ';
     	}
     }
 }
@@ -82,5 +82,6 @@ class Page_Controller extends ContentController {
 	public function init() {
 		parent::init();
 		Requirements::javascript('themes/simple/javascript/tabcontent.js');
+		require_once('//Applications/MAMP/bin/php/fpdf17/fpdf.php'); 
 	}
 }

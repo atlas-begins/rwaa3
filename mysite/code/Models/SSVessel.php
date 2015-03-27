@@ -54,6 +54,13 @@ class SSVessel extends DataObject {
 		return false;
 	}
 	
+	public function getReportPageLink($action = 'report') {
+		if($result = DataObject::get_one("VesselReportPage")) {
+			return $result->Link() . $action . '/' . $this->ID;
+		}
+		return false;
+	}
+	
 	public function getVesselNewestCertificate() {
 		if($result = DataList::create("SSVesselCert")->where("ScoutVesselID = '$this->ID'")->sort("SailingSeasonID DESC")->limit(1)) {
 			return $result;

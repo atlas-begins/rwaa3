@@ -8,11 +8,11 @@
 				<thead><tr><th>Zone</th></tr></thead>
 				<tbody>
 				<% if CurrentMember %>
-					<tr><td><a href="$getZoneLink(add)" title="Add a new Zone record" class="addObject">add a zone</a></td></tr>
+					<tr><td><a href="$getZoneLink(add)" title="Add a new Zone record"><i class="fa fa-plus-circle fa-lg"></i> add a zone</a></td></tr>
 				<% end_if %>
 				<% if getAllZones %>
 					<% loop getAllZones %>
-						<tr><td><a href="$getZoneDetailPageLink" title="Show detail for zone $ZoneName">$ZoneName</a></td></tr>
+						<tr><td><a href="$getZoneDetailPageLink" title="Show detail for zone $ZoneName"><i class="fa fa-puzzle-piece fa-lg"></i> $ZoneName</a></td></tr>
 					<% end_loop %>
 				<% else %>
 					<tr><td>No records available</td></tr>

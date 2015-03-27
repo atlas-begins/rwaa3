@@ -23,11 +23,12 @@
 									<% if VesselName %> "$VesselName"<% end_if %></th></tr>
 								</thead>
 								<tbody>
+									<tr><td colspan="2"><a href="$getReportPageLink()" title="View PDF report for this vessel" target="_blank"><i class="fa fa-file-pdf-o fa-lg"></i> view PDF report</a></td></tr>
 									<% if CurrentMember %>
-										<tr><td colspan="2"><a href="$getVesselDetailPageLink(edit)" title="Edit details for this vessel" class="editObject">edit details</a></td></tr>
+										<tr><td colspan="2"><a href="$getVesselDetailPageLink(edit)" title="Edit details for this vessel"><i class="fa fa-pencil-square-o fa-lg"></i> edit details</a></td></tr>
 									<% end_if %>
 									<tr><td>Currently with</td><td>
-										<% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupName ($GroupAcronym)</a><% end_loop %>
+										<% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName"><i class="fa fa-users"></i> $GroupName ($GroupAcronym)</a><% end_loop %>
 									</td></tr>
 									<tr><td>Active?</td><td>$Top.validIcon($VesselActive)</td></tr>
 									<tr><td>Class</td><td>$VesselClass</td></tr>
@@ -50,17 +51,17 @@
 								</thead>
 								<tbody>
 									<% if CurrentMember %>
-										<tr><td colspan="4"><a href="$getCertActionPageLink(add)" title="Add a certificate" class="addObject">add a certificate</a></td></tr>
+										<tr><td colspan="4"><a href="$getCertActionPageLink(add)" title="Add a certificate"><i class="fa fa-plus-circle fa-lg"></i> add a certificate</a></td></tr>
 									<% end_if %>
 									<% loop getVesselCertificates %>
 										<tr>
 											<td><% loop SailingSeason %>$Season<% end_loop %></td>
-											<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName">$GroupAcronym</a><% end_loop %></td>
+											<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName"><i class="fa fa-users"></i> $GroupAcronym</a><% end_loop %></td>
 											<% if VesselCertNumber %>
 												<td>
 												$Top.validIcon($CertValid)
 												<a href="$getCertDetailPageLink" title="view detail about this certificate">$completeCertNumber</a></td>
-												<td><% loop VesselSurveyor %>Srv: $FirstName $Surname<% end_loop %></td>
+												<td><% loop VesselSurveyor %><i class="fa fa-user"></i> $FirstName $Surname<% end_loop %></td>
 											<% else %>
 												<td colspan="4">not issued</td>
 											<% end_if %>

@@ -37,6 +37,14 @@ class SSPerson extends DataObject {
 		}
 		return false;
 	}
+	
+	public function getReportPageLink($action = 'report') {
+		if($result = DataObject::get_one("PersonReportPage")) {
+			return $result->Link() . $action . '/' . $this->ID;
+		}
+		return false;
+	}
+	
 	public function sortedPersonNote() {
 		return $results = $this->PersonNote()->sort("Created", "DESC");
 	}

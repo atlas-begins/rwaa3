@@ -127,6 +127,7 @@ class GroupPage_Controller extends GroupHolder_Controller {
     	$groupID = isset($data['ID']) ? (int) $data['ID'] : false;
     	if(!$groupID) {
     		$result = new SSGroup();
+    		$result->write();
     		$msg = 'Created group record';
     	} else {
     		$result = SSGroup::get()->byID($data['ID']);

@@ -5,17 +5,17 @@
 		<div class="content">
 			<div class="left size3of8">
 				<table>
-				<thead><tr><th>Branch</th><th>Group</th><th>Zone</th></tr>
+				<thead><tr><th>Branch</th><th>Group/Zone</th></tr>
 				<tbody>
 				<% if CurrentMember %>
-					<tr><td colspan="3"><a href="$getGroupActionPageLink" class="addObject" title="Add a Group">add a Group</a></td></tr>
+					<tr><td colspan="2"><a href="$getGroupActionPageLink" title="Add a Group"><i class="fa fa-plus-circle fa-lg"></i> add a Group</a></td></tr>
 				<% end_if %>
 				<% if getGroupInformation %>
 					<% loop getGroupInformation %>
 						<tr>
 							<td class="branch_{$GroupBranch}">$GroupBranch</td>
-							<td><a href="$getGroupDetailPageLink" title="Edit details for $GroupName">($GroupAcronym) $GroupName</a></td>
-							<td nowrap><% loop GroupZone %><a href="$getZoneLink" title="View details for $ZoneName">$ZoneName</a><% end_loop %></td>
+							<td><a href="$getGroupDetailPageLink" title="Edit details for $GroupName"><i class="fa fa-users"></i> ($GroupAcronym) $GroupName</a>
+							<br><% loop GroupZone %><a href="$getZoneLink" title="View details for $ZoneName"><i class="fa fa-puzzle-piece fa-lg"></i> $ZoneName</a><% end_loop %></td>
 						</tr>
 					<% end_loop %>
 				<% else %>

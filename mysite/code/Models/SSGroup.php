@@ -54,6 +54,13 @@ class SSGroup extends DataObject {
 		return false;
 	}
 	
+	public function getReportPageLink($action = 'report') {
+		if($result = DataObject::get_one("GroupReportPage")) {
+			return $result->Link() . $action . '/' . $this->ID;
+		}
+		return false;
+	}
+	
 	public function getGroupAddCertificates() {
 		if($result = DataObject::get_one("GroupPage")) {
 			return $result->Link() . 'certificates/' . $this->ID;

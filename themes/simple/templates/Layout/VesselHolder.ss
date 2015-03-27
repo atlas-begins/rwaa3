@@ -17,14 +17,15 @@
 							<thead><tr><th colspan="4">$getVesselCount(cutter) Cutters</th></tr></thead>
 							<tbody>
 							<% if CurrentMember %>
-								<tr><td colspan="4"><a href="$getVesselActionPageLink(addCutter)" title="Add a cutter" class="addObject">add a Cutter</a></td></tr>
+								<tr><td colspan="4"><a href="$getVesselActionPageLink(addCutter)" title="Add a cutter"><i class="fa fa-plus-circle fa-lg"></i> add a Cutter</a></td></tr>
 							<% end_if %>
 							<% if getVesselInformation(cutter) %>
+								<tr><th>No.</th><th>Name</th><th>Group</th><th>Latest certificate</th></tr>
 								<% loop getVesselInformation(cutter) %>
 									<tr>
 										<td>$VesselNumber</td>
-										<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
-										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink">$GroupName</a><% end_loop %></td>
+										<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$Top.validIcon($VesselActive) $VesselName</a></td>
+										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink"><i class="fa fa-users"></i> $GroupName</a><% end_loop %></td>
 										<td><% loop getVesselNewestCertificate %><a href="$getCertDetailPageLink" title="View detail for certificate $ID">$Top.validIcon($CertValid) $completeCertNumber</a><% end_loop %></td>
 									</tr>
 								<% end_loop %>
@@ -39,15 +40,16 @@
 							<thead><tr><th colspan="5">$getVesselCount(sunburst) Sunbursts</th></tr></thead>
 							<tbody>
 							<% if CurrentMember %>
-								<tr><td colspan="5"><a href="$getVesselActionPageLink(addSunburst)" title="Add a sunburst" class="addObject">add a Sunburst</a></td></tr>
+								<tr><td colspan="5"><a href="$getVesselActionPageLink(addSunburst)" title="Add a sunburst"><i class="fa fa-plus-circle fa-lg"></i> add a Sunburst</a></td></tr>
 							<% end_if %>
 							<% if getVesselInformation(sunburst) %>
+								<tr><th>No.</th><th>Name</th><th>Group</th><th>Latest certificate</th></tr>
 								<% loop getVesselInformation(sunburst) %>
 									<tr>
 										<td>$VesselNumber</td>
-										<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
-										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink">$GroupName</a><% end_loop %></td>
-										<td><% loop getVesselNewestCertificate %>$completeCertNumber<% end_loop %></td>
+										<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$Top.validIcon($VesselActive) $VesselName</a></td>
+										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink"><i class="fa fa-users"></i> $GroupName</a><% end_loop %></td>
+										<td><% loop getVesselNewestCertificate %><a href="$getCertDetailPageLink" title="View detail for certificate $ID">$Top.validIcon($CertValid) $completeCertNumber</a><% end_loop %></td>
 									</tr>
 								<% end_loop %>
 							<% else %>
@@ -61,21 +63,22 @@
 							<thead><tr><th colspan="4">$getVesselCount(kayak) Kayaks</th></tr>
 							<tbody>
 							<% if CurrentMember %>
-								<tr><td colspan="4"><a href="$getVesselActionPageLink(addKayak)" title="Add a kayak" class="addObject">add a Kayak</a></td></tr>
+								<tr><td colspan="4"><a href="$getVesselActionPageLink(addKayak)" title="Add a kayak"><i class="fa fa-plus-circle fa-lg"></i> add a Kayak</a></td></tr>
 							<% end_if %>
 							<% if getVesselInformation(kayak) %>
+								<tr><th>No.</th><th>Name</th><th>Group</th><th>Latest certificate</th></tr>
 								<% loop getVesselInformation(kayak) %>
 									<tr>
 										<td>$VesselNumber</td>
-										<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $ID $VesselName">
+										<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $ID $VesselName">$Top.validIcon($VesselActive) 
 										<% if VesselName %>
 											$VesselName
 										<% else %>
 											$VesselClass
 										<% end_if %></a>
 										</td>
-										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink">$GroupName</a><% end_loop %></td>
-										<td><% loop getVesselNewestCertificate %>$completeCertNumber<% end_loop %></td>
+										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink"><i class="fa fa-users"></i> $GroupName</a><% end_loop %></td>
+										<td><% loop getVesselNewestCertificate %><a href="$getCertDetailPageLink" title="View detail for certificate $ID">$Top.validIcon($CertValid) $completeCertNumber</a><% end_loop %></td>
 									</tr>
 								<% end_loop %>
 							<% else %>
@@ -89,16 +92,17 @@
 							<thead><tr><th colspan="5">$getVesselCount of everything else</th></tr></thead>
 							<tbody>
 							<% if CurrentMember %>
-								<tr><td colspan="5"><a href="$getVesselActionPageLink(addVessel)" title="Add a vessel" class="addObject">add a Vessel</a></td></tr>
+								<tr><td colspan="5"><a href="$getVesselActionPageLink(addVessel)" title="Add a vessel"><i class="fa fa-plus-circle fa-lg"></i> add a Vessel</a></td></tr>
 							<% end_if %>
 							<% if getVesselInformation %>
+								<tr><th>No.</th><th>Class</th><th>Name</th><th>Group</th><th>Latest certificate</th></tr>
 								<% loop getVesselInformation %>
 									<tr>
 										<td>$VesselNumber</td>
 										<td>$VesselClass</td>
-										<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
-										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink">$GroupName</a><% end_loop %></td>
-										<td><% loop getVesselNewestCertificate %>$completeCertNumber<% end_loop %></td>
+										<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$Top.validIcon($VesselActive) $VesselName</a></td>
+										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink"><i class="fa fa-users"></i> $GroupName</a><% end_loop %></td>
+										<td><% loop getVesselNewestCertificate %><a href="$getCertDetailPageLink" title="View detail for certificate $ID">$Top.validIcon($CertValid) $completeCertNumber</a><% end_loop %></td>
 									</tr>
 								<% end_loop %>
 							<% else %>
@@ -112,13 +116,14 @@
 							<thead><tr><th colspan="5">$getVesselCount(inactive) inactive vessels</th></tr></thead>
 							<tbody>
 							<% if getVesselInformation(inactive) %>
+								<tr><th>No.</th><th>Class</th><th>Name</th><th>Group</th><th>Latest certificate</th></tr>
 								<% loop getVesselInformation(inactive) %>
 									<tr>
 										<td>$VesselNumber</td>
 										<td>$VesselClass</td>
-										<td>$Top.validIcon($VesselActive) <a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a></td>
-										<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink">$GroupName</a><% end_loop %></td>
-										<td><% loop getVesselNewestCertificate %>$completeCertNumber<% end_loop %></td>
+										<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$Top.validIcon($VesselActive) $VesselName</a></td>
+										<td><% if ScoutGroup %><% loop ScoutGroup %><a href="$getGroupDetailPageLink"><i class="fa fa-users"></i> $GroupName</a><% end_loop %><% end_if %></td>
+										<td><% loop getVesselNewestCertificate %><a href="$getCertDetailPageLink" title="View detail for certificate $ID">$Top.validIcon($CertValid) $completeCertNumber</a><% end_loop %></td>
 									</tr>
 								<% end_loop %>
 							<% else %>
