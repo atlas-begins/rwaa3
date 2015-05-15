@@ -70,6 +70,7 @@ class VesselPage_Controller extends VesselHolder_Controller {
 		, 'addSunburst' => TRUE
 		, 'addKayak' => TRUE
 		, 'addOther' => true
+		, 'addCertificate' => true
 		, 'doSaveVessel' => TRUE
 		, 'doSaveVesselImage' => true
 		, 'doSaveVesselNote' => true

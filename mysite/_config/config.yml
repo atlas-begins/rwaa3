@@ -9,3 +9,7 @@ SSViewer:
   theme: 'simple'
 Director:
   environment_type: 'dev'
+DateField:
+  default_config:
+    showcalendar: true
+    datavalueformat: 'YYYY-mm-dd'

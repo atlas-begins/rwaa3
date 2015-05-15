@@ -11,7 +11,7 @@
 					<li><a href="#viewtab2">Events</a></li>
 				    <li><a href="#viewtab3">Course Map</a></li>
 				    <li><a href="#viewtab4">Prizes</a></li>
-				    <li><a href="#viewtab5">Winners</a></li>
+				    <li><a href="#viewtab5">Results</a></li>
 				</ul>
 				<div class="tabcontents">
 					<% if Content %>

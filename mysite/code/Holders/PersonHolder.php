@@ -29,7 +29,7 @@ class PersonHolder extends Page {
     }
     
     public function getLoosePeople() {
-    	if($results = DataList::create("SSPerson")->where("\"ScoutGroupID\" = '0'")) return $results;
+    	if($results = DataList::create("SSPerson")->where("\"ScoutGroupID\" = '0' OR \"PersonActive\" = '0'")) return $results;
     	return false;
     }
 }

@@ -71,6 +71,13 @@ class SSGroup extends DataObject {
 	public function sortedGroupNote() {
 		return $results = $this->GroupNote()->sort("Created", "DESC");
 	}
+    
+    public function activeGroupPeople() {
+    	if($activePeople = $this->GroupPeople()->filter("PersonActive", '1')) {
+    		return $activePeople;
+    	}
+    	return false;
+    }
 	
 	/*
 	public static function requireDefaultRecords() {

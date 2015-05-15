@@ -29,12 +29,28 @@ class CertificatePage_Controller extends CertificateHolder_Controller {
 		'view' => true
 		, 'add' => 'ADMIN'
 		, 'edit' => 'ADMIN'
+		, 'certificateForm' => 'ADMIN'
 		, 'CertNoteForm' => true
 		, 'doSaveCertNote' => true
+		, 'doSaveCertificate' => 'ADMIN'
 	);
 	
 	public function CertNoteForm() {
 		$cert = SSVesselCert::get()->byID($this->request->param('ID'));
+    	$fields = new FieldList();
+    	$fields->push(new TextareaField('NoteContents', ''));
+    	$fields->push(new HiddenField('CertificateID', 'Certificate ID', $cert->ID));
+    	$fields->push(new HiddenField('VesselID', 'Vessel ID', $cert->ScoutVesselID));
+    	$fields->push(new HiddenField('GroupID', 'Group ID', $cert->ScoutGroupID));
+    	$actions = new FieldList(
+            new FormAction('doSaveCertNote', 'Save note')
+        );
+        $validator = new RequiredFields();
+		$form = new Form($this, 'CertNoteForm', $fields, $actions, $validator);
+		return $form;
+    }
+    
+	public function certificateForm() {
     	$fields = new FieldList();
     	$fields->push(new TextareaField('NoteContents', ''));
     	$fields->push(new HiddenField('CertificateID', 'Certificate ID', $cert->ID));
@@ -73,18 +89,17 @@ class CertificatePage_Controller extends CertificateHolder_Controller {
     
 	public function add($request) {
     	if($result = SSVessel::get()->byID($this->request->param('ID'))) {
-    		$newTitle = 'Add certificate for "' . $result->VesselName . '"';
-    		$newCert = Object::create("SSVesselCert");
-    		$resultsArray = array(
-    			'Title' => $newTitle
-    			, 'Certificate' => $newCert
-    		);
+    		$resultsArray['ObjectAction'] = 'add';
+			$resultsArray['Title'] = 'Add certificate for "' . $result->VesselName . '"';
+			$resultsArray['Form'] = self::certificateForm($this->request->param('ID'));
+	    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
     	} else {
     		$resultsArray = array(
     			'Title' => 'Vessel not found'
     			, 'Content' => '<p>Sorry, we cannot locate records for that vessel and cannot create a certificate.</p><p>Please return to the main page and make another selection.</p>'
     		);
     	}
-    	return $this->customise($resultsArray)->renderWith(array('CertificatePage', 'Page'));
+    	return $this->customise($resultsArray)->renderWith(array('ObjectPage_actions', 'Page'));
+    	//return $this->customise($resultsArray)->renderWith(array('CertificatePage', 'Page'));
     }
 }

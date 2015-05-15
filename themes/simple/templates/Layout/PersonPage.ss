@@ -9,7 +9,8 @@
 					<ul class="tabs" data-persist="true">
 			            <li><a href="#viewtab1"><% loop Person %>{$FirstName}'s details<% end_loop %></a></li>
 			            <li><a href="#viewtab2">Charge certificate</a></li>
-			            <li><a href="#viewtab3">Notes <% loop Person %>($sortedPersonNote.Count)<% end_loop %></a></li>
+			            <li><a href="#viewtab3">Qualifications</a></li>
+			            <li><a href="#viewtab4">Notes <% loop Person %>($sortedPersonNote.Count)<% end_loop %></a></li>
 			        </ul>
 					<div class="tabcontents">
 			            <div id="viewtab1">
@@ -38,33 +39,78 @@
 											($RoleAbbrev) $Role<br>
 										<% end_loop %>
 									</td></tr>
+									<tr><td>Can issue charge?</td><td>$Top.validIcon($CanIssueCharge)</td></tr>
+									<tr><td>Charge</td><td>
+										<% if PersonCharge %>
+											<% loop PersonCharge %>
+												$Top.validIcon($ChargeActive) $ChargeNumber
+											<% end_loop %>
+										<% else %>
+											No Charge Certificate
+										<% end_if %>
+									</td></tr>
 								</tbody>
 								</table>
 							<% end_loop %>
 							<div class="clear"></div>
 			            </div>
 			            <div id="viewtab2">
+							<table>
+							<thead>
+								<tr><th colspan="2">Charge certificate and endorsements</th></tr>
+							</thead>
+							<tbody>
 							<% loop Person %>
-								<table>
-								<thead>
-									<tr><th colspan="2">Charge certificate and endorsements</th></tr>
-								</thead>
-								<tbody>
 								<% if PersonCharge %>
 									<% loop PersonCharge %>
-										<tr><td>Year</td><td>
-										($ChargeType) $ChargeDescription<br>
+										<tr><td>$Top.validIcon($ChargeActive) <strong>$ChargeNumber</strong>
+										<br>Issued $IssueDate.Long
+										<br>by 
+										<% loop ChargeIssuer %>
+											<a href="$getPersonDetailPageLink" title="View details about $FirstName $Surname"><i class="fa fa-user"></i> $FirstName $Surname</a>
+										<% end_loop %>
+										</td>
+										<td>
+											<% loop getChargeEndorsements %>
+												<p><strong>($EndorsementCode) $Description</strong>
+												<br>Issued: $EndorsementDate.Long
+												<br>Examiner: <% loop Examiner %>$FirstName $Surname<% end_loop %>
+												<% if EndorsementNote %>
+													<br><span class="chargeNote">$EndorsementNote</span>
+												<% end_if %>
+												</p>
+											<% end_loop %>
 										</td></tr>
 									<% end_loop %>
 								<% else %>
 									<tr><td colspan="2"><a href="$getPersonDetailPageLink(createCharge)" title="Create a charge certificate for $FirstName $Surname"><i class="fa fa-plus-circle fa-lg"></i> create a charge certificate</a></td></tr>
 								<% end_if %>
-								</tbody>
-								</table>
 							<% end_loop %>
+							</tbody>
+							<% if CurrentMember && Person.PersonCharge %>
+								<thead>
+									<tr><th colspan="2">Write a Charge Certificate note</th></tr>
+								</thead>
+								<tbody>
+								<tr><td colspan="2">
+								$ChargeNoteForm
+								</td></tr>
+								</tbody>
+							<% end_if %>
+							</table>
 							<div class="clear"></div>
 			            </div>
 			            <div id="viewtab3">
+			            	<table>
+								<thead>
+									<tr><th colspan="2">Qualifications</th></tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+			            	<div class="clear"></div>
+			            </div>
+			            <div id="viewtab4">
 			            	<table>
 								<thead>
 									<tr><th colspan="2">Notes</th></tr>

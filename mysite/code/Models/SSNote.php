@@ -12,5 +12,6 @@ class SSNote extends DataObject {
 		, 'Author' => 'Member'
 		, 'Certificate' => 'SSVesselCert'
 		, 'Trophy' => 'SSTrophy'
+		, 'Charge' => 'SSCharge'
     );
 }

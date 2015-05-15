@@ -147,7 +147,12 @@ class GroupPage_Controller extends GroupHolder_Controller {
     		$result->FirstName = $data['FirstName'];
 	    	$result->Surname = $data['Surname'];
 	    	$result->ScoutGroupID = $groupID;
-	    	$result->PersonActive = $data['PersonActive'];
+	    	if(isset($data['PersonActive'])) {
+	    		$result->PersonActive = true;
+	    	} else {
+	    		$result->PersonActive = false;
+	    	}
+	    	
 	    	$result->write();
 	    	if(isset($data['Roles'])) {
 	    		$pID = $result->ID;

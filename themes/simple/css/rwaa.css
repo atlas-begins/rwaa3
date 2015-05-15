@@ -23,6 +23,13 @@
 .currentSeason	{
 	font-weight: bold;
 }
+.chargeNote {
+	margin: 0;
+	font-style: italic;
+	padding: 4px;
+	background-color: #ddf;
+}
+
 
 /* LINK ICONS - shows type of file
 ------------------------------------ */

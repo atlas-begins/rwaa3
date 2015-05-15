@@ -10,18 +10,36 @@ class VesselFoldersTask extends BuildTask {
  
     function run($request) {
     	if($results = DataList::create("SSVessel")) {
-    		echo '<p>Checking each vessel:';
+    		$hasf = '0';
+    		$hasn = '0';
+    		$hasv = '0';
+			echo '<p>Checking ' . $results->Count() . ' vessels:';
     		foreach($results as $result) {
-    			echo '<br>Vessel ' . $result->ID;
     			$imageFolder = Folder::find_or_make('Uploads/Vessels/Vessel' . $result->ID);
     			if($imageFolder->ID == $result->VesselGalleryID) {
-    				echo ' has a folder';
+    				$hasf++;
     			} else {
     				$result->VesselGalleryID = $imageFolder->ID;
     				$result->write();
-    				echo ' did not have a folder';
+    				$hasn++;
     			}
     		}
+    		
+    		$pFolderID = Folder::find_or_make('Uploads/Vessels')->ID;
+    		
+    		if($vFolders = DataList::create("Folder")->filter('ParentID', '$pFolderID')) {
+    			foreach($vFolders as $vFolder) {
+    				$fID = $vFolder->ID;
+	    			if(!$vessel = DataList::create("SSVessel")->filter('VesselGalleryID', '$fID')) {
+	    				$hasv++;
+	    				$vFolder->delete();
+	    			}
+    			}	
+    		}
+    		
+    		echo '<br>' . $hasf . ' had folders';
+    		echo '<br>' . $hasn . ' did not have folders';
+    		echo '<br>' . $hasv . ' folders did not have a corresponding vessel';
     	}
     	echo '</p><p>Done</p>';
 	}

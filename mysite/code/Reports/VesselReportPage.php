@@ -48,8 +48,8 @@ class VesselReportPage_Controller extends VesselHolder_Controller {
 			$pdf->Cell(40, 10, $result->ReportTitle, 0, 1);
 			$pdf->SetFont('Arial','',9);
 			$pdf->Cell(0, 5, '(Cmd+S or Ctrl+S to save this document)', 0, 1);
-			$pdf->Cell(0, 10, 'Vessel number ' . $result->VesselNumber, 0, 1);
 			$pdf->SetFont('Arial', '', 12);
+			$pdf->Cell(0, 10, 'Vessel number ' . $result->VesselNumber, 0, 1);
 			$pdf->Cell(0, 6, $result->RecordCreated, 0, 1);
 			$pdf->Cell(0, 6, $result->RecordActive, 0, 1);
 			$pdf->Cell(0, 6, $result->RecordYear, 0, 1);

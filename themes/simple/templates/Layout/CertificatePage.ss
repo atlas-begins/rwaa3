@@ -18,7 +18,7 @@
 				            	<% loop Certificate %>
 									<table>
 									<thead>
-										<tr><th colspan="2">$completeCertNumber</th></tr>
+										<tr><th colspan="2">Certificate $completeCertNumber</th></tr>
 									</thead>
 									<tbody>
 										<% if CurrentMember %>
@@ -26,14 +26,14 @@
 										<% end_if %>
 										<% loop ScoutVessel %>
 											<tr><td>Issued for vessel</td>
-											<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName">$VesselName</a>
+											<td><a href="$getVesselDetailPageLink" title="Show detail for $VesselClass $VesselName"><i class="fa fa-anchor"></i> $VesselName</a>
 											</td></tr>
 										<% end_loop %>
 										<tr><td>Certificate valid?</td>
 										<td>$Top.validIcon($CertValid)</td></tr>
 										<% loop ScoutGroup %>
 											<tr><td>Belonging to group</td>
-											<td><a href="$getGroupDetailPageLink" title="Show detail for $GroupName">$GroupName</a>
+											<td><a href="$getGroupDetailPageLink" title="Show detail for $GroupName"><i class="fa fa-users"></i> $GroupName</a>
 											</td></tr>
 										<% end_loop %>
 										<% loop SailingSeason %>
@@ -42,7 +42,7 @@
 										<% end_loop %>
 										<% loop VesselSurveyor %>
 											<tr><td>Surveyed by</td>
-											<td>$FirstName $Surname</td></tr>
+											<td><a href="$getPersonDetailPageLink" title="View details about $FirstName $Surname"><i class="fa fa-user"></i> $FirstName $Surname</a></td></tr>
 										<% end_loop %>
 										
 										<tr><td>Survey date</td>
@@ -52,7 +52,7 @@
 										<td>$IssueDate.Long</td></tr>
 										<% loop IssuedBy %>
 											<tr><td>Issued by</td>
-											<td>$FirstName $Surname</td></tr>
+											<td><a href="$getPersonDetailPageLink" title="View details about $FirstName $Surname"><i class="fa fa-user"></i> $FirstName $Surname</a></td></tr>
 										<% end_loop %>
 										<% loop SurveyForm %>
 											<tr><td>View the form</td>

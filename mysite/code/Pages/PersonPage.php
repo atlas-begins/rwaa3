@@ -38,36 +38,51 @@ class PersonPage_Controller extends PersonHolder_Controller {
 		, 'PersonForm' => true
 		, 'PersonNoteForm' => true
 		, 'PersonChargeForm' => TRUE
+		, 'ChargeNoteForm' => TRUE
+		, 'doSaveChargeNote' => true
 		, 'doSavePerson' => true
 		, 'doSavePersonNote' => true
 		, 'doSavePersonCharge' => true
+		, 'doCancel' => true
 	);
 	
 	// FORMS
 	public function PersonForm() {
-		//Create form Action
-		$cancelButton = new FormAction("cancelForm");
-		//Set it to use button
-		$cancelButton->useButtonTag = true;
-		$cancelButton->setButtonContent('No, changed my mind');
-		$cancelButton->addExtraClass('cancelButton');
-		$actions = new FieldList(
-            new FormAction('doSavePerson', 'Save changes')
-            , $cancelButton
-        );
-        $validator = new RequiredFields('FirstName', 'Surname');
+		// creates form fields
+		$fields = new FieldList();
+		$firstnameField = new TextField('FirstName', 'First Name');
+		$surnameField = new TextField('Surname', 'Last Name');
+		$activeField = new CheckboxField('PersonActive', 'Is this person active?');
+		$chargeField = new CheckboxField('CanIssueCharge', 'Can this person issue a charge certificate?');
+		// sets up selectors and mappings
 		$allGroupsMap = SSGroup::get()->sort("GroupName")->map("ID", "GroupName");
 		$groupField = new DropdownField('ScoutGroupID', 'Scout Group', $allGroupsMap);
 			$groupField->setEmptyString('(Select a Group)');
+			
 		$roleMap = SSRole::get()->sort("Role")->map('ID', 'Role');
-		$fields = singleton('SSPerson')->getFrontendFields();
-		$form = new Form($this, 'PersonForm', $fields, $actions, $validator);
-		$fields->replaceField('ScoutGroupID', $groupField);
 		$roleField = new CheckboxSetField(
 			$name = "Roles",
 			$title = "Select Roles",
 			$source = $roleMap
 		);
+		$fields = new FieldList();
+			$fields->push($firstnameField);
+			$fields->push($surnameField);
+			$fields->push($activeField);
+			$fields->push($chargeField);
+			$fields->push($groupField);
+			$fields->push($roleField);
+			
+		// create form actions
+		$actions = new FieldList(
+            new FormAction('doSavePerson', 'Save changes')
+            , new FormAction('doCancel', 'No, changed my mind')
+        );
+        // creates validator
+        $validator = new RequiredFields('FirstName', 'Surname');
+        
+        // builds form
+		$form = new Form($this, 'PersonForm', $fields, $actions, $validator);
 		if($pID = $this->urlParams['ID']) {
 			$fields->push(new HiddenField("ID", "ID", $pID));
 			if($result = SSPerson::get()->byID($pID)) {
@@ -83,7 +98,6 @@ class PersonPage_Controller extends PersonHolder_Controller {
 		}
 		
 		$fields->push($roleField);
-		// $fields->push(new LiteralField('CancelForm', '<a id="cancelButton" href="" title="Changed my mind about this">No, changed my mind</a>'));
 		return $form;
     }
     
@@ -102,28 +116,50 @@ class PersonPage_Controller extends PersonHolder_Controller {
 		return $form;
     }
     
-	public function PersonChargeForm() {
-		$person = SSPerson::get()->byID($this->request->param('ID'));
+	public function PersonChargeForm($pID = null) {
+		if(!$pID) $pID = $this->request->param('ID');
+		$person = SSPerson::get()->byID($pID);
+		$endorsementArray = SSChargeEndorsement::endorsements();
+		$issuers = SSPerson::getChargeIssuers()->map('ID', 'Fullname');
     	$fields = new FieldList();
-    		$pField = new HiddenField('PersonID', 'Person ID', $this->request->param('ID'));
+    		$pField = new HiddenField('PersonID', 'Person ID', $pID);
     			$fields->push($pField);
     		$cField = new TextField('ChargeNumber', 'Charge Number');
     			$fields->push($cField);
     		$dField = new DateField('IssueDate', 'Issue Date');
-				$dField->setConfig('datavalueformat', 'yyyy-MM-dd'); // global setting
-				$dField->setConfig('showcalendar', 1); // field-specific setting
-				$dField->setLocale('en_NZ');
+				$dField->setLocale("en_NZ");
     			$fields->push($dField);
+    		$iField = new DropdownField("ChargeIssuerID", "Issued by", $issuers);
+    			$iField->setEmptyString('Select one...');
+    			$fields->push($iField);
+    		$eField = new CheckboxsetField("Endorsements", "Endorsements", $endorsementArray);
+    			$fields->push($eField);
     		
     	$actions = new FieldList(
             new FormAction('doSavePersonCharge', 'Save Charge')
         );
-        $validator = new RequiredFields('Issue Date', 'Charge Number');
+        $validator = new RequiredFields('IssueDate', 'ChargeNumber', 'ChargeIssuerID');
 		$form = new Form($this, 'PersonChargeForm', $fields, $actions, $validator);
 		
 		return $form;
     }
     
+	public function ChargeNoteForm() {
+		$person = SSPerson::get()->byID($this->request->param('ID'));
+		if($cID = $person->PersonCharge()->ID) {
+			$fields = new FieldList();
+	    	$fields->push(new TextareaField('NoteContents', ''));
+	    	$fields->push(new HiddenField('ChargeID', 'Charge ID', $cID));
+	    	$actions = new FieldList(
+	            new FormAction('doSaveChargeNote', 'Save note')
+	        );
+	        $validator = new RequiredFields();
+			$form = new Form($this, 'ChargeNoteForm', $fields, $actions, $validator);
+			return $form;
+		}
+		return false;
+    }
+
     // FORMS ACTIONS
 	public function doSavePerson($data) {
     	$groupID = isset($data['ScoutGroupID']) ? (int) $data['ScoutGroupID'] : false;
@@ -138,6 +174,11 @@ class PersonPage_Controller extends PersonHolder_Controller {
     		$result->PersonActive = true;
     	} else {
     		$result->PersonActive = false;
+    	}
+		if(isset($data['CanIssueCharge'])) {
+    		$result->CanIssueCharge = true;
+    	} else {
+    		$result->CanIssueCharge = false;
     	}
     	if(isset($data['ScoutGroupID'])) {
     		$result->ScoutGroupID = $groupID;
@@ -167,18 +208,40 @@ class PersonPage_Controller extends PersonHolder_Controller {
     	return $this->redirect($returnURL);
     }
     
-	public function doSavePersonCharge($form, $data) {
-		print_r($form['PersonID'] . '<br>');
-		
+	public function doSaveChargeNote($form, $data) {
+		print_r('hhhhh');
 		die();
-		
-    	if($result = SSPerson::get_by_id("SSPerson", $form['PersonID'])) {
-    		$result = new SSCharge();
-    		$form->saveInto($result);
-    		$result->write();
-    		$returnURL = $this->Link() . 'view/' . $form['PersonID'];
+		$person = SSPerson::get()->byID($this->request->param('ID'));
+    	if($result = SSCharge::get_by_id("SSCharge", $form['ChargeID'])) {
+    		SSCharge::writeChargeNote($result, $form['NoteContents']);
     	}
+    	$returnURL = $this->Link() . 'view/' . $person->ID;
     	return $this->redirect($returnURL);
+    }
+    
+	public function doSavePersonCharge($form, $data) {
+    	if($person = DataList::create("SSPerson")->byID($form['PersonID'])) {
+    		$result = new SSCharge();
+    		$result->ChargeNumber = $form['ChargeNumber'];
+    		$result->IssueDate = $form['IssueDate'];
+    		$result->ChargeHolderID = $form['PersonID'];
+    		$result->ChargeIssuerID = $form['ChargeIssuerID'];
+    		$result->write();
+    		$person->PersonChargeID = $result->ID;
+    		$person->write();
+    		// need to process endorsements
+    		
+    	}
+    	$returnURL = $this->Link() . 'view/' . $form['PersonID'];
+    	return $this->redirect($returnURL);
+    }
+    
+    public function doCancel($form, $data) {
+    	if($pPage = DataList::create("PersonPage")->first()) {
+    		$returnURL = $pPage->Link() . 'view/' . $form['ID'];
+    		return $this->redirect($returnURL);
+    	}
+    	return false;
     }
 	
     public function view($request) {

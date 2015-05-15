@@ -14,7 +14,7 @@ $databaseConfig = array(
 );
 
 // Set the site locale
-i18n::set_locale('en_US');
+i18n::set_locale('en_NZ');
 
 global $fpdfPath;
 $fpdfPath = '//Applications/MAMP/bin/php/fpdf17/fpdf.php';

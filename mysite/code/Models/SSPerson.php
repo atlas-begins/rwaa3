@@ -5,6 +5,7 @@ class SSPerson extends DataObject {
 		'FirstName' => 'Varchar(64)'
 		, 'Surname' => 'Varchar(64)'
 		, 'PersonActive' => 'Boolean'
+		, 'CanIssueCharge' => 'Boolean'
 	);
 	
 	private static $many_many = array(
@@ -14,7 +15,6 @@ class SSPerson extends DataObject {
 	static $has_one = array(
 		'ScoutGroup' => 'SSGroup'
 		, 'PersonCharge' => 'SSCharge'
-		
 	);
 	
 	private static $has_many = array(
@@ -23,6 +23,7 @@ class SSPerson extends DataObject {
 	
 	private static $defaults = array(
 		'PersonActive' => 1
+		, 'CanIssueCharge' => 0
 	);
 	
 	private static $searchable_fields = array(
@@ -47,6 +48,17 @@ class SSPerson extends DataObject {
 	
 	public function sortedPersonNote() {
 		return $results = $this->PersonNote()->sort("Created", "DESC");
+	}
+	
+	public static function getChargeIssuers() {
+		$results = new ArrayList();
+		if($persons = DataList::create("SSPerson")->filter('CanIssueCharge', '1')->sort("Surname")) {
+			foreach($persons as $person) {
+				$person->Fullname = $person->FirstName . ' ' . $person->Surname;
+				$results->push($person);
+			}
+		}
+		return $results;
 	}
 	
 }

@@ -56,12 +56,12 @@
 									<% loop getVesselCertificates %>
 										<tr>
 											<td><% loop SailingSeason %>$Season<% end_loop %></td>
-											<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName"><i class="fa fa-users"></i> $GroupAcronym</a><% end_loop %></td>
+											<td><% loop ScoutGroup %><a href="$getGroupDetailPageLink" title="view details for group $GroupName"><i class="fa fa-users"></i> $GroupName ($GroupAcronym)</a><% end_loop %></td>
 											<% if VesselCertNumber %>
 												<td>
 												$Top.validIcon($CertValid)
 												<a href="$getCertDetailPageLink" title="view detail about this certificate">$completeCertNumber</a></td>
-												<td><% loop VesselSurveyor %><i class="fa fa-user"></i> $FirstName $Surname<% end_loop %></td>
+												<td><% loop VesselSurveyor %><a href="$getPersonDetailPageLink" title="View details about $FirstName $Surname"><i class="fa fa-user"></i>  $FirstName $Surname</a><% end_loop %></td>
 											<% else %>
 												<td colspan="4">not issued</td>
 											<% end_if %>
